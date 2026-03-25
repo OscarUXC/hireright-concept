@@ -80,6 +80,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 textarea,input[type=text],input[type=number]{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--paper);transition:border-color .2s,background .2s;resize:vertical;line-height:1.6;outline:none;}
 textarea:focus,input[type=text]:focus,input[type=number]:focus{border-color:var(--sage);background:white;}
 textarea{min-height:88px;}
+select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--ink);background:var(--paper);outline:none;cursor:pointer;}
+select:focus{border-color:var(--sage);background:white;}
 .field-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);display:block;margin-bottom:5px;}
 /* CHECKBOXES */
 .check-group{display:flex;flex-direction:column;gap:8px;}
@@ -93,6 +95,11 @@ textarea{min-height:88px;}
 .check-expand{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
 .check-item.selected .check-expand{display:block;}
 .check-expand textarea{min-height:64px;font-size:13px;margin-top:6px;}
+/* CAPABILITY BUTTONS */
+.cap-group{display:flex;gap:6px;margin-top:6px;}
+.cap-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:6px 14px;border-radius:6px;border:1.5px solid var(--border);background:var(--paper);color:var(--muted);cursor:pointer;transition:all .15s;}
+.cap-btn:hover{border-color:var(--sage);color:var(--sage);}
+.cap-btn.sel{background:var(--sage);color:white;border-color:var(--sage);}
 /* RADIO */
 .radio-group{display:flex;flex-direction:column;gap:8px;}
 .radio-item{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;user-select:none;}
@@ -180,6 +187,9 @@ textarea{min-height:88px;}
 .typing span{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bounce 1.2s infinite;}
 .typing span:nth-child(2){animation-delay:.2s;}
 .typing span:nth-child(3){animation-delay:.4s;}
+/* OUTCOME EXPAND GRID */
+.oc-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.oc-fields-full{grid-column:1/-1;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
@@ -250,50 +260,85 @@ textarea{min-height:88px;}
 <div id="p0" class="phase-section visible">
   <div class="phase-eyebrow">Phase 1 of 6 — Foundation</div>
   <h1 class="phase-heading">What is your team<br><em style="color:var(--sage)">responsible for delivering?</em></h1>
-  <p class="phase-intro">Before thinking about hiring, understand what your team exists to achieve. Everything you enter here flows automatically into all 12 documents. Takes 10–15 minutes.</p>
-  <div class="progress-row"><div class="progress-track"><div class="progress-fill" id="pb0" style="width:0%"></div></div><div class="progress-label" id="pl0">Q1 of 3</div></div>
+  <p class="phase-intro">Complete this template to understand your team's current state. This forms the foundation for all hiring decisions and will auto-populate later templates. Takes 15–20 minutes.</p>
+  <div class="progress-row"><div class="progress-track"><div class="progress-fill" id="pb0" style="width:0%"></div></div><div class="progress-label" id="pl0">Q1 of 6</div></div>
 
+  <!-- Q1: Team/Function -->
   <div class="q-card active" id="p0c1">
-    <div class="q-num">Question 1 of 3</div>
+    <div class="q-num">Section A — Team Context · Question 1 of 6</div>
     <div class="q-text">What is your team or function?</div>
     <div class="q-sub">Give a short description — team name, size, and company stage. This sets the context for every document.</div>
-    <input type="text" id="i-team" placeholder="e.g. Product Team — 3 PMs, 2 designers, 3 analysts. Series B B2B SaaS, 150 people." oninput="chk('i-team',3,'p0n1')">
+    <input type="text" id="i-team" placeholder="e.g. Product Team — 3 PMs, 2 designers, 3 analysts. Series B B2B SaaS, 150 people." oninput="chk('i-team',1,'p0n1')">
     <div class="q-nav"><div></div><button class="btn-next" id="p0n1" disabled onclick="adv0(1)">Next →</button></div>
   </div>
 
+  <!-- Q2: Team Purpose -->
   <div class="q-card locked" id="p0c2">
-    <div class="q-num">Question 2 of 3</div>
+    <div class="q-num">Section A — Team Context · Question 2 of 6</div>
     <div class="q-text">What is the primary purpose of this team?</div>
     <div class="q-sub">Why does this team exist? What commercial or operational value does it create?</div>
-    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Think about the <strong>outcome</strong> your team delivers — not the tasks they do. e.g. <em>"Enable Sales to close enterprise deals by shipping the product features they need."</em></div></div>
-    <textarea id="i-purpose" placeholder="e.g. Build and ship product features that drive commercial growth — specifically the enterprise tier that enables Sales to close deals and achieve ARR targets." oninput="chk('i-purpose',10,'p0n2')"></textarea>
+    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Think about the <strong>outcome</strong> your team delivers — not the tasks they do. e.g. <em>"Build and ship product features that drive commercial growth — specifically the enterprise tier that enables Sales to close deals and achieve £2M ARR by Q4 2026"</em></div></div>
+    <textarea id="i-purpose" placeholder="e.g. Build and ship product features that drive commercial growth — specifically the enterprise tier that enables Sales to close deals and achieve ARR targets." oninput="chk('i-purpose',1,'p0n2')"></textarea>
     <div class="q-nav"><button class="btn-back" onclick="bk0(1)">← Back</button><button class="btn-next" id="p0n2" disabled onclick="adv0(2)">Next →</button></div>
   </div>
 
+  <!-- Q3: Key Stakeholders -->
   <div class="q-card locked" id="p0c3">
-    <div class="q-num">Question 3 of 3</div>
+    <div class="q-num">Section A — Team Context · Question 3 of 6</div>
+    <div class="q-text">Who are your key stakeholders?</div>
+    <div class="q-sub">Who depends on this team's outcomes? List the people and teams who rely on your output.</div>
+    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Include names, roles, and <strong>what they need from your team</strong>. This helps map dependencies across your documents.</div></div>
+    <textarea id="i-stakeholders" placeholder="e.g. Sales team / Tom Rodriguez (need enterprise features to close deals), Emma Liu VP Product (strategic direction), James Park Engineering Lead (delivery capacity), Sarah Rasool Design Lead (UX quality)" oninput="chk('i-stakeholders',1,'p0n3')"></textarea>
+    <div class="q-nav"><button class="btn-back" onclick="bk0(2)">← Back</button><button class="btn-next" id="p0n3" disabled onclick="adv0(3)">Next →</button></div>
+  </div>
+
+  <!-- Q4: Outcome Selection from 12 Universal Groups -->
+  <div class="q-card locked" id="p0c4">
+    <div class="q-num">Sections B & C — Outcomes · Question 4 of 6</div>
     <div class="q-text">What are your team's top outcomes right now?</div>
-    <div class="q-sub">Select up to 3 outcome groups, then describe your specific version with a measure and timeframe. These appear in 10 of your 12 documents.</div>
-    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Ask: what would need to be true in 12 months for this team to have had a great year? Start with the group name, then make it specific with a number and a date.</div></div>
-    <div class="check-group" id="ocg">
-      <div class="check-item" onclick="togCheck(this,'o1')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Strategic Direction & Prioritisation</div><div class="check-desc">Setting direction, making trade-offs, aligning stakeholders on what matters most</div><div class="check-expand"><label class="field-label">Your specific outcome — measure + timeframe:</label><textarea id="o1t" placeholder="e.g. Define and deliver H2 product roadmap by end of Q2, prioritising features that drive £500k ARR growth by Q4, so Engineering and Sales are aligned..." oninput="updPrev()"></textarea><div style="font-size:11px;color:var(--muted);text-align:right;margin-top:4px">One sentence · clear measure · clear timeframe</div></div></div></div>
-      <div class="check-item" onclick="togCheck(this,'o2')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Delivery & Execution</div><div class="check-desc">Shipping quality product on time with constrained resources</div><div class="check-expand"><label class="field-label">Your specific outcome:</label><textarea id="o2t" placeholder="e.g. Ship 5 major features with &lt;10% post-launch defect rate by Q4, reducing time-to-market by 25% vs H1 baseline" oninput="updPrev()"></textarea></div></div></div>
-      <div class="check-item" onclick="togCheck(this,'o3')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Customer Insight & Experience</div><div class="check-desc">Understanding customers deeply and acting on what you learn</div><div class="check-expand"><label class="field-label">Your specific outcome:</label><textarea id="o3t" placeholder="e.g. Increase NPS from 34 to 50 by Q4 by implementing top 3 improvements from 10+ monthly customer interviews from Month 2" oninput="updPrev()"></textarea></div></div></div>
-      <div class="check-item" onclick="togCheck(this,'o4')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Revenue & Commercial Impact</div><div class="check-desc">Driving ARR, pipeline, conversion, or retention outcomes</div><div class="check-expand"><label class="field-label">Your specific outcome:</label><textarea id="o4t" placeholder="e.g. Grow ARR from £5M to £8M by Q4 by landing 3 enterprise accounts and reducing churn below 5%" oninput="updPrev()"></textarea></div></div></div>
-    </div>
+    <div class="q-sub">Select 3–6 outcome groups from the 12 Universal Outcome Groups below. For each, describe your specific version with a measure and timeframe. Number your top 3 in priority order (1, 2, 3).</div>
+    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Ask: what would need to be true in 12 months for this team to have had a great year? Most teams draw on 4–7 of the 12 groups. You don't need all 12.</div></div>
+    <div class="check-group" id="ocg"></div>
     <div class="doc-preview" style="margin-top:20px">
-      <div class="doc-preview-label">Live preview — flowing into 10 of 12 documents</div>
+      <div class="doc-preview-label">Live preview — priority outcomes flowing into 10 of 12 documents</div>
       <div class="doc-preview-title">Outcomes as they'll appear in the Job Description, Interview Guide & more</div>
-      <div class="doc-field"><div class="dfl">Outcome 1</div><div class="dfv empty" id="pv1">Not yet defined</div></div>
-      <div class="doc-field"><div class="dfl">Outcome 2</div><div class="dfv empty" id="pv2">Not yet defined</div></div>
-      <div class="doc-field"><div class="dfl">Outcome 3</div><div class="dfv empty" id="pv3">Not yet defined</div></div>
+      <div class="doc-field"><div class="dfl">Priority 1</div><div class="dfv empty" id="pv1">Not yet defined</div></div>
+      <div class="doc-field"><div class="dfl">Priority 2</div><div class="dfv empty" id="pv2">Not yet defined</div></div>
+      <div class="doc-field"><div class="dfl">Priority 3</div><div class="dfv empty" id="pv3">Not yet defined</div></div>
     </div>
     <div class="ai-box" id="aiBox">
       <div class="ai-label">AI Coach suggestion</div>
-      <div class="ai-text">Your Outcome 1 looks strong — specific and commercially grounded. Consider adding <strong>"so that [stakeholder impact]"</strong> to make the business case even clearer when it appears in your job advert and recruiter briefing.</div>
+      <div class="ai-text">Your Priority 1 outcome looks strong — specific and commercially grounded. Consider adding <strong>"so that [stakeholder impact]"</strong> to make the business case even clearer when it appears in your job advert and recruiter briefing.</div>
       <div class="ai-actions"><button class="btn-use" onclick="applyAI()">Apply suggestion</button><button class="btn-edit" onclick="document.getElementById('aiBox').classList.remove('show')">Dismiss</button></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(2)">← Back</button><button class="btn-cont" onclick="done0()">Complete Phase 1 & continue →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="bk0(3)">← Back</button><button class="btn-next" id="p0n4" onclick="adv0(4)">Next →</button></div>
+  </div>
+
+  <!-- Q5: Gap Analysis -->
+  <div class="q-card locked" id="p0c5">
+    <div class="q-num">Section D — Gap Analysis · Question 5 of 6</div>
+    <div class="q-text">What is preventing full delivery of these outcomes?</div>
+    <div class="q-sub">Based on the outcomes above, identify what is blocking or at risk. Be honest — this shapes whether you need to hire.</div>
+    <label class="field-label" style="margin-bottom:6px">Outcomes at risk — which outcomes are not being delivered or are in jeopardy?</label>
+    <textarea id="i-atrisk" placeholder="e.g. Direction and Strategic Clarity and Commercial Impact and Value Creation are at risk — no PM with enterprise B2B product experience; enterprise tier launch has no owner; 4 enterprise deals stalled waiting on features..." style="margin-bottom:14px"></textarea>
+    <label class="field-label" style="margin-bottom:6px">Root causes — why? Capacity? Capability? Dependencies? Ownership?</label>
+    <textarea id="i-rootcause" placeholder="e.g. Capability gap — no PM with enterprise B2B SaaS experience. Capacity gap — both existing PMs at capacity on mid-market; enterprise workstream has 0 hours allocated" style="margin-bottom:14px"></textarea>
+    <label class="field-label" style="margin-bottom:6px">Impact — what happens if this continues? Commercial / operational / strategic?</label>
+    <textarea id="i-impact" placeholder="e.g. Enterprise deals continue to stall; £500k ARR target missed; board-level growth priority missed for second consecutive half; Sales team loses confidence in product"></textarea>
+    <div class="q-nav"><button class="btn-back" onclick="bk0(4)">← Back</button><button class="btn-next" id="p0n5" onclick="adv0(5)">Next →</button></div>
+  </div>
+
+  <!-- Q6: Where Support May Be Needed -->
+  <div class="q-card locked" id="p0c6">
+    <div class="q-num">Section E — Support Needed · Question 6 of 6</div>
+    <div class="q-text">Where could additional capacity or capability help?</div>
+    <div class="q-sub">Based on the gaps above, identify where additional support could make the biggest impact.</div>
+    <label class="field-label" style="margin-bottom:6px">Which outcomes could benefit from additional support?</label>
+    <textarea id="i-support" placeholder="e.g. Direction and Strategic Clarity + Commercial Impact and Value Creation — need Senior PM with enterprise B2B product experience to own the enterprise tier launch end-to-end" style="margin-bottom:14px"></textarea>
+    <label class="field-label" style="margin-bottom:6px">What type of support might help? New hire / Contractor / Redistribution / Process change?</label>
+    <textarea id="i-supporttype" placeholder="e.g. Hiring Senior PM with enterprise B2B SaaS track record OR contract PM for 6 months to cover enterprise launch — permanent hire preferred given board-level priority and ongoing roadmap ownership"></textarea>
+    <div class="hint-box success" style="margin-top:16px"><div class="hint-icon">→</div><div class="hint-text"><strong>Next step:</strong> Use Phase 2 (Hiring Decision Brief) to evaluate whether hiring is the right solution based on everything you've documented here.</div></div>
+    <div class="q-nav"><button class="btn-back" onclick="bk0(5)">← Back</button><button class="btn-cont" onclick="done0()">Complete Phase 1 & continue →</button></div>
   </div>
 </div>
 
@@ -307,7 +352,7 @@ textarea{min-height:88px;}
   <div class="q-card answered" id="p1c1">
     <div class="q-num">Question 1 — Carried forward from Phase 1</div>
     <div class="q-text">Which outcomes are currently at risk?</div>
-    <div class="hint-box info"><div class="hint-icon">↑</div><div class="hint-text" id="carriedHint">Your outcomes from Phase 1 have been carried forward automatically.</div></div>
+    <div class="hint-box info"><div class="hint-icon">↑</div><div class="hint-text" id="carriedHint">Your outcomes and gap analysis from Phase 1 have been carried forward automatically.</div></div>
     <textarea id="i-risk" placeholder="Describe which outcomes are at risk and why — include the impact if nothing changes..."></textarea>
     <div class="q-nav"><div></div><button class="btn-next" onclick="adv1(1)">Next →</button></div>
   </div>
@@ -348,20 +393,20 @@ textarea{min-height:88px;}
   <div class="phase-eyebrow">Phase 3 of 6 — Role Design</div>
   <h1 class="phase-heading">Designing the role<br><em style="color:var(--sage)">around your outcomes</em></h1>
   <p class="phase-intro">Your outcomes are locked in. Now add the role-specific details. This phase generates 4 documents — Job Description, Role Charter, Job Advert, and Recruiter Briefing.</p>
-  <div class="hint-box info" style="margin-bottom:24px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Carried forward automatically:</strong> Your 3 outcomes, team context, and company details. You only need to provide the new information below.</div></div>
+  <div class="hint-box info" style="margin-bottom:24px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Carried forward automatically:</strong> Your 3 priority outcomes, team context, stakeholders, and company details. You only need to provide the new information below.</div></div>
   <div class="progress-row"><div class="progress-track"><div class="progress-fill" id="pb2" style="width:0%"></div></div><div class="progress-label" id="pl2">Q1 of 5</div></div>
 
-  <div class="q-card active" id="p2c1"><div class="q-num">Question 1 of 5</div><div class="q-text">Job title</div><input type="text" id="i-title" placeholder="e.g. Senior Product Manager — Enterprise" oninput="chk('i-title',2,'p2n1')"><div class="q-nav"><button class="btn-back" onclick="goPhase(1)">← Back to Phase 2</button><button class="btn-next" id="p2n1" disabled onclick="adv2(1)">Next →</button></div></div>
+  <div class="q-card active" id="p2c1"><div class="q-num">Question 1 of 5</div><div class="q-text">Job title</div><input type="text" id="i-title" placeholder="e.g. Senior Product Manager — Enterprise" oninput="chk('i-title',1,'p2n1')"><div class="q-nav"><button class="btn-back" onclick="goPhase(1)">← Back to Phase 2</button><button class="btn-next" id="p2n1" disabled onclick="adv2(1)">Next →</button></div></div>
 
-  <div class="q-card locked" id="p2c2"><div class="q-num">Question 2 of 5</div><div class="q-text">Salary / compensation package</div><input type="text" id="i-sal" placeholder="e.g. £80k–£95k + 10% performance bonus" oninput="chk('i-sal',2,'p2n2')"><div class="q-nav"><button class="btn-back" onclick="bk2(1)">← Back</button><button class="btn-next" id="p2n2" disabled onclick="adv2(2)">Next →</button></div></div>
+  <div class="q-card locked" id="p2c2"><div class="q-num">Question 2 of 5</div><div class="q-text">Salary / compensation package</div><input type="text" id="i-sal" placeholder="e.g. £80k–£95k + 10% performance bonus" oninput="chk('i-sal',1,'p2n2')"><div class="q-nav"><button class="btn-back" onclick="bk2(1)">← Back</button><button class="btn-next" id="p2n2" disabled onclick="adv2(2)">Next →</button></div></div>
 
-  <div class="q-card locked" id="p2c3"><div class="q-num">Question 3 of 5</div><div class="q-text">Location and working arrangement</div><input type="text" id="i-loc" placeholder="e.g. London, Hybrid (3 days office)" oninput="chk('i-loc',2,'p2n3')"><div class="q-nav"><button class="btn-back" onclick="bk2(2)">← Back</button><button class="btn-next" id="p2n3" disabled onclick="adv2(3)">Next →</button></div></div>
+  <div class="q-card locked" id="p2c3"><div class="q-num">Question 3 of 5</div><div class="q-text">Location and working arrangement</div><input type="text" id="i-loc" placeholder="e.g. London, Hybrid (3 days office)" oninput="chk('i-loc',1,'p2n3')"><div class="q-nav"><button class="btn-back" onclick="bk2(2)">← Back</button><button class="btn-next" id="p2n3" disabled onclick="adv2(3)">Next →</button></div></div>
 
-  <div class="q-card locked" id="p2c4"><div class="q-num">Question 4 of 5</div><div class="q-text">What does this role exist to achieve? (1–2 sentences)</div><div class="q-sub">This becomes the Role Purpose at the top of the Job Description, Advert, and Offer Letter.</div><textarea id="i-rp" placeholder="e.g. Own the enterprise product roadmap and drive delivery of high-value features that increase revenue and reduce churn for our B2B SaaS platform." oninput="chk('i-rp',10,'p2n4')"></textarea><div class="q-nav"><button class="btn-back" onclick="bk2(3)">← Back</button><button class="btn-next" id="p2n4" disabled onclick="adv2(4)">Next →</button></div></div>
+  <div class="q-card locked" id="p2c4"><div class="q-num">Question 4 of 5</div><div class="q-text">What does this role exist to achieve? (1–2 sentences)</div><div class="q-sub">This becomes the Role Purpose at the top of the Job Description, Advert, and Offer Letter.</div><textarea id="i-rp" placeholder="e.g. Own the enterprise product roadmap and drive delivery of high-value features that increase revenue and reduce churn for our B2B SaaS platform." oninput="chk('i-rp',1,'p2n4')"></textarea><div class="q-nav"><button class="btn-back" onclick="bk2(3)">← Back</button><button class="btn-next" id="p2n4" disabled onclick="adv2(4)">Next →</button></div></div>
 
   <div class="q-card locked" id="p2c5">
     <div class="q-num">Question 5 of 5</div><div class="q-text">Who does this role report to?</div>
-    <input type="text" id="i-rep" placeholder="e.g. Emma Liu, VP Product" oninput="chk('i-rep',2,'p2n5');updJD()">
+    <input type="text" id="i-rep" placeholder="e.g. Emma Liu, VP Product" oninput="chk('i-rep',1,'p2n5');updJD()">
     <div class="doc-preview" style="margin-top:20px">
       <div class="doc-preview-label">Live preview — T4 Job Description</div>
       <div class="doc-field"><div class="dfl">Role title</div><div class="dfv fill" id="jd-t">—</div></div>
@@ -409,7 +454,7 @@ textarea{min-height:88px;}
 <div id="p4" class="phase-section">
   <div class="phase-eyebrow">Phase 5 of 6 — Interviews</div>
   <h1 class="phase-heading">Evidence-based<br><em style="color:var(--sage)">interviewing</em></h1>
-  <p class="phase-intro">Your 3 outcomes are pre-loaded. Use S-E-O-A for every outcome: Situation, Evidence (what they did), Outcome (result), After-effects (what they learned).</p>
+  <p class="phase-intro">Your 3 priority outcomes are pre-loaded. Use S-E-O-A for every outcome: Situation, Evidence (what they did), Outcome (result), After-effects (what they learned).</p>
 
   <div class="q-card active">
     <div class="q-num">Candidate details</div>
@@ -421,7 +466,7 @@ textarea{min-height:88px;}
 
   <div class="q-card" style="border-color:var(--sage)">
     <div class="q-num">Outcome 1 — 15 minutes</div>
-    <div class="q-text" id="int-o1">Strategic Direction & Prioritisation</div>
+    <div class="q-text" id="int-o1">Direction and Strategic Clarity</div>
     <div class="hint-box info"><div class="hint-icon">💬</div><div class="hint-text"><strong>Opening:</strong> "I've read your written answer. Can you walk me through it — what was the situation, what were you personally trying to achieve, and what happened?"</div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
       <div><label class="field-label">S — Situation</label><textarea placeholder="Context at the time..." style="min-height:70px;font-size:13px"></textarea></div>
@@ -441,7 +486,7 @@ textarea{min-height:88px;}
 
   <div class="q-card">
     <div class="q-num">Outcome 2 — 10 minutes</div>
-    <div class="q-text" id="int-o2">Delivery & Execution</div>
+    <div class="q-text" id="int-o2">Execution and Delivery</div>
     <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Opening:</strong> "Tell me about a time you shipped a complex product on time and with high quality."</div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
       <div><label class="field-label">S — Situation</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
@@ -461,7 +506,7 @@ textarea{min-height:88px;}
 
   <div class="q-card">
     <div class="q-num">Outcome 3 — 10 minutes</div>
-    <div class="q-text" id="int-o3">Customer Insight & Experience</div>
+    <div class="q-text" id="int-o3">Customer and User Understanding</div>
     <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Opening:</strong> "Tell me about a time you improved the customer experience using direct customer insight."</div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
       <div><label class="field-label">S — Situation</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
@@ -535,8 +580,42 @@ textarea{min-height:88px;}
 </div>
 
 <script>
+// ── 12 UNIVERSAL OUTCOME GROUPS ──────────────────
+const OG=[
+  {id:'og1',name:'Direction and Strategic Clarity',desc:'Setting direction, making trade-offs, aligning stakeholders on what matters most',ph:'e.g. Define and deliver H2 product roadmap by end of Q2 2026, prioritising features that drive £500k ARR growth by Q4, so Engineering and Sales are aligned around a commercially-grounded direction'},
+  {id:'og2',name:'Risk Management and Decision Quality',desc:'Identifying risks early, making sound decisions under uncertainty',ph:'e.g. Reduce decision cycle time from 3 weeks to 5 days for enterprise feature prioritisation by Q3, with documented trade-off rationale for each call'},
+  {id:'og3',name:'Execution and Delivery',desc:'Shipping quality work on time with constrained resources',ph:'e.g. Ship 5 major product features with <10% post-launch defect rate by Q4 2026, reducing time-to-market by 25% vs H1 2026 baseline'},
+  {id:'og4',name:'Commercial Impact and Value Creation',desc:'Driving ARR, pipeline, conversion, retention, or cost savings',ph:'e.g. Grow enterprise ARR from £5M to £8M by Q4 by landing 3 enterprise accounts and reducing churn below 5%'},
+  {id:'og5',name:'Stakeholder Alignment and Influence',desc:'Building buy-in, managing competing priorities, influencing without authority',ph:'e.g. Achieve 90%+ stakeholder alignment score on quarterly roadmap reviews by Q3, reducing cross-team escalations by 50%'},
+  {id:'og6',name:'Problem Solving and Judgment',desc:'Diagnosing root causes, navigating ambiguity, making calls with incomplete data',ph:'e.g. Resolve 3 critical cross-team blockers per quarter with documented root cause analysis and prevention measures'},
+  {id:'og7',name:'Customer and User Understanding',desc:'Understanding customers deeply and acting on what you learn',ph:'e.g. Increase NPS from 34 to 50 by Q4 2026 by implementing top 3 customer-requested improvements identified through 10+ monthly customer interviews from Month 2'},
+  {id:'og8',name:'Communication and Information Flow',desc:'Ensuring the right people have the right information at the right time',ph:'e.g. Establish weekly cross-functional sync and monthly stakeholder update by Month 2, reducing "I didn\'t know about that" incidents to near zero'},
+  {id:'og9',name:'Operational Effectiveness',desc:'Improving processes, removing waste, increasing team velocity',ph:'e.g. Reduce sprint cycle time by 20% by Q3 through process improvements and removal of unnecessary approval gates'},
+  {id:'og10',name:'Leadership and Team Enablement',desc:'Developing people, building culture, enabling others to do their best work',ph:'e.g. Achieve 85%+ team engagement score by Q4 with all direct reports having documented development plans and quarterly progress reviews'},
+  {id:'og11',name:'Learning, Adaptation and Improvement',desc:'Building feedback loops, iterating based on evidence, continuous improvement',ph:'e.g. Implement monthly retrospective process by Month 2 with 80%+ of action items completed within 2 sprints'},
+  {id:'og12',name:'Governance, Quality and Control',desc:'Maintaining standards, compliance, quality gates, and accountability',ph:'e.g. Achieve 100% compliance with new data governance framework by Q3, with automated quality checks on all customer-facing releases'}
+];
+
 // ── STATE ───────────────────────────────────────
-const S={phase:0,o1:'',o2:'',o3:'',title:'',sal:'',loc:'',rep:'',decision:'',docs:Array(12).fill(false),unlocked:[true,false,false,false,false,false]};
+const S={phase:0,o1:'',o2:'',o3:'',title:'',sal:'',loc:'',rep:'',decision:'',docs:Array(12).fill(false),unlocked:[true,false,false,false,false,false],outcomes:{}};
+
+// ── BUILD OUTCOME CHECKBOXES ─────────────────────
+function buildOCG(){
+  const g=document.getElementById('ocg');
+  OG.forEach((o,i)=>{
+    const div=document.createElement('div');
+    div.className='check-item';
+    div.setAttribute('data-og',o.id);
+    div.onclick=function(e){togCheck(this,o.id)};
+    div.innerHTML=`<div class="check-box">✓</div><div style="flex:1"><div class="check-label">${i+1}. ${o.name}</div><div class="check-desc">${o.desc}</div><div class="check-expand"><div class="oc-fields"><div><label class="field-label">Priority</label><select onchange="updPrev()" onclick="event.stopPropagation()"><option value="">—</option><option value="1">1 (Top priority)</option><option value="2">2</option><option value="3">3</option></select></div><div><label class="field-label">Current capability</label><div class="cap-group"><button class="cap-btn" onclick="event.stopPropagation();pickCap(this)">Low</button><button class="cap-btn" onclick="event.stopPropagation();pickCap(this)">Medium</button><button class="cap-btn" onclick="event.stopPropagation();pickCap(this)">High</button></div></div></div><label class="field-label">Your specific outcome — measure + timeframe</label><textarea placeholder="${o.ph}" oninput="updPrev()" onclick="event.stopPropagation()"></textarea><label class="field-label" style="margin-top:10px">Capability notes — who can deliver this? At what level?</label><textarea placeholder="e.g. Emma Liu (VP, High) can oversee; 2 existing PMs (Mid, Medium) cover mid-market only; no PM with enterprise B2B experience" oninput="updPrev()" onclick="event.stopPropagation()"></textarea><label class="field-label" style="margin-top:10px">Dependencies — what/who is needed to achieve this?</label><textarea placeholder="e.g. Engineering team (James Park, 2 FTEs confirmed), Design (Sarah Rasool, 5hrs/week), Sales pipeline context (Tom Rodriguez weekly)" onclick="event.stopPropagation()"></textarea></div></div>`;
+    g.appendChild(div);
+  });
+}
+
+function pickCap(btn){
+  btn.parentElement.querySelectorAll('.cap-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
 
 // ── NAVIGATION ───────────────────────────────────
 function goPhase(n){
@@ -573,42 +652,95 @@ function sc(el,sel){document.querySelectorAll(sel+' .score-cell').forEach(c=>c.c
 
 // ── PHASE 0 ───────────────────────────────────────
 function adv0(step){
-  if(step===1){S.teamContext=document.getElementById('i-team').value;mk('p0c1','answered');mk('p0c2','active');document.getElementById('pb0').style.width='33%';document.getElementById('pl0').textContent='Q2 of 3';document.getElementById('p0c2').scrollIntoView({behavior:'smooth',block:'start'});}
-  else if(step===2){mk('p0c2','answered');mk('p0c3','active');document.getElementById('pb0').style.width='66%';document.getElementById('pl0').textContent='Q3 of 3';document.getElementById('p0c3').scrollIntoView({behavior:'smooth',block:'start'});}
+  const pcts=[0,17,33,50,67,83,100];
+  const labels=['Q1 of 6','Q2 of 6','Q3 of 6','Q4 of 6','Q5 of 6','Q6 of 6','Complete ✓'];
+  if(step===1){S.teamContext=document.getElementById('i-team').value;mk('p0c1','answered');mk('p0c2','active');}
+  else if(step===2){mk('p0c2','answered');mk('p0c3','active');}
+  else if(step===3){mk('p0c3','answered');mk('p0c4','active');}
+  else if(step===4){mk('p0c4','answered');mk('p0c5','active');}
+  else if(step===5){mk('p0c5','answered');mk('p0c6','active');}
+  document.getElementById('pb0').style.width=pcts[step]+'%';
+  document.getElementById('pl0').textContent=labels[step];
+  document.getElementById('p0c'+(step+1)).scrollIntoView({behavior:'smooth',block:'start'});
 }
 function bk0(step){
-  if(step===1){mk('p0c2','locked');mk('p0c1','active');document.getElementById('p0c1').scrollIntoView({behavior:'smooth',block:'start'});}
-  if(step===2){mk('p0c3','locked');mk('p0c2','active');document.getElementById('p0c2').scrollIntoView({behavior:'smooth',block:'start'});}
+  if(step>=1&&step<=5){
+    mk('p0c'+(step+1),'locked');
+    mk('p0c'+step,step===1?'active':'answered');
+    if(step>1)mk('p0c'+step,'active');
+    else mk('p0c1','active');
+    document.getElementById('p0c'+step).scrollIntoView({behavior:'smooth',block:'start'});
+    const pcts=[0,0,17,33,50,67];
+    const labels=['Q1 of 6','Q1 of 6','Q2 of 6','Q3 of 6','Q4 of 6','Q5 of 6'];
+    document.getElementById('pb0').style.width=pcts[step]+'%';
+    document.getElementById('pl0').textContent=labels[step];
+  }
 }
 function togCheck(el,id){
-  if(event&&(event.target.tagName==='TEXTAREA'||event.target.tagName==='INPUT'))return;
+  if(event&&(event.target.tagName==='TEXTAREA'||event.target.tagName==='INPUT'||event.target.tagName==='SELECT'))return;
   const g=el.closest('.check-group');
   const selCount=g?g.querySelectorAll('.check-item.selected').length:0;
   const isOutcomeGroup=g&&g.id==='ocg';
-  if(!el.classList.contains('selected')&&selCount>=3&&isOutcomeGroup)return;
+  if(!el.classList.contains('selected')&&selCount>=6&&isOutcomeGroup)return;
   el.classList.toggle('selected');
   updPrev();
-  const o1val=document.getElementById('o1t')?.value||'';
-  if(o1val.length>20)document.getElementById('aiBox').classList.add('show');
 }
 function updPrev(){
-  const ids=['o1t','o2t','o3t','o4t'];const pvs=['pv1','pv2','pv3'];
-  const vals=[];
-  ids.forEach(id=>{const e=document.getElementById(id);if(e&&e.value.trim().length>0)vals.push(e.value.trim());});
-  S.o1=vals[0]||'';S.o2=vals[1]||'';S.o3=vals[2]||'';
-  pvs.forEach((id,i)=>{
-    const e=document.getElementById(id);if(!e)return;
-    if(vals[i]){e.textContent=vals[i].substring(0,70)+(vals[i].length>70?'...':'');e.className='dfv fill';}
-    else{e.textContent='Not yet defined';e.className='dfv empty';}
+  // Gather all selected outcomes with their priority and text
+  const items=[];
+  document.querySelectorAll('#ocg .check-item.selected').forEach(el=>{
+    const sel=el.querySelector('select');
+    const ta=el.querySelector('.check-expand textarea');
+    const label=el.querySelector('.check-label').textContent;
+    const pri=sel?sel.value:'';
+    const txt=ta?ta.value.trim():'';
+    items.push({label,pri,txt});
   });
+  // Sort by priority (1,2,3 first, then unset)
+  const sorted=[null,null,null];
+  items.forEach(it=>{
+    if(it.pri==='1')sorted[0]=it;
+    else if(it.pri==='2')sorted[1]=it;
+    else if(it.pri==='3')sorted[2]=it;
+  });
+  // Fill gaps with non-prioritised items
+  const unpri=items.filter(it=>!it.pri||it.pri==='');
+  let ui=0;
+  for(let i=0;i<3;i++){if(!sorted[i]&&ui<unpri.length)sorted[i]=unpri[ui++];}
+
+  S.o1=sorted[0]?sorted[0].txt:'';
+  S.o2=sorted[1]?sorted[1].txt:'';
+  S.o3=sorted[2]?sorted[2].txt:'';
+
+  // Update preview
+  ['pv1','pv2','pv3'].forEach((id,i)=>{
+    const e=document.getElementById(id);if(!e)return;
+    const it=sorted[i];
+    if(it&&it.txt){
+      const display=it.label.replace(/^\d+\.\s*/,'')+': '+it.txt.substring(0,60)+(it.txt.length>60?'...':'');
+      e.textContent=display;e.className='dfv fill';
+    } else{e.textContent='Not yet defined';e.className='dfv empty';}
+  });
+
   // Update interview titles
   const labels=[];
-  document.querySelectorAll('#ocg .check-item.selected .check-label').forEach(l=>labels.push(l.textContent));
+  sorted.forEach(it=>{if(it)labels.push(it.label.replace(/^\d+\.\s*/,''));});
   ['int-o1','int-o2','int-o3'].forEach((id,i)=>{const e=document.getElementById(id);if(e&&labels[i])e.textContent=labels[i];});
+
+  // Show AI suggestion if priority 1 outcome has content
+  if(S.o1&&S.o1.length>20)document.getElementById('aiBox').classList.add('show');
 }
 function applyAI(){
-  const t=document.getElementById('o1t');
-  if(t&&!t.value.includes('so that')){t.value+=', so that the business has a clear commercially-grounded direction to execute against';updPrev();}
+  // Find the priority 1 outcome textarea
+  let target=null;
+  document.querySelectorAll('#ocg .check-item.selected').forEach(el=>{
+    const sel=el.querySelector('select');
+    if(sel&&sel.value==='1'){target=el.querySelector('.check-expand textarea');}
+  });
+  if(target&&!target.value.includes('so that')){
+    target.value+=', so that the business has a clear commercially-grounded direction to execute against';
+    updPrev();
+  }
   document.getElementById('aiBox').classList.remove('show');
 }
 function done0(){
@@ -622,8 +754,15 @@ function done0(){
 // ── PHASE 1 ───────────────────────────────────────
 function initP1(){
   const h=document.getElementById('carriedHint');
-  if(h&&S.o1)h.innerHTML=`Outcomes carried forward from Phase 1. <strong>Outcome 1:</strong> "${S.o1.substring(0,80)}${S.o1.length>80?'...':''}"`
-  const r=document.getElementById('i-risk');if(r&&!r.value&&S.o1)r.value=S.o1.substring(0,100)+(S.o1.length>100?'...':'');
+  const risk=document.getElementById('i-atrisk')?.value||'';
+  const rootcause=document.getElementById('i-rootcause')?.value||'';
+  if(h&&S.o1)h.innerHTML=`Outcomes and gap analysis carried forward from Phase 1. <strong>Priority 1:</strong> "${S.o1.substring(0,80)}${S.o1.length>80?'...':''}"`;
+  const r=document.getElementById('i-risk');
+  if(r&&!r.value){
+    // Pre-fill from gap analysis
+    if(risk)r.value=risk;
+    else if(S.o1)r.value=S.o1.substring(0,100)+(S.o1.length>100?'...':'');
+  }
 }
 function adv1(step){
   if(step===1){mk('p1c1','answered');mk('p1c2','active');document.getElementById('pb1').style.width='33%';document.getElementById('pl1').textContent='Q2 of 3';document.getElementById('p1c2').scrollIntoView({behavior:'smooth',block:'start'});}
@@ -676,7 +815,7 @@ function bk2(step){
 function updJD(){
   const v=document.getElementById('i-rep')?.value||'';const e=document.getElementById('jd-r');
   if(e){if(v){e.textContent=v;e.className='dfv fill';e.style.fontStyle='normal';}else{e.textContent='Enter above';e.className='dfv';e.style.fontStyle='italic';}}
-  const b=document.getElementById('p2n5');if(b){b.disabled=v.length<2;b.style.opacity=v.length<2?'0.4':'1';}
+  const b=document.getElementById('p2n5');if(b){b.disabled=v.length<1;b.style.opacity=v.length<1?'0.4':'1';}
 }
 function done2(){
   document.getElementById('pb2').style.width='100%';document.getElementById('pl2').textContent='Complete ✓';
@@ -715,7 +854,7 @@ function done5(){
   [9,10,11].forEach(i=>mkDoc(i));
   const banner=document.createElement('div');
   banner.className='complete-banner';
-  banner.innerHTML=`<h3>🎉 All 12 documents complete</h3><p>Your full hiring pack has been generated and is ready to send. Every document is pre-filled with everything you've entered across all 6 phases of this process.</p><div class="complete-docs">${Array.from({length:12},(_,i)=>'<div class="complete-doc">T'+(i+1)+'</div>').join('')}</div><button class="btn-gen" style="background:white;color:var(--sage);border-color:white;font-size:14px;padding:10px 22px" onclick="alert('In the full product this would download all 12 pre-filled .docx files as a zip.')">⬇ Download all 12 documents</button>`;
+  banner.innerHTML=`<h3>All 12 documents complete</h3><p>Your full hiring pack has been generated and is ready to send. Every document is pre-filled with everything you've entered across all 6 phases of this process.</p><div class="complete-docs">${Array.from({length:12},(_,i)=>'<div class="complete-doc">T'+(i+1)+'</div>').join('')}</div><button class="btn-gen" style="background:white;color:var(--sage);border-color:white;font-size:14px;padding:10px 22px" onclick="alert('In the full product this would download all 12 pre-filled .docx files as a zip.')">Download all 12 documents</button>`;
   document.getElementById('p5').appendChild(banner);
   banner.scrollIntoView({behavior:'smooth'});
 }
@@ -729,11 +868,11 @@ function mkDoc(i){
 
 // ── COACH ─────────────────────────────────────────
 const CD={
-  0:[{t:"You're defining your team's outcomes — the spine of your entire hiring process. <strong>Everything you enter here flows into all 12 documents automatically.</strong>",w:false},{t:"Take your time on Outcome 1 especially. It will be sent to candidates as the shortlisting question and appears in the job advert. Be specific, measurable, and time-bound.",w:false},{t:"⚠ Vague outcomes produce vague hires. Avoid: 'improve the product'. Aim for: 'increase NPS from 34 to 50 by Q4 by implementing top 3 improvements from monthly customer interviews'.",w:true}],
-  1:[{t:"You're in <strong>Phase 2 — Hiring Decision</strong>. Most people skip straight to writing a job description. Don't. Knowing the root cause changes your solution.",w:false},{t:"If you've identified both a <strong>capacity</strong> and a <strong>capability</strong> gap, that's a strong signal that hiring is genuinely the right call.",w:false},{t:"⚠ Before deciding: have you genuinely considered whether a contractor could bridge the gap short-term? If the priority is immediate, a 3-month interim while you hire permanently might be pragmatic.",w:true}],
-  2:[{t:"Phase 3 is where your outcomes become a role. <strong>Your outcomes are already locked in</strong> — you're just adding the packaging: title, salary, location, and purpose.",w:false},{t:"The job advert hook is the first 2 sentences candidates read. Don't describe the company. Describe the problem you need solved and who you're looking for.",w:false},{t:"This phase generates 4 documents simultaneously — Job Description, Role Charter, Job Advert, and Recruiter Briefing. Your outcomes appear consistently in all of them.",w:false}],
-  3:[{t:"Outcome 1 is automatically used as the shortlisting question. You're looking for evidence of outcome ownership — not just relevant experience or a strong CV.",w:false},{t:"Score 4–5: invite to interview. Score 3: borderline, use if the market is tight. Score 1–2: decline. Don't interview everyone hoping someone impresses you.",w:false},{t:"⚠ A strong CV is not a reason to skip scoring the written answer. Big-company PMs often write excellent answers — and then underdeliver on execution in smaller environments.",w:true}],
-  4:[{t:"The interview guide is pre-loaded with your 3 outcomes. <strong>Your job is to get evidence</strong> — not enthusiasm, not likeability. Evidence that they've done this before.",w:false},{t:"Use S-E-O-A for every outcome: Situation, Evidence (what they personally did), Outcome (measurable result), After-effects (what they learned). Same framework, every time.",w:false},{t:"⚠ Most interviewers talk too much. Ask the opening question, then stop. Let the candidate fill the silence. The evidence you need will come if you wait for it.",w:true}],
+  0:[{t:"You're building your <strong>Team Outcomes Map</strong> — the spine of your entire hiring process. Everything you enter here flows into all 12 documents automatically.",w:false},{t:"This template has 5 sections: Team Context, the 12 Universal Outcome Groups, your Selected Outcomes (3–6), Gap Analysis, and Where Support Is Needed.",w:false},{t:"Take your time on your Priority 1 outcome especially. It will be sent to candidates as the shortlisting question and appears in the job advert. Be specific, measurable, and time-bound.",w:false},{t:"⚠ Vague outcomes produce vague hires. Avoid: 'improve the product'. Aim for: 'increase NPS from 34 to 50 by Q4 by implementing top 3 improvements from monthly customer interviews'.",w:true}],
+  1:[{t:"You're in <strong>Phase 2 — Hiring Decision</strong>. Your gap analysis from Phase 1 has been carried forward. Most people skip straight to writing a job description. Don't. Knowing the root cause changes your solution.",w:false},{t:"If you've identified both a <strong>capacity</strong> and a <strong>capability</strong> gap, that's a strong signal that hiring is genuinely the right call.",w:false},{t:"⚠ Before deciding: have you genuinely considered whether a contractor could bridge the gap short-term? If the priority is immediate, a 3-month interim while you hire permanently might be pragmatic.",w:true}],
+  2:[{t:"Phase 3 is where your outcomes become a role. <strong>Your priority outcomes are already locked in</strong> — you're just adding the packaging: title, salary, location, and purpose.",w:false},{t:"The job advert hook is the first 2 sentences candidates read. Don't describe the company. Describe the problem you need solved and who you're looking for.",w:false},{t:"This phase generates 4 documents simultaneously — Job Description, Role Charter, Job Advert, and Recruiter Briefing. Your outcomes appear consistently in all of them.",w:false}],
+  3:[{t:"Your Priority 1 outcome is automatically used as the shortlisting question. You're looking for evidence of outcome ownership — not just relevant experience or a strong CV.",w:false},{t:"Score 4–5: invite to interview. Score 3: borderline, use if the market is tight. Score 1–2: decline. Don't interview everyone hoping someone impresses you.",w:false},{t:"⚠ A strong CV is not a reason to skip scoring the written answer. Big-company PMs often write excellent answers — and then underdeliver on execution in smaller environments.",w:true}],
+  4:[{t:"The interview guide is pre-loaded with your 3 priority outcomes. <strong>Your job is to get evidence</strong> — not enthusiasm, not likeability. Evidence that they've done this before.",w:false},{t:"Use S-E-O-A for every outcome: Situation, Evidence (what they personally did), Outcome (measurable result), After-effects (what they learned). Same framework, every time.",w:false},{t:"⚠ Most interviewers talk too much. Ask the opening question, then stop. Let the candidate fill the silence. The evidence you need will come if you wait for it.",w:true}],
   5:[{t:"<strong>Most failed hires happen here</strong> — not in the interview. In the silence between offer acceptance and start date. Stay in contact. It costs almost nothing and prevents dropout.",w:false},{t:"Your 30/60/90 plan is pre-filled from your outcomes. The milestones are tied to what you said this person needs to deliver. That clarity is what most onboarding plans lack.",w:false},{t:"The offer letter references their specific interview evidence. This triggers commitment and consistency — they've already told you they can do this. Remind them.",w:false}]
 };
 const EX=["\"Define and deliver the H2 roadmap by end of Q2, prioritising features that drive £500k ARR growth by Q4, so Engineering and Sales are aligned around a commercially-grounded direction.\"","\"Capacity gap — both PMs at 100% on mid-market, enterprise workstream has 0 hours. Capability gap — no PM has enterprise B2B SaaS feature experience. Neither resolves without hiring.\"","\"Senior Product Manager — Enterprise B2B Focus. £85k–£95k + 10% bonus. London, Hybrid 3 days. Reports to: Emma Liu, VP Product.\"","\"Their roadmap work at Intercom, prioritising enterprise features based on deal data to drive £400k ARR in H1, showed exactly the commercially-grounded strategic thinking we need. Score: 4.\"","\"Tell me about a time you had to make a hard trade-off on a product roadmap. What did you cut, why, and what happened as a result?\"","\"Dear Alex — your enterprise tier launch at [company], validated with 8 prospects before build and closing 3 deals within 60 days, is direct evidence you've built exactly what we need.\""];
@@ -755,7 +894,7 @@ function coach(n){
     });
     setTimeout(()=>{
       const d=document.createElement('div');d.className='coach-divider';d.textContent='Your progress';panel.appendChild(d);
-      [{l:'Documents ready',v:dc+' of 12',c:dc>0?'green':''},{l:'Outcomes defined',v:oc+' of 3',c:oc===3?'green':oc>0?'amber':''},{l:'Current phase',v:(n+1)+' of 6',c:''},{l:'Est. time remaining',v:['~15 min','~10 min','~12 min','~5 min','~20 min','~10 min'][n],c:''}].forEach(s=>{
+      [{l:'Documents ready',v:dc+' of 12',c:dc>0?'green':''},{l:'Outcomes defined',v:oc+' of 3',c:oc===3?'green':oc>0?'amber':''},{l:'Current phase',v:(n+1)+' of 6',c:''},{l:'Est. time remaining',v:['~20 min','~10 min','~12 min','~5 min','~20 min','~10 min'][n],c:''}].forEach(s=>{
         const st=document.createElement('div');st.className='coach-stat';
         st.innerHTML=`<div class="coach-stat-lbl">${s.l}</div><div class="coach-stat-val ${s.c}">${s.v}</div>`;
         panel.appendChild(st);
@@ -767,6 +906,7 @@ function coach(n){
 }
 
 // INIT
+buildOCG();
 updSidebar();coach(0);
 </script>
 </body>
