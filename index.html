@@ -568,7 +568,7 @@ function updSidebar(){
 
 // ── HELPERS ──────────────────────────────────────
 function mk(id,cls){const e=document.getElementById(id);if(e){e.className='q-card '+cls;}}
-function chk(fid,min,btn){const v=document.getElementById(fid)?.value.trim()||'';const b=document.getElementById(btn);if(b){b.disabled=v.length<min;b.style.opacity=v.length<min?'0.4':'1';}}
+function chk(fid,min,btn){const v=document.getElementById(fid)?.value.trim()||'';const b=document.getElementById(btn);if(b){b.disabled=v.length<1;b.style.opacity=v.length<1?'0.4':'1';}}
 function sc(el,sel){document.querySelectorAll(sel+' .score-cell').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');calcTot();}
 
 // ── PHASE 0 ───────────────────────────────────────
@@ -581,6 +581,7 @@ function bk0(step){
   if(step===2){mk('p0c3','locked');mk('p0c2','active');document.getElementById('p0c2').scrollIntoView({behavior:'smooth',block:'start'});}
 }
 function togCheck(el,id){
+  if(event&&(event.target.tagName==='TEXTAREA'||event.target.tagName==='INPUT'))return;
   const g=el.closest('.check-group');
   const selCount=g?g.querySelectorAll('.check-item.selected').length:0;
   const isOutcomeGroup=g&&g.id==='ocg';
@@ -593,7 +594,7 @@ function togCheck(el,id){
 function updPrev(){
   const ids=['o1t','o2t','o3t','o4t'];const pvs=['pv1','pv2','pv3'];
   const vals=[];
-  ids.forEach(id=>{const e=document.getElementById(id);if(e&&e.value.trim().length>5)vals.push(e.value.trim());});
+  ids.forEach(id=>{const e=document.getElementById(id);if(e&&e.value.trim().length>0)vals.push(e.value.trim());});
   S.o1=vals[0]||'';S.o2=vals[1]||'';S.o3=vals[2]||'';
   pvs.forEach((id,i)=>{
     const e=document.getElementById(id);if(!e)return;
