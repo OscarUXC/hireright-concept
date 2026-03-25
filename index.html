@@ -65,6 +65,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 .q-card.answered{border-color:var(--sage);}
 .q-card.answered::after{content:'✓';position:absolute;top:16px;right:16px;width:22px;height:22px;border-radius:50%;background:var(--sage);color:white;font-size:11px;display:flex;align-items:center;justify-content:center;}
 .q-card.locked{opacity:.45;pointer-events:none;}
+.o1-hint{font-size:10px;color:var(--sage);font-weight:500;margin-left:6px;opacity:.7;}
 .q-num{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
 .q-text{font-size:16px;font-weight:500;line-height:1.5;margin-bottom:6px;}
 .q-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
@@ -208,25 +209,25 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="phase-dot" id="sd0"></div><div class="phase-line" id="sl0"></div>
     <div class="phase-text"><div class="phase-title">Team Outcomes</div><div class="phase-desc">Define what your team is responsible for</div><span class="phase-badge active" id="sb0">In progress</span></div>
   </div>
-  <div class="phase-item locked" id="sp1" onclick="goPhase(1)">
+  <div class="phase-item" id="sp1" onclick="goPhase(1)">
     <div class="phase-dot" id="sd1"></div><div class="phase-line" id="sl1"></div>
-    <div class="phase-text"><div class="phase-title">Hiring Decision</div><div class="phase-desc">Confirm hiring is the right solution</div><span class="phase-badge" id="sb1">Locked</span></div>
+    <div class="phase-text"><div class="phase-title">Hiring Decision</div><div class="phase-desc">Confirm hiring is the right solution</div><span class="phase-badge" id="sb1">Not started</span></div>
   </div>
-  <div class="phase-item locked" id="sp2" onclick="goPhase(2)">
+  <div class="phase-item" id="sp2" onclick="goPhase(2)">
     <div class="phase-dot" id="sd2"></div><div class="phase-line" id="sl2"></div>
-    <div class="phase-text"><div class="phase-title">Role Design</div><div class="phase-desc">Job description, advert & recruiter briefing</div><span class="phase-badge" id="sb2">Locked</span></div>
+    <div class="phase-text"><div class="phase-title">Role Design</div><div class="phase-desc">Job description, advert & recruiter briefing</div><span class="phase-badge" id="sb2">Not started</span></div>
   </div>
-  <div class="phase-item locked" id="sp3" onclick="goPhase(3)">
+  <div class="phase-item" id="sp3" onclick="goPhase(3)">
     <div class="phase-dot" id="sd3"></div><div class="phase-line" id="sl3"></div>
-    <div class="phase-text"><div class="phase-title">Shortlisting</div><div class="phase-desc">Score candidates before interviewing</div><span class="phase-badge" id="sb3">Locked</span></div>
+    <div class="phase-text"><div class="phase-title">Shortlisting</div><div class="phase-desc">Score candidates before interviewing</div><span class="phase-badge" id="sb3">Not started</span></div>
   </div>
-  <div class="phase-item locked" id="sp4" onclick="goPhase(4)">
+  <div class="phase-item" id="sp4" onclick="goPhase(4)">
     <div class="phase-dot" id="sd4"></div><div class="phase-line" id="sl4"></div>
-    <div class="phase-text"><div class="phase-title">Interviews</div><div class="phase-desc">Evidence capture & scoring</div><span class="phase-badge" id="sb4">Locked</span></div>
+    <div class="phase-text"><div class="phase-title">Interviews</div><div class="phase-desc">Evidence capture & scoring</div><span class="phase-badge" id="sb4">Not started</span></div>
   </div>
-  <div class="phase-item locked" id="sp5" onclick="goPhase(5)">
+  <div class="phase-item" id="sp5" onclick="goPhase(5)">
     <div class="phase-dot" id="sd5"></div>
-    <div class="phase-text"><div class="phase-title">Offer & Onboarding</div><div class="phase-desc">Offer letter, pre-start & 30/60/90 plan</div><span class="phase-badge" id="sb5">Locked</span></div>
+    <div class="phase-text"><div class="phase-title">Offer & Onboarding</div><div class="phase-desc">Offer letter, pre-start & 30/60/90 plan</div><span class="phase-badge" id="sb5">Not started</span></div>
   </div>
   <hr class="sidebar-divider">
   <div class="sidebar-doc-list">
@@ -249,11 +250,11 @@ select:focus{border-color:var(--sage);background:white;}
 <main class="main">
 <div class="phase-tabs">
   <div class="phase-tab active" onclick="goPhase(0)">1 · Team Outcomes</div>
-  <div class="phase-tab tab-locked" id="tab1" onclick="goPhase(1)">2 · Hiring Decision</div>
-  <div class="phase-tab tab-locked" id="tab2" onclick="goPhase(2)">3 · Role Design</div>
-  <div class="phase-tab tab-locked" id="tab3" onclick="goPhase(3)">4 · Shortlisting</div>
-  <div class="phase-tab tab-locked" id="tab4" onclick="goPhase(4)">5 · Interviews</div>
-  <div class="phase-tab tab-locked" id="tab5" onclick="goPhase(5)">6 · Offer & Onboard</div>
+  <div class="phase-tab" id="tab1" onclick="goPhase(1)">2 · Hiring Decision</div>
+  <div class="phase-tab" id="tab2" onclick="goPhase(2)">3 · Role Design</div>
+  <div class="phase-tab" id="tab3" onclick="goPhase(3)">4 · Shortlisting</div>
+  <div class="phase-tab" id="tab4" onclick="goPhase(4)">5 · Interviews</div>
+  <div class="phase-tab" id="tab5" onclick="goPhase(5)">6 · Offer & Onboard</div>
 </div>
 
 <!-- PHASE 0 -->
@@ -269,31 +270,31 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="q-text">What is your team or function?</div>
     <div class="q-sub">Give a short description — team name, size, and company stage. This sets the context for every document.</div>
     <input type="text" id="i-team" placeholder="e.g. Product Team — 3 PMs, 2 designers, 3 analysts. Series B B2B SaaS, 150 people." oninput="chk('i-team',1,'p0n1')">
-    <div class="q-nav"><div></div><button class="btn-next" id="p0n1" disabled onclick="adv0(1)">Next →</button></div>
+    <div class="q-nav"><div></div><button class="btn-next" id="p0n1" onclick="adv0(1)">Next →</button></div>
   </div>
 
   <!-- Q2: Team Purpose -->
-  <div class="q-card locked" id="p0c2">
+  <div class="q-card" id="p0c2">
     <div class="q-num">Section A — Team Context · Question 2 of 6</div>
     <div class="q-text">What is the primary purpose of this team?</div>
     <div class="q-sub">Why does this team exist? What commercial or operational value does it create?</div>
     <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Think about the <strong>outcome</strong> your team delivers — not the tasks they do. e.g. <em>"Build and ship product features that drive commercial growth — specifically the enterprise tier that enables Sales to close deals and achieve £2M ARR by Q4 2026"</em></div></div>
     <textarea id="i-purpose" placeholder="e.g. Build and ship product features that drive commercial growth — specifically the enterprise tier that enables Sales to close deals and achieve ARR targets." oninput="chk('i-purpose',1,'p0n2')"></textarea>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(1)">← Back</button><button class="btn-next" id="p0n2" disabled onclick="adv0(2)">Next →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="bk0(1)">← Back</button><button class="btn-next" id="p0n2" onclick="adv0(2)">Next →</button></div>
   </div>
 
   <!-- Q3: Key Stakeholders -->
-  <div class="q-card locked" id="p0c3">
+  <div class="q-card" id="p0c3">
     <div class="q-num">Section A — Team Context · Question 3 of 6</div>
     <div class="q-text">Who are your key stakeholders?</div>
     <div class="q-sub">Who depends on this team's outcomes? List the people and teams who rely on your output.</div>
     <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Include names, roles, and <strong>what they need from your team</strong>. This helps map dependencies across your documents.</div></div>
     <textarea id="i-stakeholders" placeholder="e.g. Sales team / Tom Rodriguez (need enterprise features to close deals), Emma Liu VP Product (strategic direction), James Park Engineering Lead (delivery capacity), Sarah Rasool Design Lead (UX quality)" oninput="chk('i-stakeholders',1,'p0n3')"></textarea>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(2)">← Back</button><button class="btn-next" id="p0n3" disabled onclick="adv0(3)">Next →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="bk0(2)">← Back</button><button class="btn-next" id="p0n3" onclick="adv0(3)">Next →</button></div>
   </div>
 
   <!-- Q4: Outcome Selection from 12 Universal Groups -->
-  <div class="q-card locked" id="p0c4">
+  <div class="q-card" id="p0c4">
     <div class="q-num">Sections B & C — Outcomes · Question 4 of 6</div>
     <div class="q-text">What are your team's top outcomes right now?</div>
     <div class="q-sub">Select 3–6 outcome groups from the 12 Universal Outcome Groups below. For each, describe your specific version with a measure and timeframe. Number your top 3 in priority order (1, 2, 3).</div>
@@ -302,20 +303,20 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="doc-preview" style="margin-top:20px">
       <div class="doc-preview-label">Live preview — priority outcomes flowing into 10 of 12 documents</div>
       <div class="doc-preview-title">Outcomes as they'll appear in the Job Description, Interview Guide & more</div>
-      <div class="doc-field"><div class="dfl">Priority 1</div><div class="dfv empty" id="pv1">Not yet defined</div></div>
-      <div class="doc-field"><div class="dfl">Priority 2</div><div class="dfv empty" id="pv2">Not yet defined</div></div>
-      <div class="doc-field"><div class="dfl">Priority 3</div><div class="dfv empty" id="pv3">Not yet defined</div></div>
+      <div class="doc-field"><div class="dfl">Outcome 1<span class="o1-hint">— used for shortlisting</span></div><div class="dfv empty" id="pv1">Not yet defined</div></div>
+      <div class="doc-field"><div class="dfl">Outcome 2</div><div class="dfv empty" id="pv2">Not yet defined</div></div>
+      <div class="doc-field"><div class="dfl">Outcome 3</div><div class="dfv empty" id="pv3">Not yet defined</div></div>
     </div>
     <div class="ai-box" id="aiBox">
       <div class="ai-label">AI Coach suggestion</div>
-      <div class="ai-text">Your Priority 1 outcome looks strong — specific and commercially grounded. Consider adding <strong>"so that [stakeholder impact]"</strong> to make the business case even clearer when it appears in your job advert and recruiter briefing.</div>
+      <div class="ai-text">Your Outcome 1 looks strong — specific and commercially grounded. Consider adding <strong>"so that [stakeholder impact]"</strong> to make the business case even clearer when it appears in your job advert and recruiter briefing.</div>
       <div class="ai-actions"><button class="btn-use" onclick="applyAI()">Apply suggestion</button><button class="btn-edit" onclick="document.getElementById('aiBox').classList.remove('show')">Dismiss</button></div>
     </div>
     <div class="q-nav"><button class="btn-back" onclick="bk0(3)">← Back</button><button class="btn-next" id="p0n4" onclick="adv0(4)">Next →</button></div>
   </div>
 
   <!-- Q5: Gap Analysis -->
-  <div class="q-card locked" id="p0c5">
+  <div class="q-card" id="p0c5">
     <div class="q-num">Section D — Gap Analysis · Question 5 of 6</div>
     <div class="q-text">What is preventing full delivery of these outcomes?</div>
     <div class="q-sub">Based on the outcomes above, identify what is blocking or at risk. Be honest — this shapes whether you need to hire.</div>
@@ -329,7 +330,7 @@ select:focus{border-color:var(--sage);background:white;}
   </div>
 
   <!-- Q6: Where Support May Be Needed -->
-  <div class="q-card locked" id="p0c6">
+  <div class="q-card" id="p0c6">
     <div class="q-num">Section E — Support Needed · Question 6 of 6</div>
     <div class="q-text">Where could additional capacity or capability help?</div>
     <div class="q-sub">Based on the gaps above, identify where additional support could make the biggest impact.</div>
@@ -357,7 +358,7 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="q-nav"><div></div><button class="btn-next" onclick="adv1(1)">Next →</button></div>
   </div>
 
-  <div class="q-card locked" id="p1c2">
+  <div class="q-card" id="p1c2">
     <div class="q-num">Question 2 of 3</div>
     <div class="q-text">What is the root cause of this gap?</div>
     <div class="q-sub">Select all that apply, then describe the specifics for each. Be honest — this shapes whether you actually need to hire.</div>
@@ -371,7 +372,7 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="q-nav"><button class="btn-back" onclick="bk1(1)">← Back</button><button class="btn-next" onclick="adv1(2)">Next →</button></div>
   </div>
 
-  <div class="q-card locked" id="p1c3">
+  <div class="q-card" id="p1c3">
     <div class="q-num">Question 3 of 3 — Your decision</div>
     <div class="q-text">Based on all of the above, what is your decision?</div>
     <div class="q-sub">Consider alternatives honestly before committing to a hire.</div>
@@ -396,15 +397,15 @@ select:focus{border-color:var(--sage);background:white;}
   <div class="hint-box info" style="margin-bottom:24px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Carried forward automatically:</strong> Your 3 priority outcomes, team context, stakeholders, and company details. You only need to provide the new information below.</div></div>
   <div class="progress-row"><div class="progress-track"><div class="progress-fill" id="pb2" style="width:0%"></div></div><div class="progress-label" id="pl2">Q1 of 5</div></div>
 
-  <div class="q-card active" id="p2c1"><div class="q-num">Question 1 of 5</div><div class="q-text">Job title</div><input type="text" id="i-title" placeholder="e.g. Senior Product Manager — Enterprise" oninput="chk('i-title',1,'p2n1')"><div class="q-nav"><button class="btn-back" onclick="goPhase(1)">← Back to Phase 2</button><button class="btn-next" id="p2n1" disabled onclick="adv2(1)">Next →</button></div></div>
+  <div class="q-card active" id="p2c1"><div class="q-num">Question 1 of 5</div><div class="q-text">Job title</div><input type="text" id="i-title" placeholder="e.g. Senior Product Manager — Enterprise" oninput="chk('i-title',1,'p2n1')"><div class="q-nav"><button class="btn-back" onclick="goPhase(1)">← Back to Phase 2</button><button class="btn-next" id="p2n1" onclick="adv2(1)">Next →</button></div></div>
 
-  <div class="q-card locked" id="p2c2"><div class="q-num">Question 2 of 5</div><div class="q-text">Salary / compensation package</div><input type="text" id="i-sal" placeholder="e.g. £80k–£95k + 10% performance bonus" oninput="chk('i-sal',1,'p2n2')"><div class="q-nav"><button class="btn-back" onclick="bk2(1)">← Back</button><button class="btn-next" id="p2n2" disabled onclick="adv2(2)">Next →</button></div></div>
+  <div class="q-card" id="p2c2"><div class="q-num">Question 2 of 5</div><div class="q-text">Salary / compensation package</div><input type="text" id="i-sal" placeholder="e.g. £80k–£95k + 10% performance bonus" oninput="chk('i-sal',1,'p2n2')"><div class="q-nav"><button class="btn-back" onclick="bk2(1)">← Back</button><button class="btn-next" id="p2n2" onclick="adv2(2)">Next →</button></div></div>
 
-  <div class="q-card locked" id="p2c3"><div class="q-num">Question 3 of 5</div><div class="q-text">Location and working arrangement</div><input type="text" id="i-loc" placeholder="e.g. London, Hybrid (3 days office)" oninput="chk('i-loc',1,'p2n3')"><div class="q-nav"><button class="btn-back" onclick="bk2(2)">← Back</button><button class="btn-next" id="p2n3" disabled onclick="adv2(3)">Next →</button></div></div>
+  <div class="q-card" id="p2c3"><div class="q-num">Question 3 of 5</div><div class="q-text">Location and working arrangement</div><input type="text" id="i-loc" placeholder="e.g. London, Hybrid (3 days office)" oninput="chk('i-loc',1,'p2n3')"><div class="q-nav"><button class="btn-back" onclick="bk2(2)">← Back</button><button class="btn-next" id="p2n3" onclick="adv2(3)">Next →</button></div></div>
 
-  <div class="q-card locked" id="p2c4"><div class="q-num">Question 4 of 5</div><div class="q-text">What does this role exist to achieve? (1–2 sentences)</div><div class="q-sub">This becomes the Role Purpose at the top of the Job Description, Advert, and Offer Letter.</div><textarea id="i-rp" placeholder="e.g. Own the enterprise product roadmap and drive delivery of high-value features that increase revenue and reduce churn for our B2B SaaS platform." oninput="chk('i-rp',1,'p2n4')"></textarea><div class="q-nav"><button class="btn-back" onclick="bk2(3)">← Back</button><button class="btn-next" id="p2n4" disabled onclick="adv2(4)">Next →</button></div></div>
+  <div class="q-card" id="p2c4"><div class="q-num">Question 4 of 5</div><div class="q-text">What does this role exist to achieve? (1–2 sentences)</div><div class="q-sub">This becomes the Role Purpose at the top of the Job Description, Advert, and Offer Letter.</div><textarea id="i-rp" placeholder="e.g. Own the enterprise product roadmap and drive delivery of high-value features that increase revenue and reduce churn for our B2B SaaS platform." oninput="chk('i-rp',1,'p2n4')"></textarea><div class="q-nav"><button class="btn-back" onclick="bk2(3)">← Back</button><button class="btn-next" id="p2n4" onclick="adv2(4)">Next →</button></div></div>
 
-  <div class="q-card locked" id="p2c5">
+  <div class="q-card" id="p2c5">
     <div class="q-num">Question 5 of 5</div><div class="q-text">Who does this role report to?</div>
     <input type="text" id="i-rep" placeholder="e.g. Emma Liu, VP Product" oninput="chk('i-rep',1,'p2n5');updJD()">
     <div class="doc-preview" style="margin-top:20px">
@@ -417,7 +418,7 @@ select:focus{border-color:var(--sage);background:white;}
       <div class="doc-field"><div class="dfl">Outcome 2</div><div class="dfv fill" id="jd-o2">—</div></div>
       <div class="doc-field"><div class="dfl">Outcome 3</div><div class="dfv fill" id="jd-o3">—</div></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="bk2(4)">← Back</button><button class="btn-gen" id="p2n5" disabled onclick="done2()">Generate 4 documents & continue →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="bk2(4)">← Back</button><button class="btn-gen" id="p2n5" onclick="done2()">Generate 4 documents & continue →</button></div>
   </div>
 </div>
 
@@ -597,7 +598,7 @@ const OG=[
 ];
 
 // ── STATE ───────────────────────────────────────
-const S={phase:0,o1:'',o2:'',o3:'',title:'',sal:'',loc:'',rep:'',decision:'',docs:Array(12).fill(false),unlocked:[true,false,false,false,false,false],outcomes:{}};
+const S={phase:0,o1:'',o2:'',o3:'',title:'',sal:'',loc:'',rep:'',decision:'',docs:Array(12).fill(false),unlocked:[true,true,true,true,true,true],outcomes:{}};
 
 // ── BUILD OUTCOME CHECKBOXES ─────────────────────
 function buildOCG(){
@@ -619,7 +620,6 @@ function pickCap(btn){
 
 // ── NAVIGATION ───────────────────────────────────
 function goPhase(n){
-  if(!S.unlocked[n])return;
   S.phase=n;
   for(let i=0;i<6;i++){const e=document.getElementById('p'+i);if(e)e.classList.toggle('visible',i===n);}
   document.querySelectorAll('.phase-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
@@ -636,12 +636,12 @@ function updSidebar(){
   for(let i=0;i<6;i++){
     const el=document.getElementById('sp'+i),b=document.getElementById('sb'+i),ln=document.getElementById('sl'+i);
     el.className='phase-item';
-    if(!S.unlocked[i]){el.classList.add('locked');b.textContent='Locked';b.className='phase-badge';}
-    else if(i<S.phase){el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';}
-    else if(i===S.phase){el.classList.add('active');}
+    if(S.docs[i]||i<S.phase){el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';}
+    else if(i===S.phase){el.classList.add('active');b.textContent='In progress';b.className='phase-badge active';}
+    else{b.textContent='Not started';b.className='phase-badge';}
     if(ln)ln.className='phase-line'+(i<S.phase?' done':'');
     const tb=document.getElementById('tab'+i);
-    if(tb){tb.classList.toggle('tab-locked',!S.unlocked[i]);tb.style.opacity=S.unlocked[i]?'1':'0.4';tb.style.pointerEvents=S.unlocked[i]?'auto':'none';}
+    if(tb){tb.style.opacity='1';tb.style.pointerEvents='auto';}
   }
 }
 
@@ -745,9 +745,8 @@ function applyAI(){
 }
 function done0(){
   document.getElementById('pb0').style.width='100%';document.getElementById('pl0').textContent='Complete ✓';
-  mkDoc(0);S.unlocked[1]=true;
+  mkDoc(0);
   document.getElementById('sl-o1').textContent=S.o1||'[Outcome 1 not yet defined]';
-  const tb=document.getElementById('tab1');if(tb){tb.classList.remove('tab-locked');tb.style.opacity='1';tb.style.pointerEvents='auto';}
   setTimeout(()=>goPhase(1),300);
 }
 
@@ -784,8 +783,7 @@ function pickDec(el,type){
   document.getElementById('pb1').style.width='100%';document.getElementById('pl1').textContent='Complete ✓';
 }
 function done1(){
-  mkDoc(1);S.unlocked[2]=true;
-  const tb=document.getElementById('tab2');if(tb){tb.classList.remove('tab-locked');tb.style.opacity='1';tb.style.pointerEvents='auto';}
+  mkDoc(1);
   if(S.decision==='hire')setTimeout(()=>goPhase(2),300);
 }
 
@@ -819,14 +817,13 @@ function updJD(){
 }
 function done2(){
   document.getElementById('pb2').style.width='100%';document.getElementById('pl2').textContent='Complete ✓';
-  [2,3,4,5].forEach(i=>mkDoc(i));S.unlocked[3]=true;
+  [2,3,4,5].forEach(i=>mkDoc(i));
   const sl=document.getElementById('sl-role');if(sl)sl.value=S.title;
-  ['tab3'].forEach(id=>{const t=document.getElementById(id);if(t){t.classList.remove('tab-locked');t.style.opacity='1';t.style.pointerEvents='auto';}});
   setTimeout(()=>goPhase(3),300);
 }
 
 // ── PHASE 3 ───────────────────────────────────────
-function done3(){mkDoc(6);S.unlocked[4]=true;const t=document.getElementById('tab4');if(t){t.classList.remove('tab-locked');t.style.opacity='1';t.style.pointerEvents='auto';}goPhase(4);}
+function done3(){mkDoc(6);goPhase(4);}
 
 // ── PHASE 4 ───────────────────────────────────────
 function calcTot(){
@@ -839,7 +836,7 @@ function calcTot(){
   else if(tot>=6){ve.textContent='Borderline — consider carefully';ve.style.color='var(--amber)';}
   else{ve.textContent='Do not hire';ve.style.color='#c0392b';}
 }
-function done4(){[7,8].forEach(i=>mkDoc(i));S.unlocked[5]=true;const t=document.getElementById('tab5');if(t){t.classList.remove('tab-locked');t.style.opacity='1';t.style.pointerEvents='auto';}updOffer();goPhase(5);}
+function done4(){[7,8].forEach(i=>mkDoc(i));updOffer();goPhase(5);}
 
 // ── PHASE 5 ───────────────────────────────────────
 function updOffer(){
