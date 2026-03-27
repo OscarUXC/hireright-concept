@@ -6,9 +6,9 @@
 <title>HireRight — Intelligent Hiring Assistant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
-<script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="docx.umd.js"></script>
+<script src="jszip.min.js"></script>
+<script src="FileSaver.min.js"></script>
 <style>
 :root{--ink:#0f0e0d;--paper:#faf8f4;--cream:#f0ece3;--sage:#4a7c6f;--sage-light:#e8f0ee;--amber:#c8873a;--amber-light:#fdf3e7;--muted:#7a7570;--border:#e0dbd2;--blue:#2c5f8a;--blue-light:#e8f0f7;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -202,7 +202,7 @@ select:focus{border-color:var(--sage);background:white;}
 <body>
 <nav class="nav">
   <div class="nav-logo">Hire<span>Right</span></div>
-  <div class="nav-meta" id="navMeta">Acme Corp · Senior PM hire · Phase 1 of 6</div>
+  <div style="display:flex;align-items:center;gap:16px"><div class="nav-meta" id="navMeta">Acme Corp · Senior PM hire · Phase 1 of 6</div><button onclick="if(confirm('Clear all progress and start fresh?'))clearProgress()" style="font-family:'DM Sans',sans-serif;font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Reset</button></div>
 </nav>
 
 <div class="shell">
@@ -1235,9 +1235,131 @@ async function downloadDocs(indices){
   }
 }
 
+// ── SAVE & RESTORE (localStorage) ────────────────
+const SAVE_KEY='hireright_progress';
+
+function saveProgress(){
+  const data={};
+  // Save all text inputs and textareas
+  document.querySelectorAll('input[type=text],input[type=number],textarea').forEach(el=>{
+    if(el.id)data['field_'+el.id]=el.value;
+  });
+  // Save selected outcome groups
+  const selOcg=[];
+  document.querySelectorAll('#ocg .check-item').forEach((el,i)=>{
+    if(el.classList.contains('selected')){
+      const sel=el.querySelector('select');
+      const caps=el.querySelector('.cap-btn.sel');
+      selOcg.push({idx:i,pri:sel?sel.value:'',cap:caps?caps.textContent:''});
+    }
+  });
+  data.selOcg=selOcg;
+  // Save Phase 1 root cause selections
+  const selRc=[];
+  document.querySelectorAll('#p1 .check-group .check-item').forEach((el,i)=>{
+    if(el.classList.contains('selected'))selRc.push(i);
+  });
+  data.selRc=selRc;
+  // Save decision
+  data.decision=S.decision;
+  // Save score selections
+  ['#sg1','#sg2','#sg3','.score-grid.s5'].forEach(sel=>{
+    const el=document.querySelector(sel+' .score-cell.sel');
+    if(el)data['score_'+sel]=el.textContent.charAt(0);
+  });
+  // Save phase and docs
+  data.phase=S.phase;
+  data.docs=S.docs;
+  localStorage.setItem(SAVE_KEY,JSON.stringify(data));
+}
+
+function restoreProgress(){
+  const raw=localStorage.getItem(SAVE_KEY);
+  if(!raw)return;
+  try{
+    const data=JSON.parse(raw);
+    // Restore text fields
+    Object.keys(data).forEach(k=>{
+      if(k.startsWith('field_')){
+        const id=k.replace('field_','');
+        const el=document.getElementById(id);
+        if(el)el.value=data[k];
+      }
+    });
+    // Restore outcome group selections
+    if(data.selOcg){
+      const items=document.querySelectorAll('#ocg .check-item');
+      data.selOcg.forEach(s=>{
+        const el=items[s.idx];
+        if(el){
+          el.classList.add('selected');
+          if(s.pri){const sel=el.querySelector('select');if(sel)sel.value=s.pri;}
+          if(s.cap){el.querySelectorAll('.cap-btn').forEach(b=>{if(b.textContent===s.cap)b.classList.add('sel');});}
+        }
+      });
+    }
+    // Restore root cause selections
+    if(data.selRc){
+      const items=document.querySelectorAll('#p1 .check-group .check-item');
+      data.selRc.forEach(i=>{if(items[i])items[i].classList.add('selected');});
+    }
+    // Restore decision
+    if(data.decision){
+      S.decision=data.decision;
+      const decMap={hire:0,alt:1,wait:2};
+      const idx=decMap[data.decision];
+      if(idx!==undefined){
+        const items=document.querySelectorAll('#p1 .radio-item');
+        if(items[idx])items[idx].classList.add('selected');
+      }
+    }
+    // Restore docs
+    if(data.docs){data.docs.forEach((v,i)=>{if(v)mkDoc(i);});}
+    // Restore phase
+    if(data.phase)goPhase(data.phase);
+    // Update previews
+    updPrev();
+    // Show saved indicator
+    showSaveNotice('Progress restored from last session');
+  }catch(e){console.warn('Failed to restore progress',e);}
+}
+
+function clearProgress(){
+  localStorage.removeItem(SAVE_KEY);
+  location.reload();
+}
+
+function showSaveNotice(msg){
+  let notice=document.getElementById('save-notice');
+  if(!notice){
+    notice=document.createElement('div');
+    notice.id='save-notice';
+    notice.style.cssText='position:fixed;bottom:20px;right:20px;background:var(--sage);color:white;padding:10px 18px;border-radius:8px;font-size:13px;font-family:"DM Sans",sans-serif;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;';
+    document.body.appendChild(notice);
+  }
+  notice.textContent=msg;
+  notice.style.opacity='1';
+  setTimeout(()=>{notice.style.opacity='0';},2000);
+}
+
+// Auto-save on any input change (debounced)
+let saveTimer;
+document.addEventListener('input',()=>{
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{saveProgress();showSaveNotice('Progress saved');},1000);
+});
+// Also save on checkbox/radio clicks
+document.addEventListener('click',(e)=>{
+  if(e.target.closest('.check-item')||e.target.closest('.radio-item')||e.target.closest('.cap-btn')||e.target.closest('.score-cell')){
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(()=>{saveProgress();showSaveNotice('Progress saved');},500);
+  }
+});
+
 // INIT
 buildOCG();
-updSidebar();coach(0);
+restoreProgress();
+updSidebar();coach(S.phase);
 </script>
 </body>
 </html>
