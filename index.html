@@ -6,6 +6,9 @@
 <title>HireRight — Intelligent Hiring Assistant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
+<script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
 <style>
 :root{--ink:#0f0e0d;--paper:#faf8f4;--cream:#f0ece3;--sage:#4a7c6f;--sage-light:#e8f0ee;--amber:#c8873a;--amber-light:#fdf3e7;--muted:#7a7570;--border:#e0dbd2;--blue:#2c5f8a;--blue-light:#e8f0f7;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -747,6 +750,7 @@ function done0(){
   document.getElementById('pb0').style.width='100%';document.getElementById('pl0').textContent='Complete ✓';
   mkDoc(0);
   document.getElementById('sl-o1').textContent=S.o1||'[Outcome 1 not yet defined]';
+  downloadDocs([0]);
   setTimeout(()=>goPhase(1),300);
 }
 
@@ -784,6 +788,7 @@ function pickDec(el,type){
 }
 function done1(){
   mkDoc(1);
+  downloadDocs([1]);
   if(S.decision==='hire')setTimeout(()=>goPhase(2),300);
 }
 
@@ -819,11 +824,12 @@ function done2(){
   document.getElementById('pb2').style.width='100%';document.getElementById('pl2').textContent='Complete ✓';
   [2,3,4,5].forEach(i=>mkDoc(i));
   const sl=document.getElementById('sl-role');if(sl)sl.value=S.title;
+  downloadDocs([2,3,4,5]);
   setTimeout(()=>goPhase(3),300);
 }
 
 // ── PHASE 3 ───────────────────────────────────────
-function done3(){mkDoc(6);goPhase(4);}
+function done3(){mkDoc(6);downloadDocs([6]);goPhase(4);}
 
 // ── PHASE 4 ───────────────────────────────────────
 function calcTot(){
@@ -836,7 +842,7 @@ function calcTot(){
   else if(tot>=6){ve.textContent='Borderline — consider carefully';ve.style.color='var(--amber)';}
   else{ve.textContent='Do not hire';ve.style.color='#c0392b';}
 }
-function done4(){[7,8].forEach(i=>mkDoc(i));updOffer();goPhase(5);}
+function done4(){[7,8].forEach(i=>mkDoc(i));downloadDocs([7,8]);updOffer();goPhase(5);}
 
 // ── PHASE 5 ───────────────────────────────────────
 function updOffer(){
@@ -849,9 +855,10 @@ function updOffer(){
 }
 function done5(){
   [9,10,11].forEach(i=>mkDoc(i));
+  downloadDocs([9,10,11]);
   const banner=document.createElement('div');
   banner.className='complete-banner';
-  banner.innerHTML=`<h3>All 12 documents complete</h3><p>Your full hiring pack has been generated and is ready to send. Every document is pre-filled with everything you've entered across all 6 phases of this process.</p><div class="complete-docs">${Array.from({length:12},(_,i)=>'<div class="complete-doc">T'+(i+1)+'</div>').join('')}</div><button class="btn-gen" style="background:white;color:var(--sage);border-color:white;font-size:14px;padding:10px 22px" onclick="alert('In the full product this would download all 12 pre-filled .docx files as a zip.')">Download all 12 documents</button>`;
+  banner.innerHTML=`<h3>All 12 documents complete</h3><p>Your full hiring pack has been generated and is ready to send. Every document is pre-filled with everything you've entered across all 6 phases of this process.</p><div class="complete-docs">${Array.from({length:12},(_,i)=>'<div class="complete-doc">T'+(i+1)+'</div>').join('')}</div><button class="btn-gen" style="background:white;color:var(--sage);border-color:white;font-size:14px;padding:10px 22px" onclick="downloadDocs([0,1,2,3,4,5,6,7,8,9,10,11])">Download all 12 documents</button>`;
   document.getElementById('p5').appendChild(banner);
   banner.scrollIntoView({behavior:'smooth'});
 }
@@ -900,6 +907,332 @@ function coach(n){
       const ex=document.createElement('div');ex.className='coach-bubble example fade-in';ex.textContent=EX[n]||EX[0];panel.appendChild(ex);
     },msgs.length*350+200);
   },700);
+}
+
+// ── DOCUMENT GENERATION ──────────────────────────
+const D=docx;
+const DOCNAMES=['T1_Team_Outcomes_Map','T2_Hiring_Decision_Brief','T3_Role_Outcomes_Definition','T4_Job_Description','T5_Job_Advert','T6_Recruiter_Briefing','T7_Shortlisting_Guide','T8_Interview_Guide','T9_Scoring_Offer_Decision','T10_Offer_Letter','T11_Pre_Start_Engagement','T12_30_60_90_Onboarding'];
+
+function gatherData(){
+  const team=document.getElementById('i-team')?.value||'';
+  const purpose=document.getElementById('i-purpose')?.value||'';
+  const stakeholders=document.getElementById('i-stakeholders')?.value||'';
+  const atrisk=document.getElementById('i-atrisk')?.value||'';
+  const rootcause=document.getElementById('i-rootcause')?.value||'';
+  const impact=document.getElementById('i-impact')?.value||'';
+  const support=document.getElementById('i-support')?.value||'';
+  const supporttype=document.getElementById('i-supporttype')?.value||'';
+  const title=document.getElementById('i-title')?.value||'';
+  const sal=document.getElementById('i-sal')?.value||'';
+  const loc=document.getElementById('i-loc')?.value||'';
+  const rp=document.getElementById('i-rp')?.value||'';
+  const rep=document.getElementById('i-rep')?.value||'';
+  const risk=document.getElementById('i-risk')?.value||'';
+  const cn=document.getElementById('o-cn')?.value||'';
+  const osal=document.getElementById('o-sal')?.value||'';
+  const osd=document.getElementById('o-sd')?.value||'';
+  const onp=document.getElementById('o-np')?.value||'';
+  const oev=document.getElementById('o-ev')?.value||'';
+  // Gather selected outcomes
+  const outcomes=[];
+  document.querySelectorAll('#ocg .check-item.selected').forEach(el=>{
+    const label=el.querySelector('.check-label').textContent.replace(/^\d+\.\s*/,'');
+    const sel=el.querySelector('select');
+    const tas=el.querySelectorAll('.check-expand textarea');
+    const caps=el.querySelectorAll('.cap-btn.sel');
+    outcomes.push({
+      group:label,
+      priority:sel?sel.value:'',
+      outcome:tas[0]?tas[0].value:'',
+      capNotes:tas[1]?tas[1].value:'',
+      deps:tas[2]?tas[2].value:'',
+      capLevel:caps.length?caps[0].textContent:''
+    });
+  });
+  // Sort by priority
+  outcomes.sort((a,b)=>{
+    const pa=a.priority?parseInt(a.priority):99;
+    const pb=b.priority?parseInt(b.priority):99;
+    return pa-pb;
+  });
+  // Root cause selections from Phase 1
+  const rcItems=[];
+  document.querySelectorAll('#p1 .check-group .check-item.selected').forEach(el=>{
+    const label=el.querySelector('.check-label')?.textContent||'';
+    const ta=el.querySelector('textarea');
+    rcItems.push({label,detail:ta?ta.value:''});
+  });
+  const decision=S.decision;
+  return{team,purpose,stakeholders,atrisk,rootcause,impact,support,supporttype,title,sal,loc,rp,rep,risk,cn,osal,osd,onp,oev,outcomes,rcItems,decision,o1:S.o1,o2:S.o2,o3:S.o3};
+}
+
+function h(text,level){return new D.Paragraph({text,heading:level===1?D.HeadingLevel.HEADING_1:level===2?D.HeadingLevel.HEADING_2:D.HeadingLevel.HEADING_3,spacing:{after:120}});}
+function p(text,opts){return new D.Paragraph({children:[new D.TextRun({text,bold:opts?.b,italics:opts?.i,color:opts?.c,size:opts?.s})],spacing:{after:opts?.gap||100}});}
+function field(label,value){return new D.Paragraph({children:[new D.TextRun({text:label+': ',bold:true,size:22}),new D.TextRun({text:value||'—',size:22})],spacing:{after:80}});}
+function gap(){return new D.Paragraph({text:'',spacing:{after:200}});}
+function hr(){return new D.Paragraph({border:{bottom:{color:'cccccc',space:1,style:D.BorderStyle.SINGLE,size:1}},spacing:{after:200}});}
+
+function makeDocContent(idx,d){
+  const secs=[];
+  const o1g=d.outcomes[0]?.group||'';const o2g=d.outcomes[1]?.group||'';const o3g=d.outcomes[2]?.group||'';
+  switch(idx){
+    case 0:// T1 Team Outcomes Map
+      secs.push(h('Template 1: Team Outcomes Map',1));
+      secs.push(hr());
+      secs.push(h('Section A — Team Context',2));
+      secs.push(field('Team / Function',d.team));
+      secs.push(field('Team Purpose',d.purpose));
+      secs.push(field('Key Stakeholders',d.stakeholders));
+      secs.push(hr());
+      secs.push(h('Section B — 12 Universal Outcome Groups',2));
+      OG.forEach((o,i)=>secs.push(p((i+1)+'. '+o.name+' — '+o.desc,{s:20})));
+      secs.push(hr());
+      secs.push(h('Section C — Selected Outcomes',2));
+      d.outcomes.forEach((o,i)=>{
+        secs.push(h('Outcome '+(i+1)+(o.priority?' (Priority '+o.priority+')':''),3));
+        secs.push(field('Outcome Group',o.group));
+        secs.push(field('Specific Outcome',o.outcome));
+        secs.push(field('Current Capability',o.capLevel));
+        secs.push(field('Capability Notes',o.capNotes));
+        secs.push(field('Dependencies',o.deps));
+        secs.push(gap());
+      });
+      secs.push(hr());
+      secs.push(h('Section D — Gap Analysis',2));
+      secs.push(field('Outcomes at Risk',d.atrisk));
+      secs.push(field('Root Causes',d.rootcause));
+      secs.push(field('Impact',d.impact));
+      secs.push(hr());
+      secs.push(h('Section E — Where Support May Be Needed',2));
+      secs.push(field('Outcomes Needing Support',d.support));
+      secs.push(field('Type of Support',d.supporttype));
+      break;
+    case 1:// T2 Hiring Decision Brief
+      secs.push(h('Template 2: Hiring Decision Brief',1));
+      secs.push(hr());
+      secs.push(h('Outcomes at Risk',2));
+      secs.push(p(d.risk||d.atrisk||'—'));
+      secs.push(h('Root Cause Analysis',2));
+      if(d.rcItems.length){d.rcItems.forEach(rc=>{secs.push(field(rc.label,rc.detail));});}
+      else{secs.push(field('Root Causes',d.rootcause));}
+      secs.push(h('Decision',2));
+      const decMap={hire:'Proceed to hire',alt:'Try an alternative first',wait:'Postpone — reassess in 30–90 days'};
+      secs.push(p(decMap[d.decision]||'Not yet decided',{b:true,s:26}));
+      break;
+    case 2:// T3 Role Outcomes Definition
+      secs.push(h('Template 3: Role Outcomes Definition',1));
+      secs.push(hr());
+      secs.push(field('Role Title',d.title));
+      secs.push(gap());
+      d.outcomes.slice(0,3).forEach((o,i)=>{
+        secs.push(h('Outcome '+(i+1)+': '+o.group,2));
+        secs.push(field('Specific Outcome',o.outcome));
+        secs.push(field('Current Capability',o.capLevel));
+        secs.push(field('Capability Notes',o.capNotes));
+        secs.push(field('Dependencies',o.deps));
+        secs.push(gap());
+      });
+      break;
+    case 3:// T4 Job Description
+      secs.push(h('Template 4: Job Description',1));
+      secs.push(hr());
+      secs.push(field('Job Title',d.title));
+      secs.push(field('Salary',d.sal));
+      secs.push(field('Location',d.loc));
+      secs.push(field('Reports To',d.rep));
+      secs.push(hr());
+      secs.push(h('Role Purpose',2));
+      secs.push(p(d.rp||'—'));
+      secs.push(h('Key Outcomes',2));
+      secs.push(field('Outcome 1',(d.o1||'—')));
+      secs.push(field('Outcome 2',(d.o2||'—')));
+      secs.push(field('Outcome 3',(d.o3||'—')));
+      secs.push(h('Team Context',2));
+      secs.push(p(d.team||'—'));
+      secs.push(p(d.purpose||'—'));
+      break;
+    case 4:// T5 Job Advert
+      secs.push(h('Template 5: Job Advert',1));
+      secs.push(hr());
+      secs.push(h(d.title||'[Role Title]',2));
+      secs.push(field('Location',d.loc));
+      secs.push(field('Salary',d.sal));
+      secs.push(gap());
+      secs.push(h('About the Role',2));
+      secs.push(p(d.rp||'—'));
+      secs.push(h('What You Will Deliver',2));
+      secs.push(p('Outcome 1: '+(d.o1||'—')));
+      secs.push(p('Outcome 2: '+(d.o2||'—')));
+      secs.push(p('Outcome 3: '+(d.o3||'—')));
+      secs.push(h('About the Team',2));
+      secs.push(p(d.team||'—'));
+      secs.push(p(d.purpose||'—'));
+      break;
+    case 5:// T6 Recruiter Briefing
+      secs.push(h('Template 6: Recruiter Briefing',1));
+      secs.push(hr());
+      secs.push(field('Role',d.title));
+      secs.push(field('Salary',d.sal));
+      secs.push(field('Location',d.loc));
+      secs.push(field('Reports To',d.rep));
+      secs.push(hr());
+      secs.push(h('What This Person Needs to Deliver',2));
+      secs.push(p('Outcome 1: '+(d.o1||'—')));
+      secs.push(p('Outcome 2: '+(d.o2||'—')));
+      secs.push(p('Outcome 3: '+(d.o3||'—')));
+      secs.push(h('Team Context',2));
+      secs.push(p(d.team||'—'));
+      secs.push(h('Why This Role Exists',2));
+      secs.push(p(d.rp||d.purpose||'—'));
+      secs.push(h('What Good Looks Like',2));
+      secs.push(p('A strong candidate will have delivered outcomes similar to Outcome 1 in a comparable environment. Look for specific, measurable results — not just experience in the domain.'));
+      break;
+    case 6:// T7 Shortlisting Guide
+      secs.push(h('Template 7: Shortlisting Guide',1));
+      secs.push(hr());
+      secs.push(field('Role',d.title));
+      secs.push(h('Shortlisting Question (Outcome 1)',2));
+      secs.push(p(d.o1||'[Outcome 1 not yet defined]',{b:true}));
+      secs.push(h('Scoring Criteria',2));
+      secs.push(p('Score 5 — Exceptional: Clear outcome with measurable impact, personal ownership, and commercial awareness.'));
+      secs.push(p('Score 4 — Clear outcome: Specific result with evidence of personal contribution.'));
+      secs.push(p('Score 3 — Vague outcome: General outcome without specifics or measures.'));
+      secs.push(p('Score 2 — Tasks only: Describes activities, not outcomes.'));
+      secs.push(p('Score 1 — No outcome: No evidence of outcome-oriented thinking.'));
+      secs.push(h('Decision Thresholds',2));
+      secs.push(p('Score 4–5: Invite to interview.'));
+      secs.push(p('Score 3: Borderline — consider if market is tight.'));
+      secs.push(p('Score 1–2: Decline.'));
+      break;
+    case 7:// T8 Interview Guide
+      secs.push(h('Template 8: Interview Guide',1));
+      secs.push(hr());
+      secs.push(field('Role',d.title));
+      secs.push(p('Use S-E-O-A for every outcome: Situation, Evidence (what they personally did), Outcome (measurable result), After-effects (what they learned).',{i:true}));
+      secs.push(gap());
+      [d.o1,d.o2,d.o3].forEach((o,i)=>{
+        const grp=[o1g,o2g,o3g][i]||'Outcome '+(i+1);
+        const mins=i===0?'15 minutes':'10 minutes';
+        secs.push(h('Outcome '+(i+1)+': '+grp+' ('+mins+')',2));
+        secs.push(p(o||'—',{b:true}));
+        secs.push(field('S — Situation',''));
+        secs.push(field('E — Evidence',''));
+        secs.push(field('O — Outcome',''));
+        secs.push(field('A — After-effects',''));
+        secs.push(field('Score (0–4)',''));
+        secs.push(gap());
+      });
+      break;
+    case 8:// T9 Scoring & Offer Decision
+      secs.push(h('Template 9: Scoring & Offer Decision',1));
+      secs.push(hr());
+      secs.push(field('Role',d.title));
+      secs.push(field('Candidate',''));
+      secs.push(gap());
+      secs.push(field('Outcome 1 Score','    / 4'));
+      secs.push(field('Outcome 2 Score','    / 4'));
+      secs.push(field('Outcome 3 Score','    / 4'));
+      secs.push(field('Total','    / 12'));
+      secs.push(field('Gut Score','    / 10'));
+      secs.push(gap());
+      secs.push(h('Recommendation Thresholds',2));
+      secs.push(p('9–12: Strong hire — proceed to offer.'));
+      secs.push(p('6–8: Borderline — consider carefully.'));
+      secs.push(p('0–5: Do not hire.'));
+      break;
+    case 9:// T10 Offer Letter
+      secs.push(h('Template 10: Offer Letter',1));
+      secs.push(hr());
+      secs.push(field('To',d.cn));
+      secs.push(field('Role',d.title));
+      secs.push(field('Salary',d.osal));
+      secs.push(field('Start Date',d.osd));
+      secs.push(field('Notice Period',d.onp));
+      secs.push(gap());
+      secs.push(h('Why You',2));
+      secs.push(p(d.oev||'—'));
+      secs.push(h('What You Will Deliver',2));
+      secs.push(field('Outcome 1',d.o1));
+      secs.push(field('Outcome 2',d.o2));
+      secs.push(field('Outcome 3',d.o3));
+      secs.push(h('Team Context',2));
+      secs.push(p(d.team||'—'));
+      secs.push(field('Reports To',d.rep));
+      break;
+    case 10:// T11 Pre-Start Engagement
+      secs.push(h('Template 11: Pre-Start Engagement Plan',1));
+      secs.push(hr());
+      secs.push(field('Candidate',d.cn));
+      secs.push(field('Role',d.title));
+      secs.push(field('Start Date',d.osd));
+      secs.push(field('Notice Period',d.onp));
+      secs.push(gap());
+      secs.push(h('Pre-Start Touchpoints',2));
+      secs.push(p('Week 1 after acceptance: Welcome call from hiring manager. Share team context, introduce key stakeholders.'));
+      secs.push(p('Week 3: Send reading pack — team structure, current priorities, Outcome 1 context.'));
+      secs.push(p('Week before start: Logistics confirmation — equipment, access, first-day schedule.'));
+      secs.push(h('Key Stakeholders to Introduce',2));
+      secs.push(p(d.stakeholders||d.rep||'—'));
+      secs.push(h('Context to Share Before Day 1',2));
+      secs.push(p('Team purpose: '+(d.purpose||'—')));
+      secs.push(p('Outcome 1: '+(d.o1||'—')));
+      secs.push(p('Outcome 2: '+(d.o2||'—')));
+      secs.push(p('Outcome 3: '+(d.o3||'—')));
+      break;
+    case 11:// T12 30/60/90 Onboarding
+      secs.push(h('Template 12: 30/60/90 Day Onboarding Plan',1));
+      secs.push(hr());
+      secs.push(field('Name',d.cn));
+      secs.push(field('Role',d.title));
+      secs.push(field('Start Date',d.osd));
+      secs.push(field('Manager',d.rep));
+      secs.push(gap());
+      secs.push(h('First 30 Days — Learn & Orient',2));
+      secs.push(p('Understand the team, stakeholders, and current state of each outcome.'));
+      secs.push(field('Outcome 1 focus',o1g+': Understand current state, meet key stakeholders, review existing work'));
+      secs.push(field('Outcome 2 focus',o2g+': Shadow current processes, identify quick wins'));
+      secs.push(field('Outcome 3 focus',o3g+': Begin building domain knowledge'));
+      secs.push(p('Key milestone: Present initial observations and proposed approach to manager.'));
+      secs.push(gap());
+      secs.push(h('Days 31–60 — Contribute & Own',2));
+      secs.push(p('Begin owning Outcome 1 end-to-end. Make first measurable contribution.'));
+      secs.push(field('Outcome 1',d.o1||'Take ownership, begin executing'));
+      secs.push(field('Outcome 2',d.o2||'Begin contributing directly'));
+      secs.push(field('Outcome 3',d.o3||'Build relationships, gather insights'));
+      secs.push(p('Key milestone: First deliverable shipped or decision made on Outcome 1.'));
+      secs.push(gap());
+      secs.push(h('Days 61–90 — Deliver & Lead',2));
+      secs.push(p('Fully own all 3 outcomes. Demonstrate measurable progress against targets.'));
+      secs.push(field('Outcome 1','Measurable progress toward: '+(d.o1||'—')));
+      secs.push(field('Outcome 2','Measurable progress toward: '+(d.o2||'—')));
+      secs.push(field('Outcome 3','Measurable progress toward: '+(d.o3||'—')));
+      secs.push(p('Key milestone: 90-day review with manager. Evidence of impact on all 3 outcomes.'));
+      break;
+  }
+  return secs;
+}
+
+function buildDoc(idx,d){
+  const children=makeDocContent(idx,d);
+  return new D.Document({sections:[{properties:{},children}]});
+}
+
+async function downloadDocs(indices){
+  const d=gatherData();
+  if(indices.length===1){
+    const doc=buildDoc(indices[0],d);
+    const blob=await D.Packer.toBlob(doc);
+    saveAs(blob,DOCNAMES[indices[0]]+'.docx');
+  } else {
+    const zip=new JSZip();
+    for(const idx of indices){
+      const doc=buildDoc(idx,d);
+      const blob=await D.Packer.toBlob(doc);
+      zip.file(DOCNAMES[idx]+'.docx',blob);
+    }
+    const content=await zip.generateAsync({type:'blob'});
+    saveAs(content,'HireRight_Documents.zip');
+  }
 }
 
 // INIT
