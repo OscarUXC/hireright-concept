@@ -147,6 +147,10 @@ select:focus{border-color:var(--sage);background:white;}
 .btn-use:hover{background:#3d6a5e;}
 .btn-edit{font-size:12px;padding:5px 12px;background:transparent;color:var(--sage);border-color:var(--sage);}
 .btn-edit:hover{background:var(--sage-light);}
+.btn-dl{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;padding:9px 18px;border-radius:8px;cursor:pointer;transition:all .2s;border:1.5px solid var(--sage);background:transparent;color:var(--sage);display:inline-flex;align-items:center;gap:6px;}
+.btn-dl:hover{background:var(--sage-light);}
+.btn-dl::before{content:'↓';font-weight:700;}
+.phase-end-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
 .q-nav{display:flex;justify-content:space-between;align-items:center;margin-top:24px;padding-top:20px;border-top:1px solid var(--border);}
 /* SCORE */
 .score-grid{display:grid;gap:8px;margin:10px 0;}
@@ -342,7 +346,7 @@ select:focus{border-color:var(--sage);background:white;}
     <label class="field-label" style="margin-bottom:6px">What type of support might help? New hire / Contractor / Redistribution / Process change?</label>
     <textarea id="i-supporttype" placeholder="e.g. Hiring Senior PM with enterprise B2B SaaS track record OR contract PM for 6 months to cover enterprise launch — permanent hire preferred given board-level priority and ongoing roadmap ownership"></textarea>
     <div class="hint-box success" style="margin-top:16px"><div class="hint-icon">→</div><div class="hint-text"><strong>Next step:</strong> Use Phase 2 (Hiring Decision Brief) to evaluate whether hiring is the right solution based on everything you've documented here.</div></div>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(5)">← Back</button><button class="btn-cont" onclick="done0()">Complete Phase 1 & continue →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="bk0(5)">← Back</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([0])">Download T1</button><button class="btn-cont" onclick="done0()">Continue to Phase 2 →</button></div></div>
   </div>
 </div>
 
@@ -387,7 +391,7 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="decision-result" id="decResult"><h4 id="decTitle">Decision confirmed</h4><p id="decBody"></p></div>
     <div class="q-nav">
       <button class="btn-back" onclick="bk1(2)">← Back</button>
-      <button class="btn-cont" id="p1done" style="display:none" onclick="done1()">Generate document & continue →</button>
+      <div class="phase-end-actions" id="p1done" style="display:none"><button class="btn-dl" onclick="downloadDocs([1])">Download T2</button><button class="btn-cont" onclick="done1()">Continue to Phase 3 →</button></div>
     </div>
   </div>
 </div>
@@ -421,7 +425,7 @@ select:focus{border-color:var(--sage);background:white;}
       <div class="doc-field"><div class="dfl">Outcome 2</div><div class="dfv fill" id="jd-o2">—</div></div>
       <div class="doc-field"><div class="dfl">Outcome 3</div><div class="dfv fill" id="jd-o3">—</div></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="bk2(4)">← Back</button><button class="btn-gen" id="p2n5" onclick="done2()">Generate 4 documents & continue →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="bk2(4)">← Back</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([2,3,4,5])">Download T3–T6</button><button class="btn-cont" onclick="done2()">Continue to Phase 4 →</button></div></div>
   </div>
 </div>
 
@@ -450,7 +454,7 @@ select:focus{border-color:var(--sage);background:white;}
       <div class="score-cell" onclick="sc(this,'.score-grid.s5')">4<span class="score-lbl">Clear outcome</span></div>
       <div class="score-cell" onclick="sc(this,'.score-grid.s5')">5<span class="score-lbl">Exceptional</span></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="goPhase(2)">← Back to Phase 3</button><button class="btn-cont" onclick="done3()">Continue to Interviews →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="goPhase(2)">← Back to Phase 3</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([6])">Download T7</button><button class="btn-cont" onclick="done3()">Continue to Phase 5 →</button></div></div>
   </div>
 </div>
 
@@ -536,7 +540,7 @@ select:focus{border-color:var(--sage);background:white;}
       <div style="background:var(--cream);border-radius:8px;padding:16px;text-align:center"><div style="font-size:13px;font-weight:600" id="verd">Score all 3 outcomes first</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Recommendation</div></div>
       <div style="background:var(--cream);border-radius:8px;padding:12px"><label class="field-label">Gut score /10</label><input type="number" min="1" max="10" placeholder="7" style="font-size:20px;font-weight:600;text-align:center;margin-top:6px" oninput="calcTot()"></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="goPhase(3)">← Back</button><button class="btn-cont" onclick="done4()">Continue to Offer →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="goPhase(3)">← Back</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([7,8])">Download T8–T9</button><button class="btn-cont" onclick="done4()">Continue to Phase 6 →</button></div></div>
   </div>
 </div>
 
@@ -568,7 +572,7 @@ select:focus{border-color:var(--sage);background:white;}
       <div class="doc-field"><div class="dfl">Outcome 2</div><div class="dfv fill" id="of-o2">—</div></div>
       <div class="doc-field"><div class="dfl">Outcome 3</div><div class="dfv fill" id="of-o3">—</div></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="goPhase(4)">← Back to Interviews</button><button class="btn-gen" onclick="done5()">Generate all 3 documents →</button></div>
+    <div class="q-nav"><button class="btn-back" onclick="goPhase(4)">← Back to Interviews</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([9,10,11])">Download T10–T12</button><button class="btn-cont" onclick="done5()">Complete →</button></div></div>
   </div>
 </div>
 </main>
@@ -750,7 +754,6 @@ function done0(){
   document.getElementById('pb0').style.width='100%';document.getElementById('pl0').textContent='Complete ✓';
   mkDoc(0);
   document.getElementById('sl-o1').textContent=S.o1||'[Outcome 1 not yet defined]';
-  downloadDocs([0]);
   setTimeout(()=>goPhase(1),300);
 }
 
@@ -780,15 +783,14 @@ function pickDec(el,type){
   el.classList.add('selected');S.decision=type;
   const res=document.getElementById('decResult'),ti=document.getElementById('decTitle'),bo=document.getElementById('decBody');
   res.classList.add('show');
-  const btn=document.getElementById('p1done');btn.style.display='block';
-  if(type==='hire'){ti.textContent='✓ Decision: Proceed to hire';ti.style.color='var(--sage)';bo.textContent="You've evaluated the alternatives and confirmed hiring is the right solution. Your Hiring Decision Brief will document this rationale so you can share it with your manager for sign-off.";btn.textContent='Generate document & continue to Role Design →';}
-  else if(type==='alt'){ti.textContent='→ Decision: Try an alternative first';ti.style.color='var(--amber)';bo.textContent="Noted. Before committing to a hire, try the alternative you've identified. Your Hiring Decision Brief will document this reasoning. Come back to Phase 3 when you're ready to proceed.";btn.textContent='Generate document & save →';}
-  else{ti.textContent='⏸ Decision: Postpone';ti.style.color='var(--muted)';bo.textContent="Understood. Your Hiring Decision Brief will document the reasoning. Set a reminder — it's easy to let this drift. Come back when circumstances change.";btn.textContent='Generate document & save →';}
+  const actions=document.getElementById('p1done');actions.style.display='flex';
+  if(type==='hire'){ti.textContent='✓ Decision: Proceed to hire';ti.style.color='var(--sage)';bo.textContent="You've evaluated the alternatives and confirmed hiring is the right solution. Your Hiring Decision Brief will document this rationale so you can share it with your manager for sign-off.";}
+  else if(type==='alt'){ti.textContent='→ Decision: Try an alternative first';ti.style.color='var(--amber)';bo.textContent="Noted. Before committing to a hire, try the alternative you've identified. Your Hiring Decision Brief will document this reasoning. Come back to Phase 3 when you're ready to proceed.";}
+  else{ti.textContent='⏸ Decision: Postpone';ti.style.color='var(--muted)';bo.textContent="Understood. Your Hiring Decision Brief will document the reasoning. Set a reminder — it's easy to let this drift. Come back when circumstances change.";}
   document.getElementById('pb1').style.width='100%';document.getElementById('pl1').textContent='Complete ✓';
 }
 function done1(){
   mkDoc(1);
-  downloadDocs([1]);
   if(S.decision==='hire')setTimeout(()=>goPhase(2),300);
 }
 
@@ -824,12 +826,11 @@ function done2(){
   document.getElementById('pb2').style.width='100%';document.getElementById('pl2').textContent='Complete ✓';
   [2,3,4,5].forEach(i=>mkDoc(i));
   const sl=document.getElementById('sl-role');if(sl)sl.value=S.title;
-  downloadDocs([2,3,4,5]);
   setTimeout(()=>goPhase(3),300);
 }
 
 // ── PHASE 3 ───────────────────────────────────────
-function done3(){mkDoc(6);downloadDocs([6]);goPhase(4);}
+function done3(){mkDoc(6);goPhase(4);}
 
 // ── PHASE 4 ───────────────────────────────────────
 function calcTot(){
@@ -842,7 +843,7 @@ function calcTot(){
   else if(tot>=6){ve.textContent='Borderline — consider carefully';ve.style.color='var(--amber)';}
   else{ve.textContent='Do not hire';ve.style.color='#c0392b';}
 }
-function done4(){[7,8].forEach(i=>mkDoc(i));downloadDocs([7,8]);updOffer();goPhase(5);}
+function done4(){[7,8].forEach(i=>mkDoc(i));updOffer();goPhase(5);}
 
 // ── PHASE 5 ───────────────────────────────────────
 function updOffer(){
@@ -855,7 +856,6 @@ function updOffer(){
 }
 function done5(){
   [9,10,11].forEach(i=>mkDoc(i));
-  downloadDocs([9,10,11]);
   const banner=document.createElement('div');
   banner.className='complete-banner';
   banner.innerHTML=`<h3>All 12 documents complete</h3><p>Your full hiring pack has been generated and is ready to send. Every document is pre-filled with everything you've entered across all 6 phases of this process.</p><div class="complete-docs">${Array.from({length:12},(_,i)=>'<div class="complete-doc">T'+(i+1)+'</div>').join('')}</div><button class="btn-gen" style="background:white;color:var(--sage);border-color:white;font-size:14px;padding:10px 22px" onclick="downloadDocs([0,1,2,3,4,5,6,7,8,9,10,11])">Download all 12 documents</button>`;
