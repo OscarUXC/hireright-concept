@@ -238,7 +238,7 @@ select:focus{border-color:var(--sage);background:white;}
   </div>
   <hr class="sidebar-divider">
   <div class="sidebar-doc-list">
-    <div class="sidebar-doc-label">Documents (<span id="docCount">0</span>/12 ready)</div>
+    <div class="sidebar-doc-label">Documents Completed (<span id="docCount">0</span>/12)</div>
     <div class="doc-item" id="di0"><div class="doc-icon"></div> T1 — Team Outcomes Map</div>
     <div class="doc-item" id="di1"><div class="doc-icon"></div> T2 — Hiring Decision Brief</div>
     <div class="doc-item" id="di2"><div class="doc-icon"></div> T3 — Role Outcomes Definition</div>
@@ -897,12 +897,6 @@ function coach(n){
       },i*350);
     });
     setTimeout(()=>{
-      const d=document.createElement('div');d.className='coach-divider';d.textContent='Your progress';panel.appendChild(d);
-      [{l:'Documents ready',v:dc+' of 12',c:dc>0?'green':''},{l:'Outcomes defined',v:oc+' of 3',c:oc===3?'green':oc>0?'amber':''},{l:'Current phase',v:(n+1)+' of 6',c:''},{l:'Est. time remaining',v:['~20 min','~10 min','~12 min','~5 min','~20 min','~10 min'][n],c:''}].forEach(s=>{
-        const st=document.createElement('div');st.className='coach-stat';
-        st.innerHTML=`<div class="coach-stat-lbl">${s.l}</div><div class="coach-stat-val ${s.c}">${s.v}</div>`;
-        panel.appendChild(st);
-      });
       const ed=document.createElement('div');ed.className='coach-divider';ed.textContent='Example';panel.appendChild(ed);
       const ex=document.createElement('div');ex.className='coach-bubble example fade-in';ex.textContent=EX[n]||EX[0];panel.appendChild(ex);
     },msgs.length*350+200);
