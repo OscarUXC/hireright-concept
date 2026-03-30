@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HireRight — Intelligent Hiring Assistant</title>
+<title>Outcome Hiring System™</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="docx.umd.js"></script>
@@ -205,7 +205,7 @@ select:focus{border-color:var(--sage);background:white;}
 </head>
 <body>
 <nav class="nav">
-  <div class="nav-logo">Hire<span>Right</span></div>
+  <div class="nav-logo">Outcome <span>Hiring</span> System<sup style="font-size:10px;vertical-align:super;color:var(--muted)">™</sup></div>
   <div style="display:flex;align-items:center;gap:16px"><div class="nav-meta" id="navMeta">Acme Corp · Senior PM hire · Phase 1 of 6</div><button onclick="if(confirm('Clear all progress and start fresh?'))clearProgress()" style="font-family:'DM Sans',sans-serif;font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Reset</button></div>
 </nav>
 
@@ -581,7 +581,7 @@ select:focus{border-color:var(--sage);background:white;}
 <aside class="coach-panel">
   <div class="coach-header">
     <div class="coach-avatar">H</div>
-    <div><div class="coach-name">HireRight Coach</div><div class="coach-role">Hiring process guide</div></div>
+    <div><div class="coach-name">OHS Coach</div><div class="coach-role">Hiring process guide</div></div>
   </div>
   <div id="coach"></div>
 </aside>
@@ -1231,7 +1231,7 @@ async function downloadDocs(indices){
       zip.file(DOCNAMES[idx]+'.docx',blob);
     }
     const content=await zip.generateAsync({type:'blob'});
-    saveAs(content,'HireRight_Documents.zip');
+    saveAs(content,'OHS_Documents.zip');
   }
 }
 
