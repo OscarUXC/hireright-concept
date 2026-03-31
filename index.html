@@ -436,26 +436,13 @@ select:focus{border-color:var(--sage);background:white;}
   <p class="phase-intro">Outcome 1 is automatically used as the shortlisting question. Candidates answer it in writing. You score their answers before deciding who to interview.</p>
   <div class="hint-box info" style="margin-bottom:24px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Shortlisting question (sent to candidates):</strong> <span id="sl-o1" style="font-weight:500">Complete Phase 1 first.</span></div></div>
 
-  <div class="q-card active">
-    <div class="q-num">Score candidate written answers</div>
-    <div class="q-text">Paste each candidate's answer and score it</div>
-    <div class="q-sub">You're looking for: a clear outcome, personal contribution, and measurable impact. Score 4–5 to interview. Score 1–2 to decline.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-      <div><label class="field-label" style="margin-bottom:6px">Candidate name</label><input type="text" placeholder="e.g. Alex Turner"></div>
-      <div><label class="field-label" style="margin-bottom:6px">Applied for</label><input type="text" id="sl-role" placeholder="—" readonly style="background:var(--cream)"></div>
-    </div>
-    <label class="field-label" style="margin-bottom:6px">Their written answer</label>
-    <textarea placeholder="Paste the candidate's response here. Looking for: clear outcome, personal ownership, measurable impact." style="min-height:100px;margin-bottom:12px"></textarea>
-    <label class="field-label" style="margin-bottom:8px">Outcome Strength Score</label>
-    <div class="score-grid s5">
-      <div class="score-cell" onclick="sc(this,'.score-grid.s5')">1<span class="score-lbl">No outcome</span></div>
-      <div class="score-cell" onclick="sc(this,'.score-grid.s5')">2<span class="score-lbl">Tasks only</span></div>
-      <div class="score-cell" onclick="sc(this,'.score-grid.s5')">3<span class="score-lbl">Vague outcome</span></div>
-      <div class="score-cell" onclick="sc(this,'.score-grid.s5')">4<span class="score-lbl">Clear outcome</span></div>
-      <div class="score-cell" onclick="sc(this,'.score-grid.s5')">5<span class="score-lbl">Exceptional</span></div>
-    </div>
-    <div class="q-nav"><button class="btn-back" onclick="goPhase(2)">← Back to Phase 3</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([6])">Download T7</button><button class="btn-cont" onclick="done3()">Continue to Phase 5 →</button></div></div>
+  <div id="candidates-container"></div>
+
+  <div style="text-align:center;margin:16px 0">
+    <button class="btn-cont" onclick="addCandidate()" style="font-size:13px;padding:8px 20px;">+ Add candidate</button>
   </div>
+
+  <div class="q-nav" style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px"><button class="btn-back" onclick="goPhase(2)">← Back to Phase 3</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([6])">Download T7</button><button class="btn-cont" onclick="done3()">Continue to Phase 5 →</button></div></div>
 </div>
 
 <!-- PHASE 4 -->
@@ -635,6 +622,7 @@ function goPhase(n){
   document.getElementById('navMeta').textContent=`Acme Corp · Senior PM hire · Phase ${n+1} of 6 — ${nm[n]}`;
   if(n===1)initP1();
   if(n===2)initP2();
+  if(n===3&&candidateCount===0)addCandidate();
   if(n===5)updOffer();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -830,6 +818,22 @@ function done2(){
 }
 
 // ── PHASE 3 ───────────────────────────────────────
+let candidateCount=0;
+function addCandidate(){
+  candidateCount++;
+  const n=candidateCount;
+  const container=document.getElementById('candidates-container');
+  const card=document.createElement('div');
+  card.className='q-card';
+  card.id='cand-'+n;
+  card.innerHTML=`<div class="q-num" style="display:flex;justify-content:space-between;align-items:center">Candidate ${n}${n>1?'<button onclick="removeCandidate('+n+')" style="font-family:\'DM Sans\',sans-serif;font-size:11px;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Remove</button>':''}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px"><div><label class="field-label" style="margin-bottom:6px">Candidate name</label><input type="text" class="cand-name" placeholder="e.g. Alex Turner"></div><div><label class="field-label" style="margin-bottom:6px">Applied for</label><input type="text" class="cand-role" value="${S.title||''}" readonly style="background:var(--cream)"></div></div><label class="field-label" style="margin-bottom:6px">Their written answer</label><textarea class="cand-answer" placeholder="Paste the candidate's response here. Looking for: clear outcome, personal ownership, measurable impact." style="min-height:100px;margin-bottom:12px"></textarea><label class="field-label" style="margin-bottom:8px">Outcome Strength Score</label><div class="score-grid s5" id="sg-cand-${n}"><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">1<span class="score-lbl">No outcome</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">2<span class="score-lbl">Tasks only</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">3<span class="score-lbl">Vague outcome</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">4<span class="score-lbl">Clear outcome</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">5<span class="score-lbl">Exceptional</span></div></div>`;
+  container.appendChild(card);
+  card.scrollIntoView({behavior:'smooth',block:'center'});
+}
+function removeCandidate(n){
+  const card=document.getElementById('cand-'+n);
+  if(card)card.remove();
+}
 function done3(){mkDoc(6);goPhase(4);}
 
 // ── PHASE 4 ───────────────────────────────────────
