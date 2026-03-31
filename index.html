@@ -953,14 +953,19 @@ function goPhase(n){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function isPhaseComplete(i){
+  // Check if all documents for a phase have been generated
+  const phaseDocMap=[[0],[1],[2,3,4,5],[6],[7,8],[9,10,11]];
+  return phaseDocMap[i].every(d=>S.docs[d]);
+}
 function updSidebar(){
   for(let i=0;i<6;i++){
     const el=document.getElementById('sp'+i),b=document.getElementById('sb'+i),ln=document.getElementById('sl'+i);
     el.className='phase-item';
-    if(S.docs[i]||i<S.phase){el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';}
+    if(isPhaseComplete(i)){el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';}
     else if(i===S.phase){el.classList.add('active');b.textContent='In progress';b.className='phase-badge active';}
     else{b.textContent='Not started';b.className='phase-badge';}
-    if(ln)ln.className='phase-line'+(i<S.phase?' done':'');
+    if(ln)ln.className='phase-line'+(isPhaseComplete(i)?' done':'');
     const tb=document.getElementById('tab'+i);
     if(tb){tb.style.opacity='1';tb.style.pointerEvents='auto';}
   }
