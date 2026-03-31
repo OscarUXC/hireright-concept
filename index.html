@@ -355,42 +355,74 @@ select:focus{border-color:var(--sage);background:white;}
   <div class="phase-eyebrow">Phase 2 of 6 — Decision</div>
   <h1 class="phase-heading">Do you actually need<br><em style="color:var(--sage)">to hire someone?</em></h1>
   <p class="phase-intro">Before committing to a hire, confirm it's the right solution. This generates your Hiring Decision Brief — which you can share with your manager for sign-off. Takes 5–10 minutes.</p>
-  <div class="progress-row"><div class="progress-track"><div class="progress-fill" id="pb1" style="width:0%"></div></div><div class="progress-label" id="pl1">Q1 of 3</div></div>
+  <div class="progress-row"><div class="progress-track"><div class="progress-fill" id="pb1" style="width:0%"></div></div><div class="progress-label" id="pl1">Q1 of 5</div></div>
 
   <div class="q-card answered" id="p1c1">
     <div class="q-num">Question 1 — Carried forward from Phase 1</div>
-    <div class="q-text">Which outcomes are currently at risk?</div>
+    <div class="q-text">Problem Definition — Outcomes at Risk</div>
     <div class="hint-box info"><div class="hint-icon">↑</div><div class="hint-text" id="carriedHint">Your outcomes and gap analysis from Phase 1 have been carried forward automatically.</div></div>
+    <label class="field-label">Outcomes at risk</label>
     <textarea id="i-risk" placeholder="Describe which outcomes are at risk and why — include the impact if nothing changes..."></textarea>
+    <label class="field-label" style="margin-top:14px">Measurable Impact</label>
+    <textarea id="i-impact" placeholder="What is the commercial/operational impact if nothing changes? e.g. revenue at risk, delayed launches, customer churn..."></textarea>
     <div class="q-nav"><div></div><button class="btn-next" onclick="adv1(1)">Next →</button></div>
   </div>
 
   <div class="q-card" id="p1c2">
-    <div class="q-num">Question 2 of 3</div>
+    <div class="q-num">Question 2 of 5</div>
     <div class="q-text">What is the root cause of this gap?</div>
     <div class="q-sub">Select all that apply, then describe the specifics for each. Be honest — this shapes whether you actually need to hire.</div>
-    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Most gaps come down to one of four causes. Picking the right one changes your solution. <strong>You might not need to hire at all.</strong></div></div>
+    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Most gaps come down to one of six causes. Picking the right one changes your solution. <strong>You might not need to hire at all.</strong></div></div>
     <div class="check-group">
       <div class="check-item" onclick="togCheck(this,'rc1')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Capacity Issue — Not enough hours or people</div><div class="check-desc">The work exists and the skills exist, but there aren't enough people to do it</div><div class="check-expand"><label class="field-label">Describe specifically:</label><textarea placeholder="e.g. Both PMs are at 100% on mid-market. Enterprise workstream has 0 hours allocated."></textarea></div></div></div>
       <div class="check-item" onclick="togCheck(this,'rc2')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Capability Issue — Required skills are missing</div><div class="check-desc">The team doesn't have the experience this outcome demands</div><div class="check-expand"><label class="field-label">Describe specifically:</label><textarea placeholder="e.g. No PM in the team has enterprise B2B SaaS product experience — SSO, admin controls, tiered pricing."></textarea></div></div></div>
       <div class="check-item" onclick="togCheck(this,'rc3')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Ownership Issue — Nobody is accountable</div><div class="check-desc">The work exists but no one owns the outcome end to end</div><div class="check-expand"><label class="field-label">Describe specifically:</label><textarea placeholder="e.g. Two teams think they own this outcome but neither is fully accountable for the result."></textarea></div></div></div>
       <div class="check-item" onclick="togCheck(this,'rc4')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Dependency Issue — Blocked waiting on others</div><div class="check-desc">Progress is stalled because of another team, decision, or system</div><div class="check-expand"><label class="field-label">Describe specifically:</label><textarea placeholder="e.g. Waiting on data team to deliver insights before we can prioritise the roadmap."></textarea></div></div></div>
+      <div class="check-item" onclick="togCheck(this,'rc5')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Process/System Issue — Processes or tools creating friction</div><div class="check-desc">Inefficient workflows, outdated tools, or manual processes slowing the team down</div><div class="check-expand"><label class="field-label">Describe specifically:</label><textarea placeholder="e.g. Manual reporting takes 10 hours/week. Migrating to a modern tool would free up capacity."></textarea></div></div></div>
+      <div class="check-item" onclick="togCheck(this,'rc6')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Leadership/Context Issue — Direction unclear or changing too often</div><div class="check-desc">Strategy shifts, unclear priorities, or lack of decision-making causing the team to stall</div><div class="check-expand"><label class="field-label">Describe specifically:</label><textarea placeholder="e.g. Priorities have shifted 3 times this quarter. Team doesn't know which outcome to focus on."></textarea></div></div></div>
     </div>
     <div class="q-nav"><button class="btn-back" onclick="bk1(1)">← Back</button><button class="btn-next" onclick="adv1(2)">Next →</button></div>
   </div>
 
   <div class="q-card" id="p1c3">
-    <div class="q-num">Question 3 of 3 — Your decision</div>
+    <div class="q-num">Question 3 of 5</div>
+    <div class="q-text">Have you considered alternatives to hiring?</div>
+    <div class="q-sub">Select each alternative you've evaluated and describe why it will or won't work. You must consider these before proceeding.</div>
+    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Hiring is expensive and slow. These alternatives can often close the gap faster — or reveal that the gap is smaller than you think.</div></div>
+    <div class="check-group">
+      <div class="check-item" onclick="togCheck(this,'alt1')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Reallocate work internally</div><div class="check-desc">Shift responsibilities or reprioritise existing team members</div><div class="check-expand"><label class="field-label">Your evaluation:</label><textarea placeholder="e.g. Considered moving Sarah onto this but she's the only one who can maintain the existing product."></textarea></div></div></div>
+      <div class="check-item" onclick="togCheck(this,'alt2')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Stop/pause lower-priority work</div><div class="check-desc">Free up capacity by deprioritising or stopping less important initiatives</div><div class="check-expand"><label class="field-label">Your evaluation:</label><textarea placeholder="e.g. Could pause the internal tooling project but it's already committed to stakeholders this quarter."></textarea></div></div></div>
+      <div class="check-item" onclick="togCheck(this,'alt3')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Automate/streamline</div><div class="check-desc">Use tools, automation, or process improvements to reduce the workload</div><div class="check-expand"><label class="field-label">Your evaluation:</label><textarea placeholder="e.g. Some reporting could be automated but the core problem is strategic thinking, not execution."></textarea></div></div></div>
+      <div class="check-item" onclick="togCheck(this,'alt4')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Contractor/outsourced support</div><div class="check-desc">Bring in temporary or external help instead of a permanent hire</div><div class="check-expand"><label class="field-label">Your evaluation:</label><textarea placeholder="e.g. Considered a contractor but this role needs deep product context that takes months to build."></textarea></div></div></div>
+      <div class="check-item" onclick="togCheck(this,'alt5')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Training/capability uplift</div><div class="check-desc">Invest in developing existing team members to fill the gap</div><div class="check-expand"><label class="field-label">Your evaluation:</label><textarea placeholder="e.g. Could train a junior PM but the ramp time (6+ months) is too long given the urgency."></textarea></div></div></div>
+    </div>
+    <div class="q-nav"><button class="btn-back" onclick="bk1(2)">← Back</button><button class="btn-next" onclick="adv1(3)">Next →</button></div>
+  </div>
+
+  <div class="q-card" id="p1c4">
+    <div class="q-num">Question 4 of 5</div>
+    <div class="q-text">Why hiring may be required</div>
+    <div class="q-sub">Summarise why the alternatives above cannot fully solve this problem.</div>
+    <div class="hint-box info"><div class="hint-icon">✦</div><div class="hint-text">This becomes the core justification in your Hiring Decision Brief. Be specific — your manager will read this.</div></div>
+    <textarea id="i-whyhire" placeholder="Why can't the alternatives above solve this? e.g. The gap requires a dedicated senior PM with enterprise experience. Internal reallocation would leave mid-market unowned, and contractors lack the context needed for this strategic role."></textarea>
+    <div class="q-nav"><button class="btn-back" onclick="bk1(3)">← Back</button><button class="btn-next" onclick="adv1(4)">Next →</button></div>
+  </div>
+
+  <div class="q-card" id="p1c5">
+    <div class="q-num">Question 5 of 5 — Your decision</div>
     <div class="q-text">Based on all of the above, what is your decision?</div>
     <div class="q-sub">Consider alternatives honestly before committing to a hire.</div>
     <div class="radio-group">
       <div class="radio-item" onclick="pickDec(this,'hire')"><div class="radio-dot"></div><div><div class="radio-label">Proceed to hire</div><div class="radio-desc">None of the alternatives close the gap. Hiring is the right call.</div></div></div>
       <div class="radio-item" onclick="pickDec(this,'alt')"><div class="radio-dot"></div><div><div class="radio-label">Try an alternative first</div><div class="radio-desc">Redistribute work, upskill, or bring in a contractor before committing.</div></div></div>
       <div class="radio-item" onclick="pickDec(this,'wait')"><div class="radio-dot"></div><div><div class="radio-label">Postpone — reassess in 30–90 days</div><div class="radio-desc">Not urgent enough right now. Set a reminder and revisit.</div></div></div>
+      <div class="radio-item" onclick="pickDec(this,'nohire')"><div class="radio-dot"></div><div><div class="radio-label">Do not hire</div><div class="radio-desc">After analysis, the gap can be closed without a new hire. Document and move on.</div></div></div>
     </div>
     <div class="decision-result" id="decResult"><h4 id="decTitle">Decision confirmed</h4><p id="decBody"></p></div>
+    <label class="field-label" style="margin-top:14px">Decision rationale</label>
+    <textarea id="i-decrationale" placeholder="Briefly explain the reasoning behind your decision..."></textarea>
     <div class="q-nav">
-      <button class="btn-back" onclick="bk1(2)">← Back</button>
+      <button class="btn-back" onclick="bk1(4)">← Back</button>
       <div class="phase-end-actions" id="p1done" style="display:none"><button class="btn-dl" onclick="downloadDocs([1])">Download T2</button><button class="btn-cont" onclick="done1()">Continue to Phase 3 →</button></div>
     </div>
   </div>
@@ -400,32 +432,121 @@ select:focus{border-color:var(--sage);background:white;}
 <div id="p2" class="phase-section">
   <div class="phase-eyebrow">Phase 3 of 6 — Role Design</div>
   <h1 class="phase-heading">Designing the role<br><em style="color:var(--sage)">around your outcomes</em></h1>
-  <p class="phase-intro">Your outcomes are locked in. Now add the role-specific details. This phase generates 4 documents — Job Description, Role Charter, Job Advert, and Recruiter Briefing.</p>
-  <div class="hint-box info" style="margin-bottom:24px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Carried forward automatically:</strong> Your 3 priority outcomes, team context, stakeholders, and company details. You only need to provide the new information below.</div></div>
-  <div class="progress-row"><div class="progress-track"><div class="progress-fill" id="pb2" style="width:0%"></div></div><div class="progress-label" id="pl2">Q1 of 5</div></div>
+  <p class="phase-intro">This phase generates 4 documents — Role Outcomes Definition (T3), Job Description + Role Charter (T4), Job Advert (T5), and Recruiter Briefing (T6).</p>
+  <div class="hint-box info" style="margin-bottom:24px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Carried forward:</strong> Team context, stakeholders, outcomes, gap analysis, and hiring decision rationale.</div></div>
 
-  <div class="q-card active" id="p2c1"><div class="q-num">Question 1 of 5</div><div class="q-text">Job title</div><input type="text" id="i-title" placeholder="e.g. Senior Product Manager — Enterprise" oninput="chk('i-title',1,'p2n1')"><div class="q-nav"><button class="btn-back" onclick="goPhase(1)">← Back to Phase 2</button><button class="btn-next" id="p2n1" onclick="adv2(1)">Next →</button></div></div>
+  <!-- T3: Role Outcomes -->
+  <div class="q-card">
+    <div class="q-num">T3 — Role Outcomes Definition</div>
+    <div class="q-text">Define the outcomes for this specific role</div>
+    <div class="q-sub">Confirm or adjust your team outcomes for this role. Outcome 1 becomes the shortlisting question sent to candidates before interview.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div><label class="field-label">Role title</label><input type="text" id="i-title" placeholder="e.g. Senior Product Manager — Enterprise"></div>
+      <div><label class="field-label">Reports to</label><input type="text" id="i-rep" placeholder="e.g. Emma Liu, VP Product"></div>
+    </div>
+    <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text"><strong>Outcome 1 is the shortlisting outcome</strong> — it will be sent to candidates before interview. Make it specific, measurable, and time-bound.</div></div>
+    <label class="field-label">Outcome 1 — Shortlisting Outcome</label>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px"><div><label class="field-label" style="font-size:10px">Outcome group</label><input type="text" id="i-ro1g" placeholder="e.g. Direction and Strategic Clarity"></div><div><label class="field-label" style="font-size:10px">Priority</label><input type="text" value="1 — Shortlisting" readonly style="background:var(--cream)"></div></div>
+    <textarea id="i-ro1" placeholder="e.g. Define and deliver H2 product roadmap by end of Q2 2026, prioritising features that drive £500k ARR growth by Q4" style="margin-bottom:14px"></textarea>
+    <label class="field-label">Outcome 2</label>
+    <div style="margin-bottom:6px"><label class="field-label" style="font-size:10px">Outcome group</label><input type="text" id="i-ro2g" placeholder="e.g. Execution and Delivery"></div>
+    <textarea id="i-ro2" placeholder="e.g. Ship 5 major product features with <10% post-launch defect rate by Q4 2026" style="margin-bottom:14px"></textarea>
+    <label class="field-label">Outcome 3</label>
+    <div style="margin-bottom:6px"><label class="field-label" style="font-size:10px">Outcome group</label><input type="text" id="i-ro3g" placeholder="e.g. Customer and User Understanding"></div>
+    <textarea id="i-ro3" placeholder="e.g. Increase NPS from 34 to 50 by Q4 2026 by implementing top 3 improvements from 10+ monthly customer interviews"></textarea>
+  </div>
 
-  <div class="q-card" id="p2c2"><div class="q-num">Question 2 of 5</div><div class="q-text">Salary / compensation package</div><input type="text" id="i-sal" placeholder="e.g. £80k–£95k + 10% performance bonus" oninput="chk('i-sal',1,'p2n2')"><div class="q-nav"><button class="btn-back" onclick="bk2(1)">← Back</button><button class="btn-next" id="p2n2" onclick="adv2(2)">Next →</button></div></div>
+  <!-- T4: Job Description -->
+  <div class="q-card">
+    <div class="q-num">T4 — Job Description + Role Charter</div>
+    <div class="q-text">Basic details and role context</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div><label class="field-label">Salary / compensation</label><input type="text" id="i-sal" placeholder="e.g. £85,000 + 10% bonus"></div>
+      <div><label class="field-label">Employment type</label><input type="text" id="i-emptype" placeholder="e.g. Permanent, Full-time"></div>
+      <div><label class="field-label">Location</label><input type="text" id="i-loc" placeholder="e.g. London, Hybrid (3 days office)"></div>
+      <div><label class="field-label">Travel</label><input type="text" id="i-travel" placeholder="e.g. Minimal"></div>
+      <div><label class="field-label">Flexibility</label><input type="text" id="i-flex" placeholder="e.g. Core hours 10-4"></div>
+      <div><label class="field-label">Start / notice</label><input type="text" id="i-startnotice" placeholder="e.g. ASAP, open to 3-month notice"></div>
+    </div>
+    <label class="field-label">Role purpose (1–2 sentences)</label>
+    <textarea id="i-rp" placeholder="e.g. Own the enterprise product roadmap and drive delivery of high-value features that increase revenue and reduce churn." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Context and constraints</label>
+    <textarea id="i-context" placeholder="e.g. Series B, 150 people. Product team is 8 people. Enterprise tier is new — no existing playbook." style="margin-bottom:14px"></textarea>
+    <label class="field-label">What this role is NOT</label>
+    <textarea id="i-rolenotthis" placeholder="e.g. Not a people management role. Not responsible for mid-market. Not strategy-only — must ship."></textarea>
+  </div>
 
-  <div class="q-card" id="p2c3"><div class="q-num">Question 3 of 5</div><div class="q-text">Location and working arrangement</div><input type="text" id="i-loc" placeholder="e.g. London, Hybrid (3 days office)" oninput="chk('i-loc',1,'p2n3')"><div class="q-nav"><button class="btn-back" onclick="bk2(2)">← Back</button><button class="btn-next" id="p2n3" onclick="adv2(3)">Next →</button></div></div>
+  <!-- T4: Role Charter (Advanced) -->
+  <div class="q-card">
+    <div class="q-num">T4 — Role Charter (Internal)</div>
+    <div class="q-text">Internal details not in the public JD</div>
+    <div class="q-sub">Shared with the hiring panel, not candidates.</div>
+    <label class="field-label">Named stakeholder map</label>
+    <textarea id="i-stakemap" placeholder="e.g. Emma Liu (VP Product) — weekly 1:1&#10;James Park (Engineering Lead) — daily standups&#10;Tom Rodriguez (Sales VP) — weekly pipeline sync" style="margin-bottom:14px"></textarea>
+    <label class="field-label">Can do independently</label>
+    <textarea id="i-deccan" placeholder="e.g. Prioritise features within roadmap, run customer interviews, make scope trade-offs" style="margin-bottom:10px"></textarea>
+    <label class="field-label">Needs sign-off</label>
+    <textarea id="i-deccannot" placeholder="e.g. Budget >£5k, roadmap changes >1 quarter, hiring" style="margin-bottom:10px"></textarea>
+    <label class="field-label">Consult before deciding</label>
+    <textarea id="i-decconsult" placeholder="e.g. Engineering Lead on feasibility, Sales VP on priority" style="margin-bottom:14px"></textarea>
+    <label class="field-label">Dependencies</label>
+    <textarea id="i-deps" placeholder="e.g. Week 1: Jira, Mixpanel access. Ongoing: 2 engineers, Design 5hrs/week. Budget: £10k research." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Risks and failure modes</label>
+    <textarea id="i-risks" placeholder="e.g. Risk: Engineering pulled to mid-market (High). Mitigation: Protected sprints. Failure: Roadmap stalls." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Operating rhythm</label>
+    <textarea id="i-rhythm" placeholder="e.g. Weekly: Sprint planning + Sales sync. Monthly: Stakeholder update. Quarterly: Roadmap planning." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Resource reality</label>
+    <textarea id="i-resources" placeholder="e.g. Will have: 2 engineers, design support. Won't have: dedicated researcher, extra PM."></textarea>
+  </div>
 
-  <div class="q-card" id="p2c4"><div class="q-num">Question 4 of 5</div><div class="q-text">What does this role exist to achieve? (1–2 sentences)</div><div class="q-sub">This becomes the Role Purpose at the top of the Job Description, Advert, and Offer Letter.</div><textarea id="i-rp" placeholder="e.g. Own the enterprise product roadmap and drive delivery of high-value features that increase revenue and reduce churn for our B2B SaaS platform." oninput="chk('i-rp',1,'p2n4')"></textarea><div class="q-nav"><button class="btn-back" onclick="bk2(3)">← Back</button><button class="btn-next" id="p2n4" onclick="adv2(4)">Next →</button></div></div>
+  <!-- T5: Job Advert -->
+  <div class="q-card">
+    <div class="q-num">T5 — Job Advert</div>
+    <div class="q-text">Public-facing advert content</div>
+    <div class="q-sub">The JD is internal. The advert is what candidates see — make it compelling.</div>
+    <label class="field-label">Hook (2–3 sentences)</label>
+    <textarea id="i-hook" placeholder="e.g. We're taking our B2B SaaS platform from £5M to £20M ARR. The enterprise tier is the growth engine — and we need a Senior PM to own it." style="margin-bottom:14px"></textarea>
+    <label class="field-label">What good looks like (candidate signals)</label>
+    <textarea id="i-signals" placeholder="e.g. You've owned a product roadmap in B2B SaaS and can point to specific commercial impact. You talk about outcomes, not activities." style="margin-bottom:14px"></textarea>
+    <label class="field-label">How to apply</label>
+    <textarea id="i-apply" placeholder="e.g. Apply with CV. Shortlisted candidates receive one outcome question. 50-min interview. Decision within 5 working days."></textarea>
+  </div>
 
-  <div class="q-card" id="p2c5">
-    <div class="q-num">Question 5 of 5</div><div class="q-text">Who does this role report to?</div>
-    <input type="text" id="i-rep" placeholder="e.g. Emma Liu, VP Product" oninput="chk('i-rep',1,'p2n5');updJD()">
-    <div class="doc-preview" style="margin-top:20px">
-      <div class="doc-preview-label">Live preview — T4 Job Description</div>
+  <!-- T6: Recruiter Briefing -->
+  <div class="q-card">
+    <div class="q-num">T6 — Recruiter Briefing</div>
+    <div class="q-text">What the recruiter needs to know</div>
+    <div class="q-sub">Be honest — the recruiter needs the truth to find the right person.</div>
+    <label class="field-label">Assumptions recruiter can challenge</label>
+    <textarea id="i-assumptions" placeholder="e.g. B2B SaaS experience assumed essential — open to challenge. London-based less flexible." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Must-haves (with rationale)</label>
+    <textarea id="i-musthaves" placeholder="e.g. Enterprise product ownership — owns roadmap end-to-end.&#10;Commercially-grounded prioritisation — roadmap must drive ARR." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Flex areas</label>
+    <textarea id="i-flexareas" placeholder="e.g. Industry, title level, remote flexibility for exceptional candidates." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Constraints to communicate honestly</label>
+    <textarea id="i-constraints" placeholder="e.g. No existing playbook. Only 2 engineers. Scale-up pace." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Interview stages</label>
+    <textarea id="i-process" placeholder="e.g. CV triage → Outcome question → 50-min interview → Offer within 5 days." style="margin-bottom:14px"></textarea>
+    <label class="field-label">Do Not Approach</label>
+    <textarea id="i-dna" placeholder="e.g. Direct competitors, current clients..." style="margin-bottom:10px"></textarea>
+    <label class="field-label">Do Approach (target environments)</label>
+    <textarea id="i-doapproach" placeholder="e.g. Intercom, Paddle, Pendo — B2B SaaS, Series B-D."></textarea>
+  </div>
+
+  <!-- Preview + Actions -->
+  <div class="q-card">
+    <div class="q-num">Preview</div>
+    <div class="doc-preview">
+      <div class="doc-preview-label">Live preview — Job Description</div>
       <div class="doc-field"><div class="dfl">Role title</div><div class="dfv fill" id="jd-t">—</div></div>
       <div class="doc-field"><div class="dfl">Salary</div><div class="dfv fill" id="jd-s">—</div></div>
       <div class="doc-field"><div class="dfl">Location</div><div class="dfv fill" id="jd-l">—</div></div>
-      <div class="doc-field"><div class="dfl">Reports to</div><div class="dfv" id="jd-r" style="color:var(--muted);font-style:italic">Enter above</div></div>
+      <div class="doc-field"><div class="dfl">Reports to</div><div class="dfv" id="jd-r" style="color:var(--muted);font-style:italic">—</div></div>
       <div class="doc-field"><div class="dfl">Outcome 1</div><div class="dfv fill" id="jd-o1">—</div></div>
       <div class="doc-field"><div class="dfl">Outcome 2</div><div class="dfv fill" id="jd-o2">—</div></div>
       <div class="doc-field"><div class="dfl">Outcome 3</div><div class="dfv fill" id="jd-o3">—</div></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="bk2(4)">← Back</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([2,3,4,5])">Download T3–T6</button><button class="btn-cont" onclick="done2()">Continue to Phase 4 →</button></div></div>
+    <div class="q-nav"><button class="btn-back" onclick="goPhase(1)">← Back to Phase 2</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([2,3,4,5])">Download T3–T6</button><button class="btn-cont" onclick="done2()">Continue to Phase 4 →</button></div></div>
   </div>
 </div>
 
@@ -433,13 +554,79 @@ select:focus{border-color:var(--sage);background:white;}
 <div id="p3" class="phase-section">
   <div class="phase-eyebrow">Phase 4 of 6 — Shortlisting</div>
   <h1 class="phase-heading">Finding the right<br><em style="color:var(--sage)">candidates to interview</em></h1>
-  <p class="phase-intro">Outcome 1 is automatically used as the shortlisting question. Candidates answer it in writing. You score their answers before deciding who to interview.</p>
-  <div class="hint-box info" style="margin-bottom:24px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Shortlisting question (sent to candidates):</strong> <span id="sl-o1" style="font-weight:500">Complete Phase 1 first.</span></div></div>
+  <p class="phase-intro">Move from applications to interview-ready candidates fast, using CV clues then one outcome question.</p>
 
-  <div id="candidates-container"></div>
+  <!-- STEP 1: Three-Bucket CV Review -->
+  <div class="q-card" style="margin-bottom:20px">
+    <div class="q-num">Step 1 — Three-Bucket CV Review (Fast Triage)</div>
+    <div class="q-sub" style="margin-bottom:12px">Rule: CVs are clues, not proof. Scan CV + LinkedIn quickly. Sort into three buckets.</div>
+    <div class="hint-box" style="margin-bottom:18px"><div class="hint-icon">⚠</div><div class="hint-text"><strong>Bias check:</strong> We all use shortcuts like company names and job titles. A big-name CV can move someone into Bucket B — it does not skip the process.</div></div>
 
-  <div style="text-align:center;margin:16px 0">
-    <button class="btn-cont" onclick="addCandidate()" style="font-size:13px;padding:8px 20px;">+ Add candidate</button>
+    <label class="field-label" style="margin-bottom:6px">Bucket A — Send Outcome Question</label>
+    <div class="q-sub" style="margin-bottom:8px;margin-top:0">Strong clues they can deliver Outcome 1. Look for: measurable impact, outcome language, similar environment, signs of judgement.</div>
+    <textarea id="sl-bucket-a" placeholder="List candidates for Bucket A..."></textarea>
+
+    <label class="field-label" style="margin-bottom:6px;margin-top:16px">Bucket B — Hold / Review</label>
+    <div class="q-sub" style="margin-bottom:8px;margin-top:0">Some relevant experience but unclear. Vague CV, task-heavy, or context mismatch.</div>
+    <textarea id="sl-bucket-b" placeholder="List candidates for Bucket B..."></textarea>
+
+    <label class="field-label" style="margin-bottom:6px;margin-top:16px">Bucket C — No</label>
+    <div class="q-sub" style="margin-bottom:8px;margin-top:0">Clear mismatch for this role.</div>
+    <textarea id="sl-bucket-c" placeholder="List candidates for Bucket C..."></textarea>
+  </div>
+
+  <!-- STEP 2: Send ONE Outcome Question -->
+  <div class="q-card" style="margin-bottom:20px">
+    <div class="q-num">Step 2 — Send ONE Outcome Question</div>
+    <div class="hint-box info" style="margin-bottom:16px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Outcome 1 (auto-populated):</strong> <span id="sl-o1" style="font-weight:500">Complete Phase 1 first.</span></div></div>
+
+    <label class="field-label" style="margin-bottom:8px">Email template (read-only preview)</label>
+    <div class="doc-preview" style="margin-top:0;margin-bottom:0">
+      <div class="doc-preview-label">Shortlisting email</div>
+      <div style="font-size:13px;line-height:1.7;color:var(--ink)">
+        <p style="margin-bottom:8px"><strong>Subject:</strong> <span id="sl-email-role" style="font-weight:500">[Role Title]</span> Application — Question</p>
+        <p style="margin-bottom:8px">Hi [Name],</p>
+        <p style="margin-bottom:8px">Thank you for your application for <span style="font-weight:500;color:var(--sage)" id="sl-email-role2">[Role Title]</span>.</p>
+        <p style="margin-bottom:8px">We would like to understand your experience with <strong><span id="sl-o1-group">[Outcome 1 group name]</span></strong> — a key outcome for this role:</p>
+        <p style="margin-bottom:8px;padding:8px 12px;background:var(--sage-light);border-radius:6px;font-style:italic"><span id="sl-o1-full">[Outcome 1 text]</span></p>
+        <p style="margin-bottom:8px">Can you describe a time you delivered something similar? In one short paragraph, please tell us:</p>
+        <ul style="margin-left:20px;margin-bottom:8px">
+          <li>What was the situation?</li>
+          <li>What did you personally do?</li>
+          <li>What was the measurable result?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3: Score the Answers -->
+  <div class="q-card" style="margin-bottom:20px">
+    <div class="q-num">Step 3 — Score the Answers</div>
+    <div class="q-sub" style="margin-bottom:12px">Add each candidate who responded. Paste their answer and score it 1–5 based on outcome strength.</div>
+    <div class="hint-box info" style="margin-bottom:16px"><div class="hint-icon">↑</div><div class="hint-text"><strong>Outcome 1 for scoring:</strong> <span id="sl-o1-info" style="font-weight:500">Complete Phase 1 first.</span></div></div>
+
+    <div id="candidates-container"></div>
+
+    <div style="text-align:center;margin:16px 0">
+      <button class="btn-cont" onclick="addCandidate()" style="font-size:13px;padding:8px 20px;">+ Add candidate</button>
+    </div>
+
+    <div class="hint-box success" style="margin-top:8px"><div class="hint-icon">✓</div><div class="hint-text"><strong>Interview rule:</strong> Interview candidates with 4–5, and a small number of strong 3's if the market is tight.</div></div>
+  </div>
+
+  <!-- STEP 4: Decide Who to Interview -->
+  <div class="q-card" style="margin-bottom:20px">
+    <div class="q-num">Step 4 — Decide Who to Interview</div>
+    <div class="q-sub" style="margin-bottom:12px">Based on scores above, sort candidates into final groups.</div>
+
+    <label class="field-label" style="margin-bottom:6px">Candidates to Interview (with notes)</label>
+    <textarea id="sl-interview" placeholder="e.g. Alex Turner (scored 5) — strong outcome on revenue growth, clear ownership..."></textarea>
+
+    <label class="field-label" style="margin-bottom:6px;margin-top:16px">Candidates on Hold (with reason)</label>
+    <textarea id="sl-hold" placeholder="e.g. Sam Lee (scored 3) — decent outcome but vague on personal contribution, revisit if pipeline is thin..."></textarea>
+
+    <label class="field-label" style="margin-bottom:6px;margin-top:16px">Candidates Declined (with reason)</label>
+    <textarea id="sl-declined" placeholder="e.g. Jordan Miles (scored 1) — no outcome evidence, task-only answer..."></textarea>
   </div>
 
   <div class="q-nav" style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px"><button class="btn-back" onclick="goPhase(2)">← Back to Phase 3</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([6])">Download T7</button><button class="btn-cont" onclick="done3()">Continue to Phase 5 →</button></div></div>
@@ -449,21 +636,31 @@ select:focus{border-color:var(--sage);background:white;}
 <div id="p4" class="phase-section">
   <div class="phase-eyebrow">Phase 5 of 6 — Interviews</div>
   <h1 class="phase-heading">Evidence-based<br><em style="color:var(--sage)">interviewing</em></h1>
-  <p class="phase-intro">Your 3 priority outcomes are pre-loaded. Use S-E-O-A for every outcome: Situation, Evidence (what they did), Outcome (result), After-effects (what they learned).</p>
+  <p class="phase-intro">Script, questions, and evidence capture in one place. Focus on ONE outcome at a time. Use the 3-layer model: Primary Question, Follow-Ups, Deep Probes.</p>
 
-  <div class="q-card active">
-    <div class="q-num">Candidate details</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-      <div><label class="field-label" style="margin-bottom:6px">Candidate name</label><input type="text" placeholder="e.g. Alex Turner"></div>
-      <div><label class="field-label" style="margin-bottom:6px">Interview date</label><input type="text" placeholder="e.g. 15 May 2026"></div>
+  <!-- T8: Setup -->
+  <div class="q-card">
+    <div class="q-num">T8 — Interview Setup</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+      <div><label class="field-label">Candidate name</label><input type="text" id="iv-name" placeholder="e.g. Alex Turner"></div>
+      <div><label class="field-label">Interview date</label><input type="text" id="iv-date" placeholder="e.g. 15 May 2026"></div>
+      <div><label class="field-label">Role</label><input type="text" id="iv-role" readonly style="background:var(--cream)"></div>
+      <div><label class="field-label">Interviewer</label><input type="text" id="iv-interviewer" placeholder="e.g. Emma Liu"></div>
     </div>
+    <div class="hint-box info"><div class="hint-icon">📋</div><div class="hint-text"><strong>Structure (50–55 min):</strong> Opening (2 min) → Outcome 1 (15 min) → Outcome 2 (10 min) → Outcome 3 (10 min) → Advice Question (4 min) → Their Questions (5 min) → Close (1 min)</div></div>
+    <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Opening script:</strong> "Thanks for joining. This conversation is focused on three key outcomes for the role. For the first outcome we will start from the answer you sent us and explore it together. For outcomes two and three I will ask for fresh examples. I am looking for clarity, not perfection."</div></div>
   </div>
 
+  <!-- Outcome 1 -->
   <div class="q-card" style="border-color:var(--sage)">
     <div class="q-num">Outcome 1 — 15 minutes</div>
     <div class="q-text" id="int-o1">Direction and Strategic Clarity</div>
-    <div class="hint-box info"><div class="hint-icon">💬</div><div class="hint-text"><strong>Opening:</strong> "I've read your written answer. Can you walk me through it — what was the situation, what were you personally trying to achieve, and what happened?"</div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+    <div class="hint-box info"><div class="hint-icon">↑</div><div class="hint-text">This outcome opens differently — you already have their written answer from shortlisting.</div></div>
+    <label class="field-label">Their written answer (paste from shortlisting)</label>
+    <textarea id="iv-o1-written" placeholder="Paste the candidate's Outcome 1 answer from the shortlisting email here..." style="margin-bottom:12px"></textarea>
+    <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Opening:</strong> "I've read your answer about [their example]. I'd like to explore it further. Can you walk me through it — what was the situation, what were you personally trying to achieve, and what happened?"</div></div>
+    <div class="q-sub" style="margin-top:8px"><strong>Follow-ups (pick 3–4):</strong> What were you personally responsible for? What made it difficult? How did you decide? Who else was involved?<br><strong>Deep probes (always ask):</strong> What options did you rule out? Hardest trade-off? Measurable result? What would you do differently?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0">
       <div><label class="field-label">S — Situation</label><textarea placeholder="Context at the time..." style="min-height:70px;font-size:13px"></textarea></div>
       <div><label class="field-label">E — Evidence</label><textarea placeholder="What they personally did & decided..." style="min-height:70px;font-size:13px"></textarea></div>
       <div><label class="field-label">O — Outcome</label><textarea placeholder="Measurable result..." style="min-height:70px;font-size:13px"></textarea></div>
@@ -479,15 +676,17 @@ select:focus{border-color:var(--sage);background:white;}
     </div>
   </div>
 
+  <!-- Outcome 2 -->
   <div class="q-card">
     <div class="q-num">Outcome 2 — 10 minutes</div>
     <div class="q-text" id="int-o2">Execution and Delivery</div>
-    <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Opening:</strong> "Tell me about a time you shipped a complex product on time and with high quality."</div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-      <div><label class="field-label">S — Situation</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
-      <div><label class="field-label">E — Evidence</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
-      <div><label class="field-label">O — Outcome</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
-      <div><label class="field-label">A — After-effects</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
+    <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Primary:</strong> "Tell me about a time you shipped a complex product feature on time and with high quality."</div></div>
+    <div class="q-sub"><strong>Follow-ups:</strong> What were you responsible for? Challenges? Key stakeholders? What slowed you down?<br><strong>Deep probes:</strong> Trade-offs? Measurable result? What did you learn?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0">
+      <div><label class="field-label">S — Situation</label><textarea style="min-height:70px;font-size:13px"></textarea></div>
+      <div><label class="field-label">E — Evidence</label><textarea style="min-height:70px;font-size:13px"></textarea></div>
+      <div><label class="field-label">O — Outcome</label><textarea style="min-height:70px;font-size:13px"></textarea></div>
+      <div><label class="field-label">A — After-effects</label><textarea style="min-height:70px;font-size:13px"></textarea></div>
     </div>
     <label class="field-label" style="margin-bottom:8px">Score (0–4)</label>
     <div class="score-grid s5" id="sg2">
@@ -499,15 +698,17 @@ select:focus{border-color:var(--sage);background:white;}
     </div>
   </div>
 
+  <!-- Outcome 3 -->
   <div class="q-card">
     <div class="q-num">Outcome 3 — 10 minutes</div>
     <div class="q-text" id="int-o3">Customer and User Understanding</div>
-    <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Opening:</strong> "Tell me about a time you improved the customer experience using direct customer insight."</div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-      <div><label class="field-label">S — Situation</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
-      <div><label class="field-label">E — Evidence</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
-      <div><label class="field-label">O — Outcome</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
-      <div><label class="field-label">A — After-effects</label><textarea placeholder="" style="min-height:70px;font-size:13px"></textarea></div>
+    <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Primary:</strong> "Tell me about a time you improved the customer experience using direct customer insight — interviews, research, or feedback loops."</div></div>
+    <div class="q-sub"><strong>Follow-ups:</strong> How did you gather insight? How did you prioritise? Who did you influence? What resistance?<br><strong>Deep probes:</strong> Trade-offs? Measurable result (NPS, retention)? What did you learn?</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0">
+      <div><label class="field-label">S — Situation</label><textarea style="min-height:70px;font-size:13px"></textarea></div>
+      <div><label class="field-label">E — Evidence</label><textarea style="min-height:70px;font-size:13px"></textarea></div>
+      <div><label class="field-label">O — Outcome</label><textarea style="min-height:70px;font-size:13px"></textarea></div>
+      <div><label class="field-label">A — After-effects</label><textarea style="min-height:70px;font-size:13px"></textarea></div>
     </div>
     <label class="field-label" style="margin-bottom:8px">Score (0–4)</label>
     <div class="score-grid s5" id="sg3">
@@ -519,48 +720,173 @@ select:focus{border-color:var(--sage);background:white;}
     </div>
   </div>
 
+  <!-- Advice Question -->
   <div class="q-card">
-    <div class="q-num">Summary</div>
-    <div class="q-text">Interview decision</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:16px 0">
-      <div style="background:var(--cream);border-radius:8px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:600;color:var(--sage)" id="tot">—</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Total /12</div></div>
-      <div style="background:var(--cream);border-radius:8px;padding:16px;text-align:center"><div style="font-size:13px;font-weight:600" id="verd">Score all 3 outcomes first</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Recommendation</div></div>
-      <div style="background:var(--cream);border-radius:8px;padding:12px"><label class="field-label">Gut score /10</label><input type="number" min="1" max="10" placeholder="7" style="font-size:20px;font-weight:600;text-align:center;margin-top:6px" oninput="calcTot()"></div>
-    </div>
-    <div class="q-nav"><button class="btn-back" onclick="goPhase(3)">← Back</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([7,8])">Download T8–T9</button><button class="btn-cont" onclick="done4()">Continue to Phase 6 →</button></div></div>
+    <div class="q-num">Advice Question — 4 minutes</div>
+    <div class="hint-box"><div class="hint-icon">💬</div><div class="hint-text"><strong>Script:</strong> "This is how we currently [brief description of a real challenge]. What advice would you give us?"</div></div>
+    <div class="q-sub">Look for: Curiosity before prescription. Do they ask clarifying questions first? Practical, grounded thinking.</div>
+    <textarea id="iv-advice" placeholder="What they said and how they approached it..." style="margin-bottom:8px"></textarea>
   </div>
+
+  <!-- Their Questions -->
+  <div class="q-card">
+    <div class="q-num">Their Questions — 5 minutes</div>
+    <div class="q-sub">What a candidate chooses to ask reveals their priorities and self-awareness. Note exact words where possible.</div>
+    <textarea id="iv-theirqs" placeholder="Note each question they asked..." style="margin-bottom:12px"></textarea>
+    <label class="field-label" style="margin-bottom:8px">Their Questions Score (1–5)</label>
+    <div class="score-grid s5" id="sg-q">
+      <div class="score-cell" onclick="sc(this,'#sg-q')">1<span class="score-lbl">No questions</span></div>
+      <div class="score-cell" onclick="sc(this,'#sg-q')">2<span class="score-lbl">Benefits only</span></div>
+      <div class="score-cell" onclick="sc(this,'#sg-q')">3<span class="score-lbl">Generic</span></div>
+      <div class="score-cell" onclick="sc(this,'#sg-q')">4<span class="score-lbl">Thoughtful</span></div>
+      <div class="score-cell" onclick="sc(this,'#sg-q')">5<span class="score-lbl">Outcome-focused</span></div>
+    </div>
+  </div>
+
+  <!-- Red Flags -->
+  <div class="q-card">
+    <div class="q-num">Red Flags & Overall Notes</div>
+    <div class="hint-box info"><div class="hint-icon">💬</div><div class="hint-text"><strong>Closing script:</strong> "Thanks for your time. We are speaking with [number] candidates this week. We will get back to you by [date]." <em>Do NOT give feedback or hint at decision.</em></div></div>
+    <label class="field-label">Red flags observed</label>
+    <textarea id="iv-redflags" placeholder="e.g. Only described team outcomes — no personal contribution; could not quantify impact; avoided trade-offs..." style="margin-bottom:12px"></textarea>
+    <label class="field-label">Overall impression</label>
+    <textarea id="iv-impression" placeholder="Brief summary — to be confirmed by scoring below. Do not finalise here."></textarea>
+  </div>
+
+  <!-- T9: Scoring & Decision -->
+  <div class="q-card" style="border-color:var(--sage)">
+    <div class="q-num">T9 — Scoring & Offer Decision</div>
+    <div class="q-text">Complete immediately after interview</div>
+    <div class="hint-box"><div class="hint-icon">⚡</div><div class="hint-text">Score within 10 minutes of the interview ending. Evidence fades fast.</div></div>
+    <label class="field-label">Outcome 1 evidence summary</label>
+    <textarea id="iv-ev1" placeholder="Paste or summarise the evidence that justifies the Outcome 1 score..." style="margin-bottom:10px"></textarea>
+    <label class="field-label">Outcome 2 evidence summary</label>
+    <textarea id="iv-ev2" placeholder="Paste or summarise the evidence for Outcome 2..." style="margin-bottom:10px"></textarea>
+    <label class="field-label">Outcome 3 evidence summary</label>
+    <textarea id="iv-ev3" placeholder="Paste or summarise the evidence for Outcome 3..." style="margin-bottom:16px"></textarea>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:16px 0">
+      <div style="background:var(--cream);border-radius:8px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:600;color:var(--sage)" id="tot">—</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Total /12</div></div>
+      <div style="background:var(--cream);border-radius:8px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:600;color:var(--sage)" id="qtot">—</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Questions /4</div></div>
+      <div style="background:var(--cream);border-radius:8px;padding:12px"><label class="field-label">Gut /10</label><input type="number" id="iv-gut" min="1" max="10" placeholder="7" style="font-size:20px;font-weight:600;text-align:center;margin-top:6px" oninput="calcTot()"></div>
+      <div style="background:var(--cream);border-radius:8px;padding:16px;text-align:center"><div style="font-size:13px;font-weight:600" id="verd">Score all outcomes</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Decision</div></div>
+    </div>
+    <div class="hint-box info" style="margin-top:8px"><div class="hint-icon">📊</div><div class="hint-text"><strong>Hire:</strong> Total 7+ out of 12. <strong>No:</strong> Total below 7.</div></div>
+    <label class="field-label" style="margin-top:14px">Offer rationale — why this candidate?</label>
+    <textarea id="iv-rationale" placeholder="Reference specific evidence from the interview for each outcome. This feeds directly into the Written Offer letter."></textarea>
+  </div>
+
+  <div class="q-nav"><button class="btn-back" onclick="goPhase(3)">← Back</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([7,8])">Download T8–T9</button><button class="btn-cont" onclick="done4()">Continue to Phase 6 →</button></div></div>
 </div>
 
 <!-- PHASE 5 -->
 <div id="p5" class="phase-section">
   <div class="phase-eyebrow">Phase 6 of 6 — Offer & Onboarding</div>
   <h1 class="phase-heading">Setting them up<br><em style="color:var(--sage)">to succeed from day one</em></h1>
-  <p class="phase-intro">You've chosen your candidate. Your outcomes pre-fill most of the 30/60/90 plan. This phase takes 15 minutes and generates 3 documents.</p>
+  <p class="phase-intro">Three documents: Written Offer Letter (nudge theory), Pre-Start Engagement, and 30/60/90 Onboarding Plan.</p>
   <div class="hint-box" style="margin-bottom:24px"><div class="hint-icon">⚡</div><div class="hint-text"><strong>Most failed hires happen here.</strong> Not in the interview — in the silence between offer acceptance and start date. This phase dramatically reduces that risk.</div></div>
 
-  <div class="q-card active">
-    <div class="q-num">Offer details</div>
-    <div class="q-text">Personalise the offer for your candidate</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-      <div><label class="field-label" style="margin-bottom:6px">Candidate name</label><input type="text" id="o-cn" placeholder="e.g. Alex Turner" oninput="updOffer()"></div>
-      <div><label class="field-label" style="margin-bottom:6px">Agreed salary</label><input type="text" id="o-sal" placeholder="e.g. £88,000 + 10% bonus" oninput="updOffer()"></div>
-      <div><label class="field-label" style="margin-bottom:6px">Start date</label><input type="text" id="o-sd" placeholder="e.g. 1st June 2026" oninput="updOffer()"></div>
-      <div><label class="field-label" style="margin-bottom:6px">Notice period</label><input type="text" id="o-np" placeholder="e.g. 3 months" oninput="updOffer()"></div>
+  <!-- T10: Offer Letter -->
+  <div class="q-card">
+    <div class="q-num">T10 — Written Offer Letter</div>
+    <div class="q-text">Outcome-anchored offer using nudge theory</div>
+    <div class="q-sub">Use social proof, loss aversion, commitment & consistency, and default to accepting.</div>
+
+    <label class="field-label" style="margin-top:12px">1. Opening (Warm & Personal)</label>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div><label class="field-label" style="font-size:10px">Candidate name</label><input type="text" id="o-cn" placeholder="e.g. Alex Turner"></div>
+      <div><label class="field-label" style="font-size:10px">Role</label><input type="text" id="o-role" readonly style="background:var(--cream)"></div>
     </div>
-    <label class="field-label" style="margin-bottom:6px">Why you chose them — interview evidence (Outcome 1)</label>
-    <textarea id="o-ev" placeholder="e.g. Their roadmap work at Intercom — prioritising enterprise features based on deal data to drive £400k ARR in H1 — showed exactly the commercially-grounded strategic thinking we need." style="margin-bottom:16px"></textarea>
-    <div class="doc-preview">
-      <div class="doc-preview-label">T10 — Offer Letter · Live preview</div>
-      <div class="doc-field"><div class="dfl">To</div><div class="dfv" id="of-cn" style="color:var(--muted);font-style:italic">Enter candidate name above</div></div>
-      <div class="doc-field"><div class="dfl">Role</div><div class="dfv fill" id="of-role">—</div></div>
-      <div class="doc-field"><div class="dfl">Salary</div><div class="dfv" id="of-sal" style="color:var(--muted);font-style:italic">Enter salary above</div></div>
-      <div class="doc-field"><div class="dfl">Start</div><div class="dfv" id="of-sd" style="color:var(--muted);font-style:italic">Enter start date above</div></div>
-      <div class="doc-field"><div class="dfl">Outcome 1</div><div class="dfv fill" id="of-o1">—</div></div>
-      <div class="doc-field"><div class="dfl">Outcome 2</div><div class="dfv fill" id="of-o2">—</div></div>
-      <div class="doc-field"><div class="dfl">Outcome 3</div><div class="dfv fill" id="of-o3">—</div></div>
+
+    <label class="field-label">2. Why We Chose YOU (Evidence-Based)</label>
+    <div class="hint-box info" style="margin-bottom:10px"><div class="hint-icon">🧠</div><div class="hint-text">Reference their interview evidence — triggers commitment & consistency.</div></div>
+    <label class="field-label" style="font-size:10px">Outcome 1 evidence</label>
+    <textarea id="o-ev1" placeholder="e.g. Your roadmap work at [company] — prioritising enterprise features based on ARR impact data and driving £400k ARR in H1 — showed exactly the strategic thinking we need." style="margin-bottom:10px"></textarea>
+    <label class="field-label" style="font-size:10px">Outcome 2 evidence</label>
+    <textarea id="o-ev2" placeholder="e.g. Shipping SSO, admin controls and permissions in 10 weeks with 2 engineers, at a 6% defect rate, proved you can deliver quality with constrained resources." style="margin-bottom:10px"></textarea>
+    <label class="field-label" style="font-size:10px">Outcome 3 evidence</label>
+    <textarea id="o-ev3" placeholder="e.g. Your enterprise tier launch — validated with 8 prospects before build, 3 deals closed within 60 days — is direct evidence you've built exactly what we need." style="margin-bottom:14px"></textarea>
+
+    <label class="field-label">3. What You'll Deliver (The 3 Outcomes)</label>
+    <div class="hint-box success" style="margin-bottom:14px"><div class="hint-icon">→</div><div class="hint-text">Auto-populated from your role outcomes. Helps them visualise success.</div></div>
+
+    <label class="field-label">4. Offer Details</label>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+      <div><label class="field-label" style="font-size:10px">Salary</label><input type="text" id="o-sal" placeholder="e.g. £85,000 + 10% bonus"></div>
+      <div><label class="field-label" style="font-size:10px">Start date</label><input type="text" id="o-sd" placeholder="e.g. 1 May 2026"></div>
+      <div><label class="field-label" style="font-size:10px">Location</label><input type="text" id="o-loc" readonly style="background:var(--cream)"></div>
+      <div><label class="field-label" style="font-size:10px">Holiday</label><input type="text" id="o-hol" placeholder="e.g. 25 days + bank holidays"></div>
+      <div><label class="field-label" style="font-size:10px">Notice period</label><input type="text" id="o-np" placeholder="e.g. 3 months"></div>
+      <div></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="goPhase(4)">← Back to Interviews</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([9,10,11])">Download T10–T12</button><button class="btn-cont" onclick="done5()">Complete →</button></div></div>
+
+    <label class="field-label">5. What Happens Next (Make Accepting Easy)</label>
+    <div class="hint-box info" style="margin-bottom:10px"><div class="hint-icon">🧠</div><div class="hint-text">Default to accepting, remove friction, hint at loss aversion.</div></div>
+    <textarea id="o-nextsteps" placeholder="e.g. To accept: Reply saying 'I accept' by [date]. Call me on [number] if questions." style="margin-bottom:10px"></textarea>
+    <label class="field-label" style="font-size:10px">Optional: loss aversion hook</label>
+    <textarea id="o-lossaversion" placeholder="e.g. We'll be in touch with introductions to people in the business and details of upcoming activities so it doesn't feel overwhelming at the start."></textarea>
+    <div style="margin-top:14px"><button class="btn-dl" onclick="downloadDocs([9])">Download T10 — Offer Letter</button></div>
   </div>
+
+  <!-- T11: Pre-Start Engagement -->
+  <div class="q-card">
+    <div class="q-num">T11 — Pre-Start Engagement</div>
+    <div class="q-text">Keep them engaged until start date</div>
+    <div class="hint-box"><div class="hint-icon">⚠</div><div class="hint-text"><strong>Biggest failure mode:</strong> Silence between acceptance and start date. Stay in touch more than you think is necessary.</div></div>
+
+    <label class="field-label" style="margin-top:14px">Engagement plan by notice period</label>
+    <label class="field-label" style="font-size:10px;margin-top:10px">0–4 weeks: Welcome email + expectations</label>
+    <textarea id="o-pre1" placeholder="e.g. Standard welcome; confirm Day 1 logistics, share team overview." style="margin-bottom:8px;min-height:50px"></textarea>
+    <label class="field-label" style="font-size:10px">4–8 weeks: Add coffee, onboarding outline</label>
+    <textarea id="o-pre2" placeholder="e.g. Share context docs + customer list. Pre-start coffee with manager." style="margin-bottom:8px;min-height:50px"></textarea>
+    <label class="field-label" style="font-size:10px">8–12 weeks: Add team socials, strategy sessions</label>
+    <textarea id="o-pre3" placeholder="e.g. Invite to observe quarterly planning; intro to key stakeholders." style="margin-bottom:8px;min-height:50px"></textarea>
+    <label class="field-label" style="font-size:10px">12+ weeks: Add paid pre-start work</label>
+    <textarea id="o-pre4" placeholder="e.g. 1-2 days paid pre-start on discovery strategy; review customer interviews." style="margin-bottom:14px;min-height:50px"></textarea>
+
+    <label class="field-label">Internal readiness</label>
+    <div class="check-group" style="margin-bottom:14px">
+      <div class="check-item" onclick="togCheck(this,'ir1')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Stakeholder calendars blocked</div></div></div>
+      <div class="check-item" onclick="togCheck(this,'ir2')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Sprint plans include onboarding capacity</div></div></div>
+      <div class="check-item" onclick="togCheck(this,'ir3')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Laptop/access ready for Day 1</div></div></div>
+      <div class="check-item" onclick="togCheck(this,'ir4')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Dependencies notified of start date</div></div></div>
+    </div>
+
+    <label class="field-label">Communication log</label>
+    <textarea id="o-commslog" placeholder="Date | Type of contact | Notes / Response&#10;e.g. 15 Apr | Welcome email | Sent, they replied same day, excited"></textarea>
+    <div style="margin-top:14px"><button class="btn-dl" onclick="downloadDocs([10])">Download T11 — Pre-Start</button></div>
+  </div>
+
+  <!-- T12: 30/60/90 Onboarding -->
+  <div class="q-card">
+    <div class="q-num">T12 — 30/60/90 Day Onboarding Plan</div>
+    <div class="q-text">Outcomes-based onboarding</div>
+    <div class="q-sub">Turn interview evidence into a clear plan for success. Focus on outcomes, not activities.</div>
+
+    <label class="field-label" style="margin-top:12px">Day 1: Reconnect to Outcomes</label>
+    <div class="hint-box success" style="margin-bottom:12px"><div class="hint-icon">→</div><div class="hint-text">Welcome + restate the 3 outcomes they were hired to deliver + share key dependencies.</div></div>
+
+    <label class="field-label">First 30 Days — Learn & Orient</label>
+    <textarea id="o-30" placeholder="Milestones (pass/fail):&#10;e.g. 5+ customer interviews completed&#10;Existing backlog reviewed in full&#10;Key stakeholders met&#10;Initial scope drafted&#10;Tools and systems access confirmed" style="margin-bottom:10px"></textarea>
+    <label class="field-label" style="font-size:10px">30-Day check-in notes</label>
+    <textarea id="o-30notes" placeholder="What has surprised them? What feels unclear? Which relationships need strengthening? What early risks?" style="margin-bottom:14px;min-height:50px"></textarea>
+
+    <label class="field-label">Days 31–60 — Contribute & Own</label>
+    <textarea id="o-60" placeholder="Milestones:&#10;e.g. Roadmap draft presented to stakeholders&#10;First feature spec in active sprint&#10;Quality tracking live&#10;Stalled deals re-engaged" style="margin-bottom:10px"></textarea>
+    <label class="field-label" style="font-size:10px">60-Day check-in notes</label>
+    <textarea id="o-60notes" placeholder="What outcomes delivered? What evidence of progress? What constraints slowed things? On track for 90-day?" style="margin-bottom:14px;min-height:50px"></textarea>
+
+    <label class="field-label">Days 61–90 — Deliver & Lead</label>
+    <textarea id="o-90" placeholder="Milestones:&#10;e.g. Features shipped with quality targets met&#10;Roadmap approved and executing&#10;Customer interviews running at 10+/month&#10;Sprint reviews running independently&#10;Stakeholders using product updates in deals" style="margin-bottom:10px"></textarea>
+    <label class="field-label" style="font-size:10px">90-Day check-in notes</label>
+    <textarea id="o-90notes" placeholder="What outcomes delivered? Where strong judgement shown? Where is support still needed? Proposed next quarter outcomes?" style="margin-bottom:14px;min-height:50px"></textarea>
+
+    <label class="field-label">Dependencies & support required</label>
+    <textarea id="o-deps" placeholder="e.g. Key system access Day 1 (Jira, Mixpanel). Weekly 1-1 with manager. 2 engineers from Week 2. Design 5hrs/week. Budget for 10 customer interviews."></textarea>
+    <div style="margin-top:14px"><button class="btn-dl" onclick="downloadDocs([11])">Download T12 — 30/60/90</button></div>
+  </div>
+
+  <!-- Final Actions -->
+  <div class="q-nav" style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px"><button class="btn-back" onclick="goPhase(4)">← Back to Interviews</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([9,10,11])">Download T10–T12</button><button class="btn-cont" onclick="done5()">Complete →</button></div></div>
 </div>
 </main>
 
@@ -704,6 +1030,7 @@ function updPrev(){
   for(let i=0;i<3;i++){if(!sorted[i]&&ui<unpri.length)sorted[i]=unpri[ui++];}
 
   S.o1=sorted[0]?sorted[0].txt:'';
+  S.o1Label=sorted[0]?sorted[0].label.replace(/^\d+\.\s*/,''):'';
   S.o2=sorted[1]?sorted[1].txt:'';
   S.o3=sorted[2]?sorted[2].txt:'';
 
@@ -742,6 +1069,10 @@ function done0(){
   document.getElementById('pb0').style.width='100%';document.getElementById('pl0').textContent='Complete ✓';
   mkDoc(0);
   document.getElementById('sl-o1').textContent=S.o1||'[Outcome 1 not yet defined]';
+  var slO1Info=document.getElementById('sl-o1-info');if(slO1Info)slO1Info.textContent=S.o1||'[Outcome 1 not yet defined]';
+  var slO1Grp=document.getElementById('sl-o1-group');if(slO1Grp)slO1Grp.textContent=S.o1Label||'[Outcome 1 group]';
+  var slO1Full=document.getElementById('sl-o1-full');if(slO1Full)slO1Full.textContent=S.o1||'[Outcome 1 not yet defined]';
+  var slRole=document.getElementById('sl-email-role');if(slRole)slRole.textContent=S.title||'[Role Title]';
   setTimeout(()=>goPhase(1),300);
 }
 
@@ -759,12 +1090,14 @@ function initP1(){
   }
 }
 function adv1(step){
-  if(step===1){mk('p1c1','answered');mk('p1c2','active');document.getElementById('pb1').style.width='33%';document.getElementById('pl1').textContent='Q2 of 3';document.getElementById('p1c2').scrollIntoView({behavior:'smooth',block:'start'});}
-  else if(step===2){mk('p1c2','answered');mk('p1c3','active');document.getElementById('pb1').style.width='66%';document.getElementById('pl1').textContent='Q3 of 3';document.getElementById('p1c3').scrollIntoView({behavior:'smooth',block:'start'});}
+  var map={1:['p1c1','p1c2',20,'Q2 of 5'],2:['p1c2','p1c3',40,'Q3 of 5'],3:['p1c3','p1c4',60,'Q4 of 5'],4:['p1c4','p1c5',80,'Q5 of 5']};
+  var m=map[step];if(!m)return;
+  mk(m[0],'answered');mk(m[1],'active');document.getElementById('pb1').style.width=m[2]+'%';document.getElementById('pl1').textContent=m[3];document.getElementById(m[1]).scrollIntoView({behavior:'smooth',block:'start'});
 }
 function bk1(step){
-  if(step===1){mk('p1c2','locked');mk('p1c1','answered');document.getElementById('p1c1').scrollIntoView({behavior:'smooth',block:'start'});}
-  if(step===2){mk('p1c3','locked');mk('p1c2','active');document.getElementById('p1c2').scrollIntoView({behavior:'smooth',block:'start'});}
+  var map={1:['p1c2','p1c1'],2:['p1c3','p1c2'],3:['p1c4','p1c3'],4:['p1c5','p1c4']};
+  var m=map[step];if(!m)return;
+  mk(m[0],'locked');mk(m[1],step===1?'answered':'active');document.getElementById(m[1]).scrollIntoView({behavior:'smooth',block:'start'});
 }
 function pickDec(el,type){
   document.querySelectorAll('#p1 .radio-item').forEach(i=>i.classList.remove('selected'));
@@ -774,6 +1107,7 @@ function pickDec(el,type){
   const actions=document.getElementById('p1done');actions.style.display='flex';
   if(type==='hire'){ti.textContent='✓ Decision: Proceed to hire';ti.style.color='var(--sage)';bo.textContent="You've evaluated the alternatives and confirmed hiring is the right solution. Your Hiring Decision Brief will document this rationale so you can share it with your manager for sign-off.";}
   else if(type==='alt'){ti.textContent='→ Decision: Try an alternative first';ti.style.color='var(--amber)';bo.textContent="Noted. Before committing to a hire, try the alternative you've identified. Your Hiring Decision Brief will document this reasoning. Come back to Phase 3 when you're ready to proceed.";}
+  else if(type==='nohire'){ti.textContent='✗ Decision: Do not hire';ti.style.color='var(--amber)';bo.textContent="After thorough analysis, you've determined a hire is not needed. Your Hiring Decision Brief will document this conclusion and the alternatives you'll pursue instead.";}
   else{ti.textContent='⏸ Decision: Postpone';ti.style.color='var(--muted)';bo.textContent="Understood. Your Hiring Decision Brief will document the reasoning. Set a reminder — it's easy to let this drift. Come back when circumstances change.";}
   document.getElementById('pb1').style.width='100%';document.getElementById('pl1').textContent='Complete ✓';
 }
@@ -826,7 +1160,7 @@ function addCandidate(){
   const card=document.createElement('div');
   card.className='q-card';
   card.id='cand-'+n;
-  card.innerHTML=`<div class="q-num" style="display:flex;justify-content:space-between;align-items:center">Candidate ${n}${n>1?'<button onclick="removeCandidate('+n+')" style="font-family:\'DM Sans\',sans-serif;font-size:11px;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Remove</button>':''}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px"><div><label class="field-label" style="margin-bottom:6px">Candidate name</label><input type="text" class="cand-name" placeholder="e.g. Alex Turner"></div><div><label class="field-label" style="margin-bottom:6px">Applied for</label><input type="text" class="cand-role" value="${S.title||''}" readonly style="background:var(--cream)"></div></div><label class="field-label" style="margin-bottom:6px">Their written answer</label><textarea class="cand-answer" placeholder="Paste the candidate's response here. Looking for: clear outcome, personal ownership, measurable impact." style="min-height:100px;margin-bottom:12px"></textarea><label class="field-label" style="margin-bottom:8px">Outcome Strength Score</label><div class="score-grid s5" id="sg-cand-${n}"><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">1<span class="score-lbl">No outcome</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">2<span class="score-lbl">Tasks only</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">3<span class="score-lbl">Vague outcome</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">4<span class="score-lbl">Clear outcome</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">5<span class="score-lbl">Exceptional</span></div></div>`;
+  card.innerHTML=`<div class="q-num" style="display:flex;justify-content:space-between;align-items:center">Candidate ${n}${n>1?'<button onclick="removeCandidate('+n+')" style="font-family:\'DM Sans\',sans-serif;font-size:11px;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Remove</button>':''}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px"><div><label class="field-label" style="margin-bottom:6px">Candidate name</label><input type="text" class="cand-name" placeholder="e.g. Alex Turner"></div><div><label class="field-label" style="margin-bottom:6px">Applied for</label><input type="text" class="cand-role" value="${S.title||''}" readonly style="background:var(--cream)"></div></div><label class="field-label" style="margin-bottom:6px">Their written answer</label><textarea class="cand-answer" placeholder="Paste the candidate's response here. Looking for: clear outcome, personal ownership, measurable impact." style="min-height:100px;margin-bottom:12px"></textarea><label class="field-label" style="margin-bottom:8px">Outcome Strength Score</label><div class="score-grid s5" id="sg-cand-${n}"><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">1<span class="score-lbl">No outcome, no ownership</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">2<span class="score-lbl">Mostly tasks, outcome unclear</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">3<span class="score-lbl">Outcome referenced but vague</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">4<span class="score-lbl">Outcome clear, impact light</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">5<span class="score-lbl">Clear outcome + impact</span></div></div>`;
   container.appendChild(card);
   card.scrollIntoView({behavior:'smooth',block:'center'});
 }
