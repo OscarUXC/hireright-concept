@@ -962,7 +962,7 @@ function hasPhaseContent(i){
   const section=document.getElementById('p'+i);
   if(!section)return false;
   const inputs=section.querySelectorAll('input[type=text],input[type=number],textarea');
-  for(const el of inputs){if(el.value.trim())return true;}
+  for(const el of inputs){if(!el.readOnly&&el.value.trim())return true;}
   const selected=section.querySelectorAll('.check-item.selected,.radio-item.selected,.score-cell.sel');
   if(selected.length>0)return true;
   return false;
