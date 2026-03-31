@@ -958,12 +958,21 @@ function isPhaseComplete(i){
   const phaseDocMap=[[0],[1],[2,3,4,5],[6],[7,8],[9,10,11]];
   return phaseDocMap[i].every(d=>S.docs[d]);
 }
+function hasPhaseContent(i){
+  const section=document.getElementById('p'+i);
+  if(!section)return false;
+  const inputs=section.querySelectorAll('input[type=text],input[type=number],textarea');
+  for(const el of inputs){if(el.value.trim())return true;}
+  const selected=section.querySelectorAll('.check-item.selected,.radio-item.selected,.score-cell.sel');
+  if(selected.length>0)return true;
+  return false;
+}
 function updSidebar(){
   for(let i=0;i<6;i++){
     const el=document.getElementById('sp'+i),b=document.getElementById('sb'+i),ln=document.getElementById('sl'+i);
     el.className='phase-item';
     if(isPhaseComplete(i)){el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';}
-    else if(i===S.phase){el.classList.add('active');b.textContent='In progress';b.className='phase-badge active';}
+    else if(i===S.phase||hasPhaseContent(i)){el.classList.add('active');b.textContent='In progress';b.className='phase-badge active';}
     else{b.textContent='Not started';b.className='phase-badge';}
     if(ln)ln.className='phase-line'+(isPhaseComplete(i)?' done':'');
     const tb=document.getElementById('tab'+i);
