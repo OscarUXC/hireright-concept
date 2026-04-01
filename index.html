@@ -353,14 +353,14 @@ select:focus{border-color:var(--sage);background:white;}
   <p class="phase-intro">Before committing to a hire, confirm it's the right solution. This generates your Hiring Decision Brief — which you can share with your manager for sign-off. Takes 5–10 minutes.</p>
   <div class="progress-row"><div class="progress-track"><div class="progress-fill" id="pb1" style="width:0%"></div></div><div class="progress-label" id="pl1">Q1 of 5</div></div>
 
-  <div class="q-card answered" id="p1c1">
+  <div class="q-card" id="p1c1">
     <div class="q-num">Question 1 — Carried forward from Phase 1</div>
     <div class="q-text">Problem Definition — Outcomes at Risk</div>
     <div class="hint-box info"><div class="hint-icon">↑</div><div class="hint-text" id="carriedHint">Your outcomes and gap analysis from Phase 1 have been carried forward automatically.</div></div>
     <label class="field-label">Outcomes at risk</label>
     <textarea id="i-risk" placeholder="Describe which outcomes are at risk and why — include the impact if nothing changes..."></textarea>
     <label class="field-label" style="margin-top:14px">Measurable Impact</label>
-    <textarea id="i-impact" placeholder="What is the commercial/operational impact if nothing changes? e.g. revenue at risk, delayed launches, customer churn..."></textarea>
+    <textarea id="i-measimpact" placeholder="What is the commercial/operational impact if nothing changes? e.g. revenue at risk, delayed launches, customer churn..."></textarea>
   </div>
 
   <div class="q-card" id="p1c2">
@@ -956,11 +956,11 @@ function goPhase(n){
 // Required fields per phase — phase is "complete" when ALL of these have content
 const REQUIRED_FIELDS={
   0:['i-team','i-purpose','i-stakeholders','i-atrisk'],
-  1:['i-risk'],
-  2:['i-title','i-sal','i-loc','i-rp','i-rep'],
+  1:['i-risk','i-measimpact','i-whyhire','i-decrationale'],
+  2:['i-title','i-sal','i-loc','i-rp','i-rep','i-ro1'],
   3:['sl-bucket-a'],
   4:[],
-  5:['o-cn','o-sal','o-sd']
+  5:['o-cn','o-sal','o-sd','o-ev1']
 };
 function isPhaseComplete(i){
   const fields=REQUIRED_FIELDS[i]||[];
@@ -1112,15 +1112,7 @@ function done0(){
 // ── PHASE 1 ───────────────────────────────────────
 function initP1(){
   const h=document.getElementById('carriedHint');
-  const risk=document.getElementById('i-atrisk')?.value||'';
-  const rootcause=document.getElementById('i-rootcause')?.value||'';
   if(h&&S.o1)h.innerHTML=`Outcomes and gap analysis carried forward from Phase 1. <strong>Priority 1:</strong> "${S.o1.substring(0,80)}${S.o1.length>80?'...':''}"`;
-  const r=document.getElementById('i-risk');
-  if(r&&!r.value){
-    // Pre-fill from gap analysis
-    if(risk)r.value=risk;
-    else if(S.o1)r.value=S.o1.substring(0,100)+(S.o1.length>100?'...':'');
-  }
 }
 function adv1(step){
   var map={1:['p1c1','p1c2',20,'Q2 of 5'],2:['p1c2','p1c3',40,'Q3 of 5'],3:['p1c3','p1c4',60,'Q4 of 5'],4:['p1c4','p1c5',80,'Q5 of 5']};
