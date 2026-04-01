@@ -342,7 +342,7 @@ select:focus{border-color:var(--sage);background:white;}
     <label class="field-label" style="margin-bottom:6px">What type of support might help? New hire / Contractor / Redistribution / Process change?</label>
     <textarea id="i-supporttype" placeholder="e.g. Hiring Senior PM with enterprise B2B SaaS track record OR contract PM for 6 months to cover enterprise launch — permanent hire preferred given board-level priority and ongoing roadmap ownership"></textarea>
     <div class="hint-box success" style="margin-top:16px"><div class="hint-icon">→</div><div class="hint-text"><strong>Next step:</strong> Use Phase 2 (Hiring Decision Brief) to evaluate whether hiring is the right solution based on everything you've documented here.</div></div>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(5)">← Back</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([0])">Download T1</button><button class="btn-cont" onclick="done0()">Continue to Phase 2 →</button></div></div>
+    <div class="q-nav"><div></div><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([0])">Download T1</button><button class="btn-cont" onclick="done0()">Continue to Phase 2 →</button></div></div>
   </div>
 </div>
 
@@ -413,11 +413,9 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="decision-result" id="decResult"><h4 id="decTitle">Decision confirmed</h4><p id="decBody"></p></div>
     <label class="field-label" style="margin-top:14px">Decision rationale</label>
     <textarea id="i-decrationale" placeholder="Briefly explain the reasoning behind your decision..."></textarea>
-    <div class="q-nav">
-      <button class="btn-back" onclick="bk1(4)">← Back</button>
-      <div class="phase-end-actions" id="p1done" style="display:none"><button class="btn-dl" onclick="downloadDocs([1])">Download T2</button><button class="btn-cont" onclick="done1()">Continue to Phase 3 →</button></div>
-    </div>
   </div>
+
+  <div class="q-nav" style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px"><button class="btn-back" onclick="goPhase(0)">← Back to Phase 1</button><div class="phase-end-actions"><button class="btn-dl" onclick="downloadDocs([1])">Download T2</button><button class="btn-cont" onclick="done1()">Continue to Phase 3 →</button></div></div>
 </div>
 
 <!-- PHASE 2 -->
@@ -1139,7 +1137,6 @@ function pickDec(el,type){
   el.classList.add('selected');S.decision=type;
   const res=document.getElementById('decResult'),ti=document.getElementById('decTitle'),bo=document.getElementById('decBody');
   res.classList.add('show');
-  const actions=document.getElementById('p1done');actions.style.display='flex';
   if(type==='hire'){ti.textContent='✓ Decision: Proceed to hire';ti.style.color='var(--sage)';bo.textContent="You've evaluated the alternatives and confirmed hiring is the right solution. Your Hiring Decision Brief will document this rationale so you can share it with your manager for sign-off.";}
   else if(type==='alt'){ti.textContent='→ Decision: Try an alternative first';ti.style.color='var(--amber)';bo.textContent="Noted. Before committing to a hire, try the alternative you've identified. Your Hiring Decision Brief will document this reasoning. Come back to Phase 3 when you're ready to proceed.";}
   else if(type==='nohire'){ti.textContent='✗ Decision: Do not hire';ti.style.color='var(--amber)';bo.textContent="After thorough analysis, you've determined a hire is not needed. Your Hiring Decision Brief will document this conclusion and the alternatives you'll pursue instead.";}
