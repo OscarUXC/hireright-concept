@@ -185,6 +185,14 @@ select:focus{border-color:var(--sage);background:white;}
 .coach-bubble.warning{border-color:#f0b0d0;background:var(--amber-light);color:#a0305a;}
 .coach-bubble.example{border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.65);font-size:12px;border-radius:8px;}
 .coach-divider{font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin:18px 0 10px;}
+.coach-nav{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;}
+.coach-nav-btn{background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
+.coach-nav-btn:hover{border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8);}
+.coach-nav-btn:disabled{opacity:0.2;cursor:default;}
+.coach-dots{display:flex;gap:6px;}
+.coach-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all .2s;}
+.coach-dot.active{background:rgba(255,255,255,0.5);}
+.coach-slide{animation:fadeUp .3s ease;}
 .coach-stat{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:none;font-size:12px;border-radius:6px;margin-bottom:4px;}
 .coach-stat:nth-child(2){background:rgba(74,124,111,0.08);}
 .coach-stat:nth-child(3){background:rgba(200,135,58,0.08);}
@@ -1308,26 +1316,67 @@ const CD={
 };
 const EX=["\"Define and deliver the H2 roadmap by end of Q2, prioritising features that drive £500k ARR growth by Q4, so Engineering and Sales are aligned around a commercially-grounded direction.\"","\"Capacity gap — both PMs at 100% on mid-market, enterprise workstream has 0 hours. Capability gap — no PM has enterprise B2B SaaS feature experience. Neither resolves without hiring.\"","\"Senior Product Manager — Enterprise B2B Focus. £85k–£95k + 10% bonus. London, Hybrid 3 days. Reports to: Emma Liu, VP Product.\"","\"Their roadmap work at Intercom, prioritising enterprise features based on deal data to drive £400k ARR in H1, showed exactly the commercially-grounded strategic thinking we need. Score: 4.\"","\"Tell me about a time you had to make a hard trade-off on a product roadmap. What did you cut, why, and what happened as a result?\"","\"Dear Alex — your enterprise tier launch at [company], validated with 8 prospects before build and closing 3 deals within 60 days, is direct evidence you've built exactly what we need.\""];
 
+let coachPage=0,coachPages=[];
 function coach(n){
   const panel=document.getElementById('coach');
   panel.innerHTML='';
   const ty=document.createElement('div');ty.className='typing';ty.innerHTML='<span></span><span></span><span></span>';panel.appendChild(ty);
-  const dc=S.docs.filter(Boolean).length,oc=[S.o1,S.o2,S.o3].filter(Boolean).length;
+
   setTimeout(()=>{
     panel.innerHTML='';
+    // Build all cards: normal, warning, example
     const msgs=CD[n]||CD[0];
-    msgs.forEach((m,i)=>{
-      setTimeout(()=>{
-        const b=document.createElement('div');
-        b.className='coach-bubble'+(m.w?' warning':'')+' fade-in';
-        b.innerHTML=m.t;panel.appendChild(b);
-      },i*350);
-    });
-    setTimeout(()=>{
-      const ed=document.createElement('div');ed.className='coach-divider';ed.textContent='Example';panel.appendChild(ed);
-      const ex=document.createElement('div');ex.className='coach-bubble example fade-in';ex.textContent=EX[n]||EX[0];panel.appendChild(ex);
-    },msgs.length*350+200);
+    const ex=EX[n]||EX[0];
+    const allCards=[];
+    msgs.forEach(m=>{allCards.push({html:m.t,type:m.w?'warn':'normal'});});
+    allCards.push({html:ex,type:'example'});
+
+    // Split into pages of max 4 (2 normal + 1 warn + 1 example, or however they fit)
+    coachPages=[];
+    for(let i=0;i<allCards.length;i+=4){
+      coachPages.push(allCards.slice(i,i+4));
+    }
+    coachPage=0;
+    renderCoachPage(panel);
+
+    // Auto-advance once after 6 seconds if there are multiple pages
+    if(coachPages.length>1){
+      setTimeout(()=>{if(coachPage===0){coachPage=1;renderCoachPage(panel);}},6000);
+    }
   },700);
+}
+
+function renderCoachPage(panel){
+  panel.innerHTML='';
+  const page=coachPages[coachPage]||[];
+  page.forEach(card=>{
+    const b=document.createElement('div');
+    b.className='coach-bubble coach-slide';
+    if(card.type==='warn')b.classList.add('warning');
+    if(card.type==='example')b.classList.add('example');
+    if(card.type==='example'){
+      const lbl=document.createElement('div');lbl.className='coach-divider';lbl.textContent='Example';panel.appendChild(lbl);
+    }
+    b.innerHTML=card.html;
+    panel.appendChild(b);
+  });
+
+  // Navigation (only if multiple pages)
+  if(coachPages.length>1){
+    const nav=document.createElement('div');nav.className='coach-nav';
+    const prev=document.createElement('button');prev.className='coach-nav-btn';prev.innerHTML='&#8249;';prev.disabled=coachPage===0;
+    prev.onclick=()=>{if(coachPage>0){coachPage--;renderCoachPage(panel);}};
+    const dots=document.createElement('div');dots.className='coach-dots';
+    coachPages.forEach((_,i)=>{
+      const d=document.createElement('div');d.className='coach-dot'+(i===coachPage?' active':'');
+      d.style.cursor='pointer';d.onclick=()=>{coachPage=i;renderCoachPage(panel);};
+      dots.appendChild(d);
+    });
+    const next=document.createElement('button');next.className='coach-nav-btn';next.innerHTML='&#8250;';next.disabled=coachPage===coachPages.length-1;
+    next.onclick=()=>{if(coachPage<coachPages.length-1){coachPage++;renderCoachPage(panel);}};
+    nav.appendChild(prev);nav.appendChild(dots);nav.appendChild(next);
+    panel.appendChild(nav);
+  }
 }
 
 // ── DOCUMENT GENERATION ──────────────────────────
