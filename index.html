@@ -207,7 +207,7 @@ select:focus{border-color:var(--sage);background:white;}
 <body>
 <nav class="nav">
   <div class="nav-logo"><div style="line-height:1.2;">creation <span>consult</span></div><div style="font-size:11px;font-weight:500;color:var(--muted);line-height:1.2;margin-top:1px;">Outcome Hiring System<sup style="font-size:8px;vertical-align:super">™</sup></div></div>
-  <div style="display:flex;align-items:center;gap:16px"><div class="nav-meta" id="navMeta">Acme Corp · Senior PM hire · Phase 1 of 6</div><button onclick="if(confirm('Clear all progress and start fresh?'))clearProgress()" style="font-family:'DM Sans',sans-serif;font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Reset</button></div>
+  <button onclick="if(confirm('Clear all progress and start fresh?'))clearProgress()" style="font-family:'DM Sans',sans-serif;font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Reset</button>
 </nav>
 
 <div class="shell">
@@ -945,8 +945,6 @@ function goPhase(n){
   for(let i=0;i<6;i++){const e=document.getElementById('p'+i);if(e)e.classList.toggle('visible',i===n);}
   document.querySelectorAll('.phase-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
   updSidebar(); coach(n);
-  const nm=['Team Outcomes','Hiring Decision','Role Design','Shortlisting','Interviews','Offer & Onboarding'];
-  document.getElementById('navMeta').textContent=`Acme Corp · Senior PM hire · Phase ${n+1} of 6 — ${nm[n]}`;
   if(n===1)initP1();
   if(n===2)initP2();
   if(n===3){
