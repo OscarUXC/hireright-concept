@@ -955,10 +955,27 @@ function goPhase(n){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+// Required fields per phase — phase is "complete" when ALL of these have content
+const REQUIRED_FIELDS={
+  0:['i-team','i-purpose','i-stakeholders','i-atrisk'],
+  1:['i-risk'],
+  2:['i-title','i-sal','i-loc','i-rp','i-rep'],
+  3:['sl-bucket-a'],
+  4:[],
+  5:['o-cn','o-sal','o-sd']
+};
 function isPhaseComplete(i){
-  // Check if all documents for a phase have been generated
-  const phaseDocMap=[[0],[1],[2,3,4,5],[6],[7,8],[9,10,11]];
-  return phaseDocMap[i].every(d=>S.docs[d]);
+  const fields=REQUIRED_FIELDS[i]||[];
+  if(fields.length===0)return false;
+  for(const id of fields){
+    const el=document.getElementById(id);
+    if(!el||!el.value.trim())return false;
+  }
+  // Phase 1 also needs a decision selected
+  if(i===1){const dec=document.querySelector('#p1 .radio-item.selected');if(!dec)return false;}
+  // Phase 0 also needs at least 1 outcome selected
+  if(i===0){const sel=document.querySelectorAll('#ocg .check-item.selected');if(sel.length<1)return false;}
+  return true;
 }
 function hasPhaseContent(i){
   const section=document.getElementById('p'+i);
@@ -970,16 +987,20 @@ function hasPhaseContent(i){
   return false;
 }
 function updSidebar(){
+  const phaseDocCounts=[1,1,4,1,2,3];// docs per phase
+  let totalDocs=0;
   for(let i=0;i<6;i++){
     const el=document.getElementById('sp'+i),b=document.getElementById('sb'+i),ln=document.getElementById('sl'+i);
     el.className='phase-item';
-    if(isPhaseComplete(i)){el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';}
+    const complete=isPhaseComplete(i);
+    if(complete){el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';totalDocs+=phaseDocCounts[i];}
     else if(i===S.phase||hasPhaseContent(i)){el.classList.add('active');b.textContent='In progress';b.className='phase-badge active';}
     else{b.textContent='Not started';b.className='phase-badge';}
-    if(ln)ln.className='phase-line'+(isPhaseComplete(i)?' done':'');
+    if(ln)ln.className='phase-line'+(complete?' done':'');
     const tb=document.getElementById('tab'+i);
     if(tb){tb.style.opacity='1';tb.style.pointerEvents='auto';}
   }
+  const dc=document.getElementById('docCount');if(dc)dc.textContent=totalDocs;
 }
 
 // ── HELPERS ──────────────────────────────────────
@@ -1082,14 +1103,12 @@ function applyAI(){
   document.getElementById('aiBox').classList.remove('show');
 }
 function done0(){
-  document.getElementById('pb0').style.width='100%';document.getElementById('pl0').textContent='Complete ✓';
-  mkDoc(0);
   document.getElementById('sl-o1').textContent=S.o1||'[Outcome 1 not yet defined]';
   var slO1Info=document.getElementById('sl-o1-info');if(slO1Info)slO1Info.textContent=S.o1||'[Outcome 1 not yet defined]';
   var slO1Grp=document.getElementById('sl-o1-group');if(slO1Grp)slO1Grp.textContent=S.o1Label||'[Outcome 1 group]';
   var slO1Full=document.getElementById('sl-o1-full');if(slO1Full)slO1Full.textContent=S.o1||'[Outcome 1 not yet defined]';
   var slRole=document.getElementById('sl-email-role');if(slRole)slRole.textContent=S.title||'[Role Title]';
-  setTimeout(()=>goPhase(1),300);
+  goPhase(1);
 }
 
 // ── PHASE 1 ───────────────────────────────────────
@@ -1128,8 +1147,8 @@ function pickDec(el,type){
   document.getElementById('pb1').style.width='100%';document.getElementById('pl1').textContent='Complete ✓';
 }
 function done1(){
-  mkDoc(1);
-  if(S.decision==='hire')setTimeout(()=>goPhase(2),300);
+  if(S.decision==='hire')goPhase(2);
+  else goPhase(2);
 }
 
 // ── PHASE 2 ───────────────────────────────────────
@@ -1161,12 +1180,10 @@ function updJD(){
   const b=document.getElementById('p2n5');if(b){b.disabled=v.length<1;b.style.opacity=v.length<1?'0.4':'1';}
 }
 function done2(){
-  [2,3,4,5].forEach(i=>mkDoc(i));
   S.title=document.getElementById('i-title')?.value||'';
   S.sal=document.getElementById('i-sal')?.value||'';
   S.loc=document.getElementById('i-loc')?.value||'';
   S.rep=document.getElementById('i-rep')?.value||'';
-  // Update shortlisting references
   const sl=document.getElementById('sl-role');if(sl)sl.value=S.title;
   const ro1=document.getElementById('i-ro1')?.value||'';
   const ro1g=document.getElementById('i-ro1g')?.value||'';
@@ -1175,9 +1192,8 @@ function done2(){
   const ro1f=document.getElementById('sl-o1-full');if(ro1f&&ro1)ro1f.textContent=ro1;
   S.o2=document.getElementById('i-ro2')?.value||S.o2;
   S.o3=document.getElementById('i-ro3')?.value||S.o3;
-  // Update interview role
   const ivr=document.getElementById('iv-role');if(ivr)ivr.value=S.title;
-  setTimeout(()=>goPhase(3),300);
+  goPhase(3);
 }
 
 // ── PHASE 3 ───────────────────────────────────────
@@ -1197,7 +1213,7 @@ function removeCandidate(n){
   const card=document.getElementById('cand-'+n);
   if(card)card.remove();
 }
-function done3(){mkDoc(6);goPhase(4);}
+function done3(){goPhase(4);}
 
 // ── PHASE 4 ───────────────────────────────────────
 function calcTot(){
@@ -1216,7 +1232,7 @@ function calcTot(){
     else{ve.textContent='No';ve.style.color='#c0392b';}
   }
 }
-function done4(){[7,8].forEach(i=>mkDoc(i));updOffer();goPhase(5);}
+function done4(){updOffer();goPhase(5);}
 
 // ── PHASE 5 ───────────────────────────────────────
 function updOffer(){
@@ -1226,7 +1242,6 @@ function updOffer(){
   const ivr=document.getElementById('iv-role');if(ivr)ivr.value=S.title||'';
 }
 function done5(){
-  [9,10,11].forEach(i=>mkDoc(i));
   const banner=document.createElement('div');
   banner.className='complete-banner';
   banner.innerHTML=`<h3>All 12 documents complete</h3><p>Your full hiring pack has been generated and is ready to send. Every document is pre-filled with everything you've entered across all 6 phases of this process.</p><div class="complete-docs">${Array.from({length:12},(_,i)=>'<div class="complete-doc">T'+(i+1)+'</div>').join('')}</div><button class="btn-gen" style="background:white;color:var(--sage);border-color:white;font-size:14px;padding:10px 22px" onclick="downloadDocs([0,1,2,3,4,5,6,7,8,9,10,11])">Download all 12 documents</button>`;
