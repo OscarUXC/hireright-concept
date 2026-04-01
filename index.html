@@ -537,7 +537,10 @@ select:focus{border-color:var(--sage);background:white;}
     <textarea id="i-signals" placeholder="e.g. You've owned a product roadmap in B2B SaaS and can point to specific commercial impact. You talk about outcomes, not activities." style="margin-bottom:14px"></textarea>
     <label class="field-label">How to apply</label>
     <textarea id="i-apply" placeholder="e.g. Apply with CV. Shortlisted candidates receive one outcome question. 50-min interview. Decision within 5 working days."></textarea>
-    <div style="margin-top:14px"><button class="btn-dl" onclick="downloadDocs([4])">Download Job Advert</button></div>
+    <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+      <button class="btn-dl" onclick="downloadBlankAdvert()">Download blank template</button>
+      <button class="btn-dl" onclick="downloadDocs([4])" style="background:var(--sage);color:white;border-color:var(--sage);">Download completed advert</button>
+    </div>
   </div>
 
   <!-- T6: Recruiter Briefing -->
@@ -1725,6 +1728,41 @@ function makeDocContent(idx,d){
 function buildDoc(idx,d){
   const children=makeDocContent(idx,d);
   return new D.Document({sections:[{properties:{},children}]});
+}
+
+async function downloadBlankAdvert(){
+  const secs=[];
+  secs.push(new D.Paragraph({children:[new D.TextRun({text:'[Role Title]',bold:true,size:36,font:'Georgia'})],spacing:{after:60}}));
+  secs.push(p('[Location]  |  [Salary]  |  [Employment Type]',{s:22,c:'666666'}));
+  secs.push(gap());
+  secs.push(new D.Paragraph({children:[new D.TextRun({text:'[Write 2–3 sentences that hook the reader. Describe the problem you need solved and the opportunity — not the company history.]',size:24,italics:true,color:'999999'})],spacing:{after:200}}));
+  secs.push(hr());
+  secs.push(h('About the role',2));
+  secs.push(p('[1–2 sentences. What does this role exist to achieve? What commercial or operational value will this person create?]',{c:'999999'}));
+  secs.push(p('[Context: company stage, team size, what makes this role unique or urgent.]',{c:'999999'}));
+  secs.push(gap());
+  secs.push(h('What you will deliver',2));
+  secs.push(new D.Paragraph({children:[new D.TextRun({text:'Outcome 1: ',bold:true,size:22}),new D.TextRun({text:'[Outcome group] — [Specific outcome with measure and timeframe]',size:22,color:'999999'})],spacing:{after:100}}));
+  secs.push(new D.Paragraph({children:[new D.TextRun({text:'Outcome 2: ',bold:true,size:22}),new D.TextRun({text:'[Outcome group] — [Specific outcome with measure and timeframe]',size:22,color:'999999'})],spacing:{after:100}}));
+  secs.push(new D.Paragraph({children:[new D.TextRun({text:'Outcome 3: ',bold:true,size:22}),new D.TextRun({text:'[Outcome group] — [Specific outcome with measure and timeframe]',size:22,color:'999999'})],spacing:{after:100}}));
+  secs.push(gap());
+  secs.push(h('What we are looking for',2));
+  secs.push(p('[Describe what good looks like — evidence-based signals, not a skills checklist. What has the right person done before?]',{c:'999999'}));
+  secs.push(gap());
+  secs.push(h('About the team',2));
+  secs.push(p('[Team name, size, what the team does, who they work with.]',{c:'999999'}));
+  secs.push(gap());
+  secs.push(h('Details',2));
+  secs.push(field('Compensation','[Salary + bonus/benefits]'));
+  secs.push(field('Employment type','[Permanent / Contract / etc.]'));
+  secs.push(field('Location','[Office / Hybrid / Remote + city]'));
+  secs.push(field('Start','[Target start date or notice period accepted]'));
+  secs.push(gap());
+  secs.push(h('How to apply',2));
+  secs.push(p('[Describe the process: what to send, what happens next, timeline for response.]',{c:'999999'}));
+  const doc=new D.Document({sections:[{properties:{},children:secs}]});
+  const blob=await D.Packer.toBlob(doc);
+  saveAs(blob,'T5_Job_Advert_Blank_Template.docx');
 }
 
 async function downloadDocs(indices){
