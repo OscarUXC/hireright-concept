@@ -277,8 +277,7 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="q-num">Section A — Team Context · Question 1 of 6</div>
     <div class="q-text">What is your team or function?</div>
     <div class="q-sub">Give a short description — team name, size, and company stage. This sets the context for every document.</div>
-    <input type="text" id="i-team" placeholder="e.g. Product Team — 3 PMs, 2 designers, 3 analysts. Series B B2B SaaS, 150 people." oninput="chk('i-team',1,'p0n1')">
-    <div class="q-nav"><div></div><button class="btn-next" id="p0n1" onclick="adv0(1)">Next →</button></div>
+    <input type="text" id="i-team" placeholder="e.g. Product Team — 3 PMs, 2 designers, 3 analysts. Series B B2B SaaS, 150 people.">
   </div>
 
   <!-- Q2: Team Purpose -->
@@ -287,8 +286,7 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="q-text">What is the primary purpose of this team?</div>
     <div class="q-sub">Why does this team exist? What commercial or operational value does it create?</div>
     <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Think about the <strong>outcome</strong> your team delivers — not the tasks they do. e.g. <em>"Build and ship product features that drive commercial growth — specifically the enterprise tier that enables Sales to close deals and achieve £2M ARR by Q4 2026"</em></div></div>
-    <textarea id="i-purpose" placeholder="e.g. Build and ship product features that drive commercial growth — specifically the enterprise tier that enables Sales to close deals and achieve ARR targets." oninput="chk('i-purpose',1,'p0n2')"></textarea>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(1)">← Back</button><button class="btn-next" id="p0n2" onclick="adv0(2)">Next →</button></div>
+    <textarea id="i-purpose" placeholder="e.g. Build and ship product features that drive commercial growth — specifically the enterprise tier that enables Sales to close deals and achieve ARR targets."></textarea>
   </div>
 
   <!-- Q3: Key Stakeholders -->
@@ -297,8 +295,7 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="q-text">Who are your key stakeholders?</div>
     <div class="q-sub">Who depends on this team's outcomes? List the people and teams who rely on your output.</div>
     <div class="hint-box"><div class="hint-icon">💡</div><div class="hint-text">Include names, roles, and <strong>what they need from your team</strong>. This helps map dependencies across your documents.</div></div>
-    <textarea id="i-stakeholders" placeholder="e.g. Sales team / Tom Rodriguez (need enterprise features to close deals), Emma Liu VP Product (strategic direction), James Park Engineering Lead (delivery capacity), Sarah Rasool Design Lead (UX quality)" oninput="chk('i-stakeholders',1,'p0n3')"></textarea>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(2)">← Back</button><button class="btn-next" id="p0n3" onclick="adv0(3)">Next →</button></div>
+    <textarea id="i-stakeholders" placeholder="e.g. Sales team / Tom Rodriguez (need enterprise features to close deals), Emma Liu VP Product (strategic direction), James Park Engineering Lead (delivery capacity), Sarah Rasool Design Lead (UX quality)"></textarea>
   </div>
 
   <!-- Q4: Outcome Selection from 12 Universal Groups -->
@@ -320,7 +317,6 @@ select:focus{border-color:var(--sage);background:white;}
       <div class="ai-text">Your Outcome 1 looks strong — specific and commercially grounded. Consider adding <strong>"so that [stakeholder impact]"</strong> to make the business case even clearer when it appears in your job advert and recruiter briefing.</div>
       <div class="ai-actions"><button class="btn-use" onclick="applyAI()">Apply suggestion</button><button class="btn-edit" onclick="document.getElementById('aiBox').classList.remove('show')">Dismiss</button></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(3)">← Back</button><button class="btn-next" id="p0n4" onclick="adv0(4)">Next →</button></div>
   </div>
 
   <!-- Q5: Gap Analysis -->
@@ -334,7 +330,6 @@ select:focus{border-color:var(--sage);background:white;}
     <textarea id="i-rootcause" placeholder="e.g. Capability gap — no PM with enterprise B2B SaaS experience. Capacity gap — both existing PMs at capacity on mid-market; enterprise workstream has 0 hours allocated" style="margin-bottom:14px"></textarea>
     <label class="field-label" style="margin-bottom:6px">Impact — what happens if this continues? Commercial / operational / strategic?</label>
     <textarea id="i-impact" placeholder="e.g. Enterprise deals continue to stall; £500k ARR target missed; board-level growth priority missed for second consecutive half; Sales team loses confidence in product"></textarea>
-    <div class="q-nav"><button class="btn-back" onclick="bk0(4)">← Back</button><button class="btn-next" id="p0n5" onclick="adv0(5)">Next →</button></div>
   </div>
 
   <!-- Q6: Where Support May Be Needed -->
@@ -366,7 +361,6 @@ select:focus{border-color:var(--sage);background:white;}
     <textarea id="i-risk" placeholder="Describe which outcomes are at risk and why — include the impact if nothing changes..."></textarea>
     <label class="field-label" style="margin-top:14px">Measurable Impact</label>
     <textarea id="i-impact" placeholder="What is the commercial/operational impact if nothing changes? e.g. revenue at risk, delayed launches, customer churn..."></textarea>
-    <div class="q-nav"><div></div><button class="btn-next" onclick="adv1(1)">Next →</button></div>
   </div>
 
   <div class="q-card" id="p1c2">
@@ -382,7 +376,6 @@ select:focus{border-color:var(--sage);background:white;}
       <div class="check-item" onclick="togCheck(this,'rc5')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Process/System Issue — Processes or tools creating friction</div><div class="check-desc">Inefficient workflows, outdated tools, or manual processes slowing the team down</div><div class="check-expand"><label class="field-label">Describe specifically:</label><textarea placeholder="e.g. Manual reporting takes 10 hours/week. Migrating to a modern tool would free up capacity."></textarea></div></div></div>
       <div class="check-item" onclick="togCheck(this,'rc6')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Leadership/Context Issue — Direction unclear or changing too often</div><div class="check-desc">Strategy shifts, unclear priorities, or lack of decision-making causing the team to stall</div><div class="check-expand"><label class="field-label">Describe specifically:</label><textarea placeholder="e.g. Priorities have shifted 3 times this quarter. Team doesn't know which outcome to focus on."></textarea></div></div></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="bk1(1)">← Back</button><button class="btn-next" onclick="adv1(2)">Next →</button></div>
   </div>
 
   <div class="q-card" id="p1c3">
@@ -397,7 +390,6 @@ select:focus{border-color:var(--sage);background:white;}
       <div class="check-item" onclick="togCheck(this,'alt4')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Contractor/outsourced support</div><div class="check-desc">Bring in temporary or external help instead of a permanent hire</div><div class="check-expand"><label class="field-label">Your evaluation:</label><textarea placeholder="e.g. Considered a contractor but this role needs deep product context that takes months to build."></textarea></div></div></div>
       <div class="check-item" onclick="togCheck(this,'alt5')"><div class="check-box">✓</div><div style="flex:1"><div class="check-label">Training/capability uplift</div><div class="check-desc">Invest in developing existing team members to fill the gap</div><div class="check-expand"><label class="field-label">Your evaluation:</label><textarea placeholder="e.g. Could train a junior PM but the ramp time (6+ months) is too long given the urgency."></textarea></div></div></div>
     </div>
-    <div class="q-nav"><button class="btn-back" onclick="bk1(2)">← Back</button><button class="btn-next" onclick="adv1(3)">Next →</button></div>
   </div>
 
   <div class="q-card" id="p1c4">
@@ -406,7 +398,6 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="q-sub">Summarise why the alternatives above cannot fully solve this problem.</div>
     <div class="hint-box info"><div class="hint-icon">✦</div><div class="hint-text">This becomes the core justification in your Hiring Decision Brief. Be specific — your manager will read this.</div></div>
     <textarea id="i-whyhire" placeholder="Why can't the alternatives above solve this? e.g. The gap requires a dedicated senior PM with enterprise experience. Internal reallocation would leave mid-market unowned, and contractors lack the context needed for this strategic role."></textarea>
-    <div class="q-nav"><button class="btn-back" onclick="bk1(3)">← Back</button><button class="btn-next" onclick="adv1(4)">Next →</button></div>
   </div>
 
   <div class="q-card" id="p1c5">
