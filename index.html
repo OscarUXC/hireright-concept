@@ -537,6 +537,7 @@ select:focus{border-color:var(--sage);background:white;}
     <textarea id="i-signals" placeholder="e.g. You've owned a product roadmap in B2B SaaS and can point to specific commercial impact. You talk about outcomes, not activities." style="margin-bottom:14px"></textarea>
     <label class="field-label">How to apply</label>
     <textarea id="i-apply" placeholder="e.g. Apply with CV. Shortlisted candidates receive one outcome question. 50-min interview. Decision within 5 working days."></textarea>
+    <div style="margin-top:14px"><button class="btn-dl" onclick="downloadDocs([4])">Download Job Advert</button></div>
   </div>
 
   <!-- T6: Recruiter Briefing -->
@@ -1532,21 +1533,50 @@ function makeDocContent(idx,d){
       secs.push(p(d.purpose||'—'));
       break;
     case 4:// T5 Job Advert
-      secs.push(h('Template 5: Job Advert',1));
-      secs.push(hr());
-      secs.push(h(d.title||'[Role Title]',2));
-      secs.push(field('Location',d.loc));
-      secs.push(field('Salary',d.sal));
+      const hook=document.getElementById('i-hook')?.value||'';
+      const signals=document.getElementById('i-signals')?.value||'';
+      const apply=document.getElementById('i-apply')?.value||'';
+      const emptype=document.getElementById('i-emptype')?.value||'';
+      const context=document.getElementById('i-context')?.value||'';
+      const ro1g=document.getElementById('i-ro1g')?.value||'';
+      const ro2g=document.getElementById('i-ro2g')?.value||'';
+      const ro3g=document.getElementById('i-ro3g')?.value||'';
+      // Title
+      secs.push(new D.Paragraph({children:[new D.TextRun({text:d.title||'[Role Title]',bold:true,size:36,font:'Georgia'})],spacing:{after:60}}));
+      // Details line
+      secs.push(p([d.loc,d.sal,emptype].filter(Boolean).join('  |  '),{s:22,c:'666666'}));
       secs.push(gap());
-      secs.push(h('About the Role',2));
+      // Hook
+      if(hook){secs.push(new D.Paragraph({children:[new D.TextRun({text:hook,size:24,italics:true})],spacing:{after:200}}));}
+      secs.push(hr());
+      // About the role
+      secs.push(h('About the role',2));
       secs.push(p(d.rp||'—'));
-      secs.push(h('What You Will Deliver',2));
-      secs.push(p('Outcome 1: '+(d.o1||'—')));
-      secs.push(p('Outcome 2: '+(d.o2||'—')));
-      secs.push(p('Outcome 3: '+(d.o3||'—')));
-      secs.push(h('About the Team',2));
-      secs.push(p(d.team||'—'));
-      secs.push(p(d.purpose||'—'));
+      if(context){secs.push(p(context));}
+      secs.push(gap());
+      // What you will deliver
+      secs.push(h('What you will deliver',2));
+      if(ro1g||d.o1){secs.push(new D.Paragraph({children:[new D.TextRun({text:(ro1g||'Outcome 1')+': ',bold:true,size:22}),new D.TextRun({text:d.o1||'—',size:22})],spacing:{after:100}}));}
+      if(ro2g||d.o2){secs.push(new D.Paragraph({children:[new D.TextRun({text:(ro2g||'Outcome 2')+': ',bold:true,size:22}),new D.TextRun({text:d.o2||'—',size:22})],spacing:{after:100}}));}
+      if(ro3g||d.o3){secs.push(new D.Paragraph({children:[new D.TextRun({text:(ro3g||'Outcome 3')+': ',bold:true,size:22}),new D.TextRun({text:d.o3||'—',size:22})],spacing:{after:100}}));}
+      secs.push(gap());
+      // What good looks like
+      if(signals){secs.push(h('What we are looking for',2));secs.push(p(signals));secs.push(gap());}
+      // About the team
+      secs.push(h('About the team',2));
+      if(d.team)secs.push(p(d.team));
+      if(d.purpose)secs.push(p(d.purpose));
+      secs.push(gap());
+      // Details
+      secs.push(h('Details',2));
+      if(d.sal)secs.push(field('Compensation',d.sal));
+      if(emptype)secs.push(field('Employment type',emptype));
+      if(d.loc)secs.push(field('Location',d.loc));
+      const startnotice=document.getElementById('i-startnotice')?.value||'';
+      if(startnotice)secs.push(field('Start',startnotice));
+      secs.push(gap());
+      // How to apply
+      if(apply){secs.push(h('How to apply',2));secs.push(p(apply));}
       break;
     case 5:// T6 Recruiter Briefing
       secs.push(h('Template 6: Recruiter Briefing',1));
