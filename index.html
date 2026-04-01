@@ -1042,15 +1042,23 @@ function hasPhaseContent(i){
   return false;
 }
 function updSidebar(){
-  const phaseDocCounts=[1,1,4,1,2,3];// docs per phase
+  const phaseDocCounts=[1,1,4,1,2,3];
   let totalDocs=0;
   for(let i=0;i<6;i++){
     const el=document.getElementById('sp'+i),b=document.getElementById('sb'+i),ln=document.getElementById('sl'+i);
     el.className='phase-item';
     const complete=isPhaseComplete(i);
-    if(complete){el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';totalDocs+=phaseDocCounts[i];}
-    else if(i===S.phase||hasPhaseContent(i)){el.classList.add('active');b.textContent='In progress';b.className='phase-badge active';}
-    else{b.textContent='Not started';b.className='phase-badge';}
+    const current=i===S.phase;
+    const hasContent=hasPhaseContent(i);
+    if(complete){
+      el.classList.add('completed');b.textContent='Complete';b.className='phase-badge done';totalDocs+=phaseDocCounts[i];
+    } else if(current){
+      el.classList.add('active');b.textContent='In progress';b.className='phase-badge active';
+    } else if(hasContent){
+      b.textContent='In progress';b.className='phase-badge active';
+    } else {
+      b.textContent='Not started';b.className='phase-badge';
+    }
     if(ln)ln.className='phase-line'+(complete?' done':'');
     const tb=document.getElementById('tab'+i);
     if(tb){tb.style.opacity='1';tb.style.pointerEvents='auto';}
