@@ -15,7 +15,7 @@
 body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);min-height:100vh;overflow-x:hidden;}
 .nav{position:fixed;top:4px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px;background:var(--paper);border-bottom:1px solid var(--border);}
 .nav::before{content:'';position:fixed;top:0;left:0;right:0;height:4px;background:var(--amber);z-index:101;}
-.nav-logo{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;letter-spacing:-0.3px;}
+.nav-logo{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;letter-spacing:0;}
 .nav-logo span{color:var(--amber);}
 .nav-meta{font-size:13px;color:var(--muted);}
 .shell{display:grid;grid-template-columns:280px 1fr 320px;min-height:100vh;padding-top:64px;}
@@ -208,7 +208,7 @@ select:focus{border-color:var(--sage);background:white;}
 </head>
 <body>
 <nav class="nav">
-  <div class="nav-logo"><div style="line-height:1.2;">creation <span>consult</span></div><div style="font-size:11px;font-weight:500;color:var(--muted);line-height:1.2;margin-top:1px;">Outcome Hiring System<sup style="font-size:8px;vertical-align:super">™</sup></div></div>
+  <div class="nav-logo"><div style="line-height:1.2;">creation <span>consult</span></div><div style="font-size:11px;font-weight:500;color:var(--muted);line-height:1.2;margin-top:2px;padding-left:1px;">Outcome Hiring System<sup style="font-size:8px;vertical-align:super">™</sup></div></div>
   <button onclick="if(confirm('Clear all progress and start fresh?'))clearProgress()" style="font-family:'DM Sans',sans-serif;font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Reset</button>
 </nav>
 
