@@ -971,7 +971,7 @@ const OG=[
 ];
 
 // ── STATE ───────────────────────────────────────
-const S={phase:0,o1:'',o2:'',o3:'',title:'',sal:'',loc:'',rep:'',decision:'',docs:Array(12).fill(false),unlocked:[true,true,true,true,true,true],outcomes:{}};
+const S={phase:0,o1:'',o2:'',o3:'',o1Label:'',ro1:'',ro2:'',ro3:'',ro1g:'',ro2g:'',ro3g:'',title:'',sal:'',loc:'',rep:'',decision:'',docs:Array(12).fill(false),unlocked:[true,true,true,true,true,true],outcomes:{}};
 
 // ── BUILD OUTCOME CHECKBOXES ─────────────────────
 function buildOCG(){
@@ -1003,9 +1003,9 @@ function goPhase(n){
   if(n===2)initP2();
   if(n===3){
     if(candidateCount===0)addCandidate();
-    // Populate shortlisting references from role outcomes or team outcomes
-    const ro1=document.getElementById('i-ro1')?.value||S.o1||'';
-    const ro1g=document.getElementById('i-ro1g')?.value||'';
+    // Populate shortlisting references from role outcomes only
+    const ro1=document.getElementById('i-ro1')?.value||S.ro1||'';
+    const ro1g=document.getElementById('i-ro1g')?.value||S.ro1g||'';
     const title=document.getElementById('i-title')?.value||S.title||'';
     const sl1=document.getElementById('sl-o1');if(sl1&&ro1)sl1.textContent=ro1;
     const slInfo=document.getElementById('sl-o1-info');if(slInfo&&ro1)slInfo.textContent=ro1;
@@ -1013,6 +1013,15 @@ function goPhase(n){
     const slFull=document.getElementById('sl-o1-full');if(slFull&&ro1)slFull.textContent=ro1;
     const slRole=document.getElementById('sl-email-role');if(slRole&&title)slRole.textContent=title;
     const slRole2=document.getElementById('sl-email-role2');if(slRole2&&title)slRole2.textContent=title;
+  }
+  if(n===4){
+    // Update interview outcome titles from role outcomes
+    const iro1g=document.getElementById('i-ro1g')?.value||S.ro1g||'';
+    const iro2g=document.getElementById('i-ro2g')?.value||S.ro2g||'';
+    const iro3g=document.getElementById('i-ro3g')?.value||S.ro3g||'';
+    const io1=document.getElementById('int-o1');if(io1&&iro1g)io1.textContent=iro1g;
+    const io2=document.getElementById('int-o2');if(io2&&iro2g)io2.textContent=iro2g;
+    const io3=document.getElementById('int-o3');if(io3&&iro3g)io3.textContent=iro3g;
   }
   if(n===5)updOffer();
   window.scrollTo({top:0,behavior:'smooth'});
@@ -1174,11 +1183,7 @@ function applyAI(){
   document.getElementById('aiBox').classList.remove('show');
 }
 function done0(){
-  document.getElementById('sl-o1').textContent=S.o1||'[Outcome 1 not yet defined]';
-  var slO1Info=document.getElementById('sl-o1-info');if(slO1Info)slO1Info.textContent=S.o1||'[Outcome 1 not yet defined]';
-  var slO1Grp=document.getElementById('sl-o1-group');if(slO1Grp)slO1Grp.textContent=S.o1Label||'[Outcome 1 group]';
-  var slO1Full=document.getElementById('sl-o1-full');if(slO1Full)slO1Full.textContent=S.o1||'[Outcome 1 not yet defined]';
-  var slRole=document.getElementById('sl-email-role');if(slRole)slRole.textContent=S.title||'[Role Title]';
+  // Team outcomes stay in S.o1/o2/o3 — shortlisting uses role outcomes from Phase 3
   goPhase(1);
 }
 
@@ -1215,9 +1220,12 @@ function done1(){
 
 // ── PHASE 2 ───────────────────────────────────────
 function initP2(){
-  const o1=S.o1||'—',o2=S.o2||'—',o3=S.o3||'—';
+  // JD preview uses role outcomes (from Phase 3 fields), not team outcomes
+  const ro1=document.getElementById('i-ro1')?.value||S.ro1||'—';
+  const ro2=document.getElementById('i-ro2')?.value||S.ro2||'—';
+  const ro3=document.getElementById('i-ro3')?.value||S.ro3||'—';
   ['jd-o1','jd-o2','jd-o3'].forEach((id,i)=>{
-    const e=document.getElementById(id),v=[o1,o2,o3][i];
+    const e=document.getElementById(id),v=[ro1,ro2,ro3][i];
     if(e){e.textContent=v.substring(0,60)+(v.length>60?'...':'');e.className=v!=='—'?'dfv fill':'dfv empty';}
   });
 }
@@ -1246,14 +1254,19 @@ function done2(){
   S.sal=document.getElementById('i-sal')?.value||'';
   S.loc=document.getElementById('i-loc')?.value||'';
   S.rep=document.getElementById('i-rep')?.value||'';
+  // Set role outcomes — separate from team outcomes
+  S.ro1=document.getElementById('i-ro1')?.value||'';
+  S.ro1g=document.getElementById('i-ro1g')?.value||'';
+  S.ro2=document.getElementById('i-ro2')?.value||'';
+  S.ro2g=document.getElementById('i-ro2g')?.value||'';
+  S.ro3=document.getElementById('i-ro3')?.value||'';
+  S.ro3g=document.getElementById('i-ro3g')?.value||'';
+  // Populate downstream phases with role outcomes
   const sl=document.getElementById('sl-role');if(sl)sl.value=S.title;
-  const ro1=document.getElementById('i-ro1')?.value||'';
-  const ro1g=document.getElementById('i-ro1g')?.value||'';
-  if(ro1){S.o1=ro1;document.getElementById('sl-o1').textContent=ro1;}
-  if(ro1g){const g=document.getElementById('sl-o1-group');if(g)g.textContent=ro1g;}
-  const ro1f=document.getElementById('sl-o1-full');if(ro1f&&ro1)ro1f.textContent=ro1;
-  S.o2=document.getElementById('i-ro2')?.value||S.o2;
-  S.o3=document.getElementById('i-ro3')?.value||S.o3;
+  const sl1=document.getElementById('sl-o1');if(sl1&&S.ro1)sl1.textContent=S.ro1;
+  const slInfo=document.getElementById('sl-o1-info');if(slInfo&&S.ro1)slInfo.textContent=S.ro1;
+  const slGrp=document.getElementById('sl-o1-group');if(slGrp&&S.ro1g)slGrp.textContent=S.ro1g;
+  const slFull=document.getElementById('sl-o1-full');if(slFull&&S.ro1)slFull.textContent=S.ro1;
   const ivr=document.getElementById('iv-role');if(ivr)ivr.value=S.title;
   goPhase(3);
 }
@@ -1460,7 +1473,14 @@ function gatherData(){
     rcItems.push({label,detail:ta?ta.value:''});
   });
   const decision=S.decision;
-  return{team,purpose,stakeholders,atrisk,rootcause,impact,support,supporttype,title,sal,loc,rp,rep,risk,cn,osal,osd,onp,oev,outcomes,rcItems,decision,o1:S.o1,o2:S.o2,o3:S.o3};
+  // Role outcomes (from Phase 3) — used for JD, advert, shortlisting, interviews, offer
+  const ro1=document.getElementById('i-ro1')?.value||S.ro1||'';
+  const ro2=document.getElementById('i-ro2')?.value||S.ro2||'';
+  const ro3=document.getElementById('i-ro3')?.value||S.ro3||'';
+  const ro1g=document.getElementById('i-ro1g')?.value||S.ro1g||'';
+  const ro2g=document.getElementById('i-ro2g')?.value||S.ro2g||'';
+  const ro3g=document.getElementById('i-ro3g')?.value||S.ro3g||'';
+  return{team,purpose,stakeholders,atrisk,rootcause,impact,support,supporttype,title,sal,loc,rp,rep,risk,cn,osal,osd,onp,oev,outcomes,rcItems,decision,o1:ro1,o2:ro2,o3:ro3,ro1g,ro2g,ro3g};
 }
 
 function h(text,level){return new D.Paragraph({text,heading:level===1?D.HeadingLevel.HEADING_1:level===2?D.HeadingLevel.HEADING_2:D.HeadingLevel.HEADING_3,spacing:{after:120}});}
