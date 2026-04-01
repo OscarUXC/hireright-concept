@@ -681,7 +681,7 @@ select:focus{border-color:var(--sage);background:white;}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
       <div><label class="field-label">Candidate name</label><input type="text" id="iv-name" placeholder="e.g. Alex Turner"></div>
       <div><label class="field-label">Interview date</label><input type="text" id="iv-date" placeholder="e.g. 15 May 2026"></div>
-      <div><label class="field-label">Role</label><input type="text" id="iv-role" readonly style="background:var(--cream)"></div>
+      <div><label class="field-label">Role</label><input type="text" id="iv-role" placeholder="Auto-filled from Phase 3" style="background:var(--cream)"></div>
       <div><label class="field-label">Interviewer</label><input type="text" id="iv-interviewer" placeholder="e.g. Emma Liu"></div>
     </div>
     <div class="hint-box info"><div class="hint-icon">📋</div><div class="hint-text"><strong>Structure (50–55 min):</strong> Opening (2 min) → Outcome 1 (15 min) → Outcome 2 (10 min) → Outcome 3 (10 min) → Advice Question (4 min) → Their Questions (5 min) → Close (1 min)</div></div>
@@ -852,7 +852,7 @@ select:focus{border-color:var(--sage);background:white;}
     <label class="field-label" style="margin-top:12px">1. Opening (Warm & Personal)</label>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
       <div><label class="field-label" style="font-size:10px">Candidate name</label><input type="text" id="o-cn" placeholder="e.g. Alex Turner"></div>
-      <div><label class="field-label" style="font-size:10px">Role</label><input type="text" id="o-role" readonly style="background:var(--cream)"></div>
+      <div><label class="field-label" style="font-size:10px">Role</label><input type="text" id="o-role" placeholder="Auto-filled from Phase 3" style="background:var(--cream)"></div>
     </div>
 
     <label class="field-label">2. Why We Chose YOU (Evidence-Based)</label>
@@ -871,7 +871,7 @@ select:focus{border-color:var(--sage);background:white;}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
       <div><label class="field-label" style="font-size:10px">Salary</label><input type="text" id="o-sal" placeholder="e.g. £85,000 + 10% bonus"></div>
       <div><label class="field-label" style="font-size:10px">Start date</label><input type="text" id="o-sd" placeholder="e.g. 1 May 2026"></div>
-      <div><label class="field-label" style="font-size:10px">Location</label><input type="text" id="o-loc" readonly style="background:var(--cream)"></div>
+      <div><label class="field-label" style="font-size:10px">Location</label><input type="text" id="o-loc" placeholder="Auto-filled from Phase 3" style="background:var(--cream)"></div>
       <div><label class="field-label" style="font-size:10px">Holiday</label><input type="text" id="o-hol" placeholder="e.g. 25 days + bank holidays"></div>
       <div><label class="field-label" style="font-size:10px">Notice period</label><input type="text" id="o-np" placeholder="e.g. 3 months"></div>
       <div></div>
@@ -1285,7 +1285,7 @@ function addCandidate(){
   const card=document.createElement('div');
   card.className='q-card';
   card.id='cand-'+n;
-  card.innerHTML=`<div class="q-num" style="display:flex;justify-content:space-between;align-items:center">Candidate ${n}${n>1?'<button onclick="removeCandidate('+n+')" style="font-family:\'DM Sans\',sans-serif;font-size:11px;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Remove</button>':''}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px"><div><label class="field-label" style="margin-bottom:6px">Candidate name</label><input type="text" class="cand-name" placeholder="e.g. Alex Turner"></div><div><label class="field-label" style="margin-bottom:6px">Applied for</label><input type="text" class="cand-role" value="${S.title||''}" readonly style="background:var(--cream)"></div></div><label class="field-label" style="margin-bottom:6px">Their written answer</label><textarea class="cand-answer" placeholder="Paste the candidate's response here. Looking for: clear outcome, personal ownership, measurable impact." style="min-height:100px;margin-bottom:12px"></textarea><label class="field-label" style="margin-bottom:8px">Outcome Strength Score</label><div class="score-grid s5" id="sg-cand-${n}"><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">1<span class="score-lbl">No outcome, no ownership</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">2<span class="score-lbl">Mostly tasks, outcome unclear</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">3<span class="score-lbl">Outcome referenced but vague</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">4<span class="score-lbl">Outcome clear, impact light</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">5<span class="score-lbl">Clear outcome + impact</span></div></div>`;
+  card.innerHTML=`<div class="q-num" style="display:flex;justify-content:space-between;align-items:center">Candidate ${n}${n>1?'<button onclick="removeCandidate('+n+')" style="font-family:\'DM Sans\',sans-serif;font-size:11px;padding:2px 8px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;">Remove</button>':''}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px"><div><label class="field-label" style="margin-bottom:6px">Candidate name</label><input type="text" class="cand-name" placeholder="e.g. Alex Turner"></div><div><label class="field-label" style="margin-bottom:6px">Applied for</label><input type="text" class="cand-role" value="${S.title||''}" placeholder="Auto-filled from Phase 3" style="background:var(--cream)"></div></div><label class="field-label" style="margin-bottom:6px">Their written answer</label><textarea class="cand-answer" placeholder="Paste the candidate's response here. Looking for: clear outcome, personal ownership, measurable impact." style="min-height:100px;margin-bottom:12px"></textarea><label class="field-label" style="margin-bottom:8px">Outcome Strength Score</label><div class="score-grid s5" id="sg-cand-${n}"><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">1<span class="score-lbl">No outcome, no ownership</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">2<span class="score-lbl">Mostly tasks, outcome unclear</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">3<span class="score-lbl">Outcome referenced but vague</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">4<span class="score-lbl">Outcome clear, impact light</span></div><div class="score-cell" onclick="sc(this,'#sg-cand-${n}')">5<span class="score-lbl">Clear outcome + impact</span></div></div>`;
   container.appendChild(card);
   card.scrollIntoView({behavior:'smooth',block:'center'});
 }
