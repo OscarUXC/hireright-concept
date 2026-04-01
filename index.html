@@ -670,6 +670,11 @@ select:focus{border-color:var(--sage);background:white;}
   <h1 class="phase-heading">Evidence-based<br><em style="color:var(--sage);font-family:'DM Serif Display',serif;">interviewing</em></h1>
   <p class="phase-intro">Script, questions, and evidence capture in one place. Focus on ONE outcome at a time. Use the 3-layer model: Primary Question, Follow-Ups, Deep Probes.</p>
 
+  <div style="display:flex;gap:10px;align-items:center;margin-bottom:24px;flex-wrap:wrap;">
+    <button class="btn-dl" onclick="downloadBlankInterview()">Download printable interview template</button>
+    <span style="font-size:11px;color:var(--muted);">A blank Word document with the full interview structure, scripts, and scoring — ready to print or fill in offline.</span>
+  </div>
+
   <!-- T8: Setup -->
   <div class="q-card">
     <div class="q-num">T8 — Interview Setup</div>
@@ -1761,6 +1766,133 @@ function makeDocContent(idx,d){
 function buildDoc(idx,d){
   const children=makeDocContent(idx,d);
   return new D.Document({sections:[{properties:{},children}]});
+}
+
+async function downloadBlankInterview(){
+  const s=[];
+  s.push(new D.Paragraph({children:[new D.TextRun({text:'Interview Guide & Evidence Capture',bold:true,size:36,font:'Georgia'})],spacing:{after:60}}));
+  s.push(p('Complete one form per candidate. Score immediately after the interview.',{s:22,c:'666666'}));
+  s.push(hr());
+  // Candidate details
+  s.push(h('Candidate Details',2));
+  s.push(field('Candidate name',''));
+  s.push(field('Role',''));
+  s.push(field('Date',''));
+  s.push(field('Interviewer',''));
+  s.push(gap());
+  // Structure
+  s.push(h('Interview Structure (50–55 min)',2));
+  s.push(p('Opening (2 min) — Set expectations, reduce anxiety'));
+  s.push(p('Outcome 1 (15 min) — Opens with candidate written answer from shortlisting'));
+  s.push(p('Outcome 2 (10 min) — Fresh example'));
+  s.push(p('Outcome 3 (10 min) — Fresh example'));
+  s.push(p('Advice Question (4 min) — Test thinking and curiosity'));
+  s.push(p('Their Questions (5 min) — Score what they ask'));
+  s.push(p('Close (1 min) — Set next steps'));
+  s.push(gap());
+  // Opening script
+  s.push(h('Opening Script',2));
+  s.push(p('"Thanks for joining. This conversation is focused on three key outcomes for the role. For the first outcome we will start from the answer you sent us and explore it together. For outcomes two and three I will ask for fresh examples. I am looking for clarity, not perfection."',{i:true}));
+  s.push(hr());
+  // Outcome 1
+  s.push(h('Outcome 1 — 15 minutes',2));
+  s.push(field('Outcome group',''));
+  s.push(field('Specific outcome',''));
+  s.push(gap());
+  s.push(p('Their written answer (paste from shortlisting):',{b:true}));
+  s.push(p(''));s.push(p(''));
+  s.push(gap());
+  s.push(p('Opening: "I have read your answer about [their example]. I would like to explore it further. Can you walk me through it — what was the situation, what were you personally trying to achieve, and what happened?"',{i:true}));
+  s.push(gap());
+  s.push(p('Follow-ups (pick 3–4): What were you personally responsible for? What made it difficult? How did you decide? Who else was involved?',{s:20,c:'666666'}));
+  s.push(p('Deep probes (always ask): What options did you rule out? Hardest trade-off? Measurable result? What would you do differently?',{s:20,c:'666666'}));
+  s.push(gap());
+  s.push(field('S — Situation',''));s.push(p(''));
+  s.push(field('E — Evidence',''));s.push(p(''));
+  s.push(field('O — Outcome',''));s.push(p(''));
+  s.push(field('A — After-effects',''));s.push(p(''));
+  s.push(gap());
+  s.push(field('Additional notes',''));s.push(p(''));
+  s.push(field('Score (0–4)','          0 = No evidence  |  1 = Weak  |  2 = Moderate  |  3 = Strong  |  4 = Exceptional'));
+  s.push(hr());
+  // Outcome 2
+  s.push(h('Outcome 2 — 10 minutes',2));
+  s.push(field('Outcome group',''));
+  s.push(field('Specific outcome',''));
+  s.push(gap());
+  s.push(p('Primary question: "Tell me about a time you [relevant to this outcome]."',{i:true}));
+  s.push(gap());
+  s.push(p('Follow-ups: What were you responsible for? Challenges? Key stakeholders? What slowed you down?',{s:20,c:'666666'}));
+  s.push(p('Deep probes: Trade-offs? Measurable result? What did you learn?',{s:20,c:'666666'}));
+  s.push(gap());
+  s.push(field('S — Situation',''));s.push(p(''));
+  s.push(field('E — Evidence',''));s.push(p(''));
+  s.push(field('O — Outcome',''));s.push(p(''));
+  s.push(field('A — After-effects',''));s.push(p(''));
+  s.push(gap());
+  s.push(field('Additional notes',''));s.push(p(''));
+  s.push(field('Score (0–4)','          0 = No evidence  |  1 = Weak  |  2 = Moderate  |  3 = Strong  |  4 = Exceptional'));
+  s.push(hr());
+  // Outcome 3
+  s.push(h('Outcome 3 — 10 minutes',2));
+  s.push(field('Outcome group',''));
+  s.push(field('Specific outcome',''));
+  s.push(gap());
+  s.push(p('Primary question: "Tell me about a time you [relevant to this outcome]."',{i:true}));
+  s.push(gap());
+  s.push(p('Follow-ups: How did you gather insight? How did you prioritise? Who did you influence? What resistance?',{s:20,c:'666666'}));
+  s.push(p('Deep probes: Trade-offs? Measurable result? What did you learn?',{s:20,c:'666666'}));
+  s.push(gap());
+  s.push(field('S — Situation',''));s.push(p(''));
+  s.push(field('E — Evidence',''));s.push(p(''));
+  s.push(field('O — Outcome',''));s.push(p(''));
+  s.push(field('A — After-effects',''));s.push(p(''));
+  s.push(gap());
+  s.push(field('Additional notes',''));s.push(p(''));
+  s.push(field('Score (0–4)','          0 = No evidence  |  1 = Weak  |  2 = Moderate  |  3 = Strong  |  4 = Exceptional'));
+  s.push(hr());
+  // Advice question
+  s.push(h('Advice Question — 4 minutes',2));
+  s.push(p('"This is how we currently [brief description]. What advice would you give us?"',{i:true}));
+  s.push(p('Look for: Curiosity before prescription. Do they ask clarifying questions first?',{s:20,c:'666666'}));
+  s.push(field('Notes',''));s.push(p(''));s.push(p(''));
+  s.push(hr());
+  // Their questions
+  s.push(h('Their Questions — 5 minutes',2));
+  s.push(p('Note each question they asked — exact words where possible.',{s:20,c:'666666'}));
+  s.push(field('Questions asked',''));s.push(p(''));s.push(p(''));
+  s.push(field('Score (1–5)','          1 = No questions  |  2 = Benefits only  |  3 = Generic  |  4 = Thoughtful  |  5 = Outcome-focused'));
+  s.push(hr());
+  // Closing
+  s.push(h('Closing',2));
+  s.push(p('"Thanks for your time. We are speaking with [number] candidates this week. We will get back to you by [date]."',{i:true}));
+  s.push(p('Do NOT give feedback or hint at decision.',{b:true,s:20,c:'999999'}));
+  s.push(hr());
+  // Red flags
+  s.push(h('Red Flags & Overall Notes',2));
+  s.push(field('Red flags observed',''));s.push(p(''));
+  s.push(field('Overall impression',''));s.push(p(''));
+  s.push(hr());
+  // Scoring summary
+  s.push(h('Scoring Summary',2));
+  s.push(p('Complete immediately after interview — within 10 minutes.',{b:true}));
+  s.push(gap());
+  s.push(field('Outcome 1 Score (0–4)',''));
+  s.push(field('Outcome 1 Evidence',''));s.push(p(''));
+  s.push(field('Outcome 2 Score (0–4)',''));
+  s.push(field('Outcome 2 Evidence',''));s.push(p(''));
+  s.push(field('Outcome 3 Score (0–4)',''));
+  s.push(field('Outcome 3 Evidence',''));s.push(p(''));
+  s.push(gap());
+  s.push(field('Outcomes Total','          / 12'));
+  s.push(field('Questions Score','          / 5'));
+  s.push(field('Gut Feeling','          / 8'));
+  s.push(field('Total','          / 25'));
+  s.push(gap());
+  s.push(field('Offer rationale',''));s.push(p(''));s.push(p(''));
+  const doc=new D.Document({sections:[{properties:{},children:s}]});
+  const blob=await D.Packer.toBlob(doc);
+  saveAs(blob,'T8_Interview_Guide_Blank_Template.docx');
 }
 
 async function downloadBlankAdvert(){
