@@ -82,7 +82,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 .hint-box.success{background:var(--sage-light);border-color:#b0d0c8;}
 .hint-box.success .hint-text{color:var(--sage);}
 /* NUMBER SPINNER ALWAYS VISIBLE */
-input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{opacity:1;height:24px;}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{opacity:1;height:34px;cursor:pointer;}
 /* INPUTS */
 textarea,input[type=text],input[type=number]{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--paper);transition:border-color .2s,background .2s;resize:vertical;line-height:1.6;outline:none;}
 textarea:focus,input[type=text]:focus,input[type=number]:focus{border-color:var(--sage);background:white;}
@@ -795,7 +795,7 @@ select:focus{border-color:var(--sage);background:white;}
       </div>
       <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px">Gut feeling</div>
-        <div style="height:34px;display:flex;align-items:center;justify-content:center;"><input type="number" id="iv-gut" min="1" max="8" placeholder="—" style="font-size:28px;font-weight:600;text-align:center;width:70px;border:none;background:transparent;color:var(--ink);outline:none;padding:0;" oninput="calcTot()"></div>
+        <div style="height:34px;display:flex;align-items:center;justify-content:center;"><input type="number" id="iv-gut" min="0" max="8" placeholder="—" style="font-size:28px;font-weight:600;text-align:center;width:70px;border:none;background:transparent;color:var(--ink);outline:none;padding:0;" oninput="calcTot()"></div>
         <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 8</div>
       </div>
       <div style="background:var(--cream);border:2px solid var(--sage);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
