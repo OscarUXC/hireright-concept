@@ -780,11 +780,27 @@ select:focus{border-color:var(--sage);background:white;}
     <textarea id="iv-ev2" placeholder="Paste or summarise the evidence for Outcome 2..." style="margin-bottom:10px"></textarea>
     <label class="field-label">Outcome 3 evidence summary</label>
     <textarea id="iv-ev3" placeholder="Paste or summarise the evidence for Outcome 3..." style="margin-bottom:16px"></textarea>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin:16px 0">
-      <div style="background:var(--cream);border-radius:8px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:600;color:var(--sage)" id="tot">—</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Outcomes /12</div></div>
-      <div style="background:var(--cream);border-radius:8px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:600;color:var(--sage)" id="qtot">—</div><div style="font-size:11px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Questions /5</div></div>
-      <div style="background:var(--cream);border-radius:8px;padding:12px"><label class="field-label">Gut feeling /8</label><input type="number" id="iv-gut" min="1" max="8" placeholder="—" style="font-size:20px;font-weight:600;text-align:center;margin-top:6px" oninput="calcTot()"></div>
-      <div style="background:var(--ink);border-radius:8px;padding:16px;text-align:center"><div style="font-size:28px;font-weight:600;color:white" id="grandtot">—</div><div style="font-size:11px;color:rgba(255,255,255,0.7);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:1px">Total /25</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin:16px 0">
+      <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px">Outcomes</div>
+        <div style="font-size:28px;font-weight:600;color:var(--ink)" id="tot">—</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 12</div>
+      </div>
+      <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px">Questions</div>
+        <div style="font-size:28px;font-weight:600;color:var(--ink)" id="qtot">—</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 5</div>
+      </div>
+      <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px">Gut feeling</div>
+        <input type="number" id="iv-gut" min="1" max="8" placeholder="—" style="font-size:28px;font-weight:600;text-align:center;width:60px;border:none;background:transparent;color:var(--ink);outline:none;" oninput="calcTot()">
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 8</div>
+      </div>
+      <div style="background:var(--cream);border:2px solid var(--sage);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--sage);margin-bottom:8px">Total</div>
+        <div style="font-size:28px;font-weight:600;color:var(--sage)" id="grandtot">—</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 25</div>
+      </div>
     </div>
     <label class="field-label" style="margin-top:14px">Offer rationale — why this candidate?</label>
     <textarea id="iv-rationale" placeholder="Reference specific evidence from the interview for each outcome. This feeds directly into the Written Offer letter."></textarea>
