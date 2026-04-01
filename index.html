@@ -1930,6 +1930,7 @@ function showSaveNotice(msg){
 let saveTimer;
 document.addEventListener('input',()=>{
   if(isResetting)return;
+  updSidebar();
   clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{saveProgress();showSaveNotice('Progress saved');},1000);
 });
