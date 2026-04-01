@@ -997,6 +997,8 @@ function goPhase(n){
   for(let i=0;i<6;i++){const e=document.getElementById('p'+i);if(e)e.classList.toggle('visible',i===n);}
   document.querySelectorAll('.phase-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
   updSidebar(); coach(n);
+  // Save phase immediately so refresh stays on this page
+  if(!isResetting){try{const raw=localStorage.getItem(SAVE_KEY);const d=raw?JSON.parse(raw):{};d.phase=n;localStorage.setItem(SAVE_KEY,JSON.stringify(d));}catch(e){}}
   if(n===1)initP1();
   if(n===2)initP2();
   if(n===3){
@@ -1330,13 +1332,17 @@ const CD={
 };
 const EX=["\"Define and deliver the H2 roadmap by end of Q2, prioritising features that drive £500k ARR growth by Q4, so Engineering and Sales are aligned around a commercially-grounded direction.\"","\"Capacity gap — both PMs at 100% on mid-market, enterprise workstream has 0 hours. Capability gap — no PM has enterprise B2B SaaS feature experience. Neither resolves without hiring.\"","\"Senior Product Manager — Enterprise B2B Focus. £85k–£95k + 10% bonus. London, Hybrid 3 days. Reports to: Emma Liu, VP Product.\"","\"Their roadmap work at Intercom, prioritising enterprise features based on deal data to drive £400k ARR in H1, showed exactly the commercially-grounded strategic thinking we need. Score: 4.\"","\"Tell me about a time you had to make a hard trade-off on a product roadmap. What did you cut, why, and what happened as a result?\"","\"Dear Alex — your enterprise tier launch at [company], validated with 8 prospects before build and closing 3 deals within 60 days, is direct evidence you've built exactly what we need.\""];
 
-let coachPage=0,coachPages=[];
+let coachPage=0,coachPages=[],coachAutoTimer=null,coachInitTimer=null;
 function coach(n){
+  // Clear any pending timers from previous phase
+  if(coachAutoTimer){clearTimeout(coachAutoTimer);coachAutoTimer=null;}
+  if(coachInitTimer){clearTimeout(coachInitTimer);coachInitTimer=null;}
+
   const panel=document.getElementById('coach');
   panel.innerHTML='';
   const ty=document.createElement('div');ty.className='typing';ty.innerHTML='<span></span><span></span><span></span>';panel.appendChild(ty);
 
-  setTimeout(()=>{
+  coachInitTimer=setTimeout(()=>{
     panel.innerHTML='';
     // Build all cards: normal, warning, example
     const msgs=CD[n]||CD[0];
@@ -1345,17 +1351,23 @@ function coach(n){
     msgs.forEach(m=>{allCards.push({html:m.t,type:m.w?'warn':'normal'});});
     allCards.push({html:ex,type:'example'});
 
-    // Split into pages of max 4 (2 normal + 1 warn + 1 example, or however they fit)
+    // Split into pages of max 4
     coachPages=[];
     for(let i=0;i<allCards.length;i+=4){
-      coachPages.push(allCards.slice(i,i+4));
+      const page=allCards.slice(i,i+4);
+      if(page.length>0)coachPages.push(page);
+    }
+    // Remove any trailing pages with only 1 example card — merge back
+    if(coachPages.length>1&&coachPages[coachPages.length-1].length===1&&coachPages[coachPages.length-1][0].type==='example'){
+      const last=coachPages.pop();
+      coachPages[coachPages.length-1].push(last[0]);
     }
     coachPage=0;
     renderCoachPage(panel);
 
-    // Auto-advance once after 6 seconds if there are multiple pages
+    // Auto-advance once after 6 seconds if there are multiple pages with real content
     if(coachPages.length>1){
-      setTimeout(()=>{if(coachPage===0){coachPage=1;renderCoachPage(panel);}},6000);
+      coachAutoTimer=setTimeout(()=>{if(coachPage===0){coachPage=1;renderCoachPage(panel);}},6000);
     }
   },700);
 }
