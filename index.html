@@ -949,7 +949,19 @@ function goPhase(n){
   document.getElementById('navMeta').textContent=`Acme Corp · Senior PM hire · Phase ${n+1} of 6 — ${nm[n]}`;
   if(n===1)initP1();
   if(n===2)initP2();
-  if(n===3&&candidateCount===0)addCandidate();
+  if(n===3){
+    if(candidateCount===0)addCandidate();
+    // Populate shortlisting references from role outcomes or team outcomes
+    const ro1=document.getElementById('i-ro1')?.value||S.o1||'';
+    const ro1g=document.getElementById('i-ro1g')?.value||'';
+    const title=document.getElementById('i-title')?.value||S.title||'';
+    const sl1=document.getElementById('sl-o1');if(sl1&&ro1)sl1.textContent=ro1;
+    const slInfo=document.getElementById('sl-o1-info');if(slInfo&&ro1)slInfo.textContent=ro1;
+    const slGrp=document.getElementById('sl-o1-group');if(slGrp&&ro1g)slGrp.textContent=ro1g;
+    const slFull=document.getElementById('sl-o1-full');if(slFull&&ro1)slFull.textContent=ro1;
+    const slRole=document.getElementById('sl-email-role');if(slRole&&title)slRole.textContent=title;
+    const slRole2=document.getElementById('sl-email-role2');if(slRole2&&title)slRole2.textContent=title;
+  }
   if(n===5)updOffer();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1160,9 +1172,22 @@ function updJD(){
   const b=document.getElementById('p2n5');if(b){b.disabled=v.length<1;b.style.opacity=v.length<1?'0.4':'1';}
 }
 function done2(){
-  document.getElementById('pb2').style.width='100%';document.getElementById('pl2').textContent='Complete ✓';
   [2,3,4,5].forEach(i=>mkDoc(i));
+  S.title=document.getElementById('i-title')?.value||'';
+  S.sal=document.getElementById('i-sal')?.value||'';
+  S.loc=document.getElementById('i-loc')?.value||'';
+  S.rep=document.getElementById('i-rep')?.value||'';
+  // Update shortlisting references
   const sl=document.getElementById('sl-role');if(sl)sl.value=S.title;
+  const ro1=document.getElementById('i-ro1')?.value||'';
+  const ro1g=document.getElementById('i-ro1g')?.value||'';
+  if(ro1){S.o1=ro1;document.getElementById('sl-o1').textContent=ro1;}
+  if(ro1g){const g=document.getElementById('sl-o1-group');if(g)g.textContent=ro1g;}
+  const ro1f=document.getElementById('sl-o1-full');if(ro1f&&ro1)ro1f.textContent=ro1;
+  S.o2=document.getElementById('i-ro2')?.value||S.o2;
+  S.o3=document.getElementById('i-ro3')?.value||S.o3;
+  // Update interview role
+  const ivr=document.getElementById('iv-role');if(ivr)ivr.value=S.title;
   setTimeout(()=>goPhase(3),300);
 }
 
@@ -1189,23 +1214,27 @@ function done3(){mkDoc(6);goPhase(4);}
 function calcTot(){
   let tot=0,cnt=0;
   ['#sg1','#sg2','#sg3'].forEach(s=>{const el=document.querySelector(s+' .score-cell.sel');if(el){tot+=parseInt(el.textContent)||0;cnt++;}});
-  if(cnt===0)return;
   const te=document.getElementById('tot'),ve=document.getElementById('verd');
-  te.textContent=tot;
-  if(tot>=9){ve.textContent='Strong hire — proceed';ve.style.color='var(--sage)';}
-  else if(tot>=6){ve.textContent='Borderline — consider carefully';ve.style.color='var(--amber)';}
-  else{ve.textContent='Do not hire';ve.style.color='#c0392b';}
+  if(te)te.textContent=cnt>0?tot:'—';
+  // Questions score
+  const qel=document.querySelector('#sg-q .score-cell.sel');
+  const qt=document.getElementById('qtot');
+  if(qt)qt.textContent=qel?qel.textContent.charAt(0):'—';
+  // Decision
+  if(ve){
+    if(cnt<3){ve.textContent='Score all outcomes';ve.style.color='var(--muted)';}
+    else if(tot>=7){ve.textContent='Hire';ve.style.color='var(--sage)';}
+    else{ve.textContent='No';ve.style.color='#c0392b';}
+  }
 }
 function done4(){[7,8].forEach(i=>mkDoc(i));updOffer();goPhase(5);}
 
 // ── PHASE 5 ───────────────────────────────────────
 function updOffer(){
-  const cn=document.getElementById('o-cn')?.value||'',sal=document.getElementById('o-sal')?.value||'',sd=document.getElementById('o-sd')?.value||'';
-  const setF=(id,val,fb)=>{const e=document.getElementById(id);if(!e)return;if(val){e.textContent=val;e.className='dfv fill';e.style.fontStyle='normal';}else{e.textContent=fb;e.className='dfv';e.style.fontStyle='italic';}};
-  setF('of-cn',cn,'Enter candidate name above');setF('of-sal',sal,'Enter salary above');setF('of-sd',sd,'Enter start date above');
-  const rle=document.getElementById('of-role');if(rle)rle.textContent=S.title||'—';
-  const o1=S.o1||'—',o2=S.o2||'—',o3=S.o3||'—';
-  ['of-o1','of-o2','of-o3'].forEach((id,i)=>{const e=document.getElementById(id),v=[o1,o2,o3][i];if(e){e.textContent=v.substring(0,55)+(v.length>55?'...':'');e.className=v!=='—'?'dfv fill':'dfv empty';}});
+  // Populate readonly fields in Phase 6
+  const orole=document.getElementById('o-role');if(orole)orole.value=S.title||'';
+  const oloc=document.getElementById('o-loc');if(oloc)oloc.value=S.loc||'';
+  const ivr=document.getElementById('iv-role');if(ivr)ivr.value=S.title||'';
 }
 function done5(){
   [9,10,11].forEach(i=>mkDoc(i));
@@ -1671,7 +1700,10 @@ function restoreProgress(){
   }catch(e){console.warn('Failed to restore progress',e);}
 }
 
+let isResetting=false;
 function clearProgress(){
+  isResetting=true;
+  clearTimeout(saveTimer);
   localStorage.removeItem(SAVE_KEY);
   location.reload();
 }
@@ -1692,11 +1724,13 @@ function showSaveNotice(msg){
 // Auto-save on any input change (debounced)
 let saveTimer;
 document.addEventListener('input',()=>{
+  if(isResetting)return;
   clearTimeout(saveTimer);
   saveTimer=setTimeout(()=>{saveProgress();showSaveNotice('Progress saved');},1000);
 });
 // Also save on checkbox/radio clicks
 document.addEventListener('click',(e)=>{
+  if(isResetting)return;
   if(e.target.closest('.check-item')||e.target.closest('.radio-item')||e.target.closest('.cap-btn')||e.target.closest('.score-cell')){
     clearTimeout(saveTimer);
     saveTimer=setTimeout(()=>{saveProgress();showSaveNotice('Progress saved');},500);
