@@ -192,8 +192,8 @@ select:focus{border-color:var(--sage);background:white;}
 .coach-dots{display:flex;gap:6px;}
 .coach-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:all .2s;}
 .coach-dot.active{background:rgba(255,255,255,0.5);}
-.coach-slide{animation:coachSlide .6s ease-out;}
-@keyframes coachSlide{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.coach-slide{opacity:0;transform:translateY(12px);animation:coachSlide 1s ease-out forwards;}
+@keyframes coachSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .coach-stat{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-bottom:none;font-size:12px;border-radius:6px;margin-bottom:4px;}
 .coach-stat:nth-child(2){background:rgba(74,124,111,0.08);}
 .coach-stat:nth-child(3){background:rgba(200,135,58,0.08);}
@@ -1358,13 +1358,14 @@ function coach(n){
 function renderCoachPage(panel){
   panel.innerHTML='';
   const page=coachPages[coachPage]||[];
-  page.forEach(card=>{
+  page.forEach((card,i)=>{
     const b=document.createElement('div');
     b.className='coach-bubble coach-slide';
+    b.style.animationDelay=(i*0.3)+'s';
     if(card.type==='warn')b.classList.add('warning');
     if(card.type==='example')b.classList.add('example');
     if(card.type==='example'){
-      const lbl=document.createElement('div');lbl.className='coach-divider';lbl.textContent='Example';panel.appendChild(lbl);
+      const lbl=document.createElement('div');lbl.className='coach-divider coach-slide';lbl.style.animationDelay=(i*0.3)+'s';lbl.textContent='Example';panel.appendChild(lbl);
     }
     b.innerHTML=card.html;
     panel.appendChild(b);
