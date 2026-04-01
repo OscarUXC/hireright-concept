@@ -1865,7 +1865,7 @@ function restoreProgress(){
     // Restore docs
     if(data.docs){data.docs.forEach((v,i)=>{if(v)mkDoc(i);});}
     // Restore phase
-    if(data.phase)goPhase(data.phase);
+    if(data.phase!==undefined&&data.phase!==null)goPhase(data.phase);
     // Update previews
     updPrev();
     // Show saved indicator
