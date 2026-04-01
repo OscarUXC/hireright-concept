@@ -81,6 +81,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);m
 .hint-box.info .hint-text{color:var(--blue);}
 .hint-box.success{background:var(--sage-light);border-color:#b0d0c8;}
 .hint-box.success .hint-text{color:var(--sage);}
+/* NUMBER SPINNER ALWAYS VISIBLE */
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{opacity:1;height:24px;}
 /* INPUTS */
 textarea,input[type=text],input[type=number]{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);background:var(--paper);transition:border-color .2s,background .2s;resize:vertical;line-height:1.6;outline:none;}
 textarea:focus,input[type=text]:focus,input[type=number]:focus{border-color:var(--sage);background:white;}
@@ -783,22 +785,22 @@ select:focus{border-color:var(--sage);background:white;}
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin:16px 0">
       <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px">Outcomes</div>
-        <div style="font-size:28px;font-weight:600;color:var(--ink)" id="tot">—</div>
+        <div style="height:34px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:600;color:var(--ink)" id="tot">—</div>
         <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 12</div>
       </div>
       <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px">Questions</div>
-        <div style="font-size:28px;font-weight:600;color:var(--ink)" id="qtot">—</div>
+        <div style="height:34px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:600;color:var(--ink)" id="qtot">—</div>
         <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 5</div>
       </div>
       <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px">Gut feeling</div>
-        <input type="number" id="iv-gut" min="1" max="8" placeholder="—" style="font-size:28px;font-weight:600;text-align:center;width:60px;border:none;background:transparent;color:var(--ink);outline:none;" oninput="calcTot()">
+        <div style="height:34px;display:flex;align-items:center;justify-content:center;"><input type="number" id="iv-gut" min="1" max="8" placeholder="—" style="font-size:28px;font-weight:600;text-align:center;width:70px;border:1px solid var(--border);border-radius:6px;background:white;color:var(--ink);outline:none;padding:2px 4px;-moz-appearance:textfield;" oninput="calcTot()"></div>
         <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 8</div>
       </div>
       <div style="background:var(--cream);border:2px solid var(--sage);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--sage);margin-bottom:8px">Total</div>
-        <div style="font-size:28px;font-weight:600;color:var(--sage)" id="grandtot">—</div>
+        <div style="height:34px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:600;color:var(--sage)" id="grandtot">—</div>
         <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 25</div>
       </div>
     </div>
