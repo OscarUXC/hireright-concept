@@ -984,8 +984,8 @@ function goPhase(n){
   for(let i=0;i<6;i++){const e=document.getElementById('p'+i);if(e)e.classList.toggle('visible',i===n);}
   document.querySelectorAll('.phase-tab').forEach((t,i)=>t.classList.toggle('active',i===n));
   updSidebar(); coach(n);
-  // Save phase immediately so refresh stays on this page
-  if(!isResetting){try{const raw=localStorage.getItem(SAVE_KEY);const d=raw?JSON.parse(raw):{};d.phase=n;localStorage.setItem(SAVE_KEY,JSON.stringify(d));}catch(e){}}
+  // Save phase immediately to its own key so nothing can overwrite it
+  if(!isResetting){try{localStorage.setItem(SAVE_KEY+'_phase',String(n));}catch(e){}}
   if(n===1)initP1();
   if(n===2)initP2();
   if(n===3){
@@ -2029,8 +2029,9 @@ function restoreProgress(){
     }
     // Restore docs
     if(data.docs){data.docs.forEach((v,i)=>{if(v)mkDoc(i);});}
-    // Restore phase
-    if(data.phase!==undefined&&data.phase!==null)goPhase(data.phase);
+    // Restore phase from dedicated key
+    const savedPhase=localStorage.getItem(SAVE_KEY+'_phase');
+    if(savedPhase!==null)goPhase(parseInt(savedPhase));
     // Update previews
     updPrev();
     // Show saved indicator
@@ -2043,6 +2044,7 @@ function clearProgress(){
   isResetting=true;
   clearTimeout(saveTimer);
   localStorage.removeItem(SAVE_KEY);
+  localStorage.removeItem(SAVE_KEY+'_phase');
   location.reload();
 }
 
