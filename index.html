@@ -810,13 +810,13 @@ select:focus{border-color:var(--sage);background:white;}
       </div>
       <div style="background:var(--cream);border:1px solid var(--border);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:8px">Gut feeling</div>
-        <div style="height:34px;display:flex;align-items:center;justify-content:center;"><input type="number" id="iv-gut" min="0" max="8" placeholder="—" style="font-size:28px;font-weight:600;text-align:center;width:70px;border:none;background:transparent;color:var(--ink);outline:none;padding:0;" oninput="calcTot()"></div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 8</div>
+        <div style="height:34px;display:flex;align-items:center;justify-content:center;"><input type="number" id="iv-gut" min="0" max="3" placeholder="—" style="font-size:28px;font-weight:600;text-align:center;width:70px;border:none;background:transparent;color:var(--ink);outline:none;padding:0;" oninput="calcTot()"></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 3</div>
       </div>
       <div style="background:var(--cream);border:2px solid var(--sage);border-radius:10px;padding:18px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--sage);margin-bottom:8px">Total</div>
         <div style="height:34px;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:600;color:var(--sage)" id="grandtot">—</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 25</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">/ 20</div>
       </div>
     </div>
     <label class="field-label" style="margin-top:14px">Offer rationale — why this candidate?</label>
@@ -1887,8 +1887,8 @@ async function downloadBlankInterview(){
   s.push(gap());
   s.push(field('Outcomes Total','          / 12'));
   s.push(field('Questions Score','          / 5'));
-  s.push(field('Gut Feeling','          / 8'));
-  s.push(field('Total','          / 25'));
+  s.push(field('Gut Feeling','          / 3'));
+  s.push(field('Total','          / 20'));
   s.push(gap());
   s.push(field('Offer rationale',''));s.push(p(''));s.push(p(''));
   const doc=new D.Document({sections:[{properties:{},children:s}]});
