@@ -249,20 +249,11 @@ select:focus{border-color:var(--sage);background:white;}
     <div class="phase-text"><div class="phase-title">Offer & Onboarding</div><div class="phase-desc">Offer letter, pre-start & 30/60/90 plan</div><span class="phase-badge" id="sb5">Not started</span></div>
   </div>
   <hr class="sidebar-divider">
-  <div class="sidebar-doc-list">
-    <div class="sidebar-doc-label">Documents Completed (<span id="docCount">0</span>/12)</div>
-    <div class="doc-item" id="di0"><div class="doc-icon"></div> T1 — Team Outcomes Map</div>
-    <div class="doc-item" id="di1"><div class="doc-icon"></div> T2 — Hiring Decision Brief</div>
-    <div class="doc-item" id="di2"><div class="doc-icon"></div> T3 — Role Outcomes Definition</div>
-    <div class="doc-item" id="di3"><div class="doc-icon"></div> T4 — Job Description</div>
-    <div class="doc-item" id="di4"><div class="doc-icon"></div> T5 — Job Advert</div>
-    <div class="doc-item" id="di5"><div class="doc-icon"></div> T6 — Recruiter Briefing</div>
-    <div class="doc-item" id="di6"><div class="doc-icon"></div> T7 — Shortlisting Guide</div>
-    <div class="doc-item" id="di7"><div class="doc-icon"></div> T8 — Interview Guide</div>
-    <div class="doc-item" id="di8"><div class="doc-icon"></div> T9 — Scoring & Offer Decision</div>
-    <div class="doc-item" id="di9"><div class="doc-icon"></div> T10 — Offer Letter</div>
-    <div class="doc-item" id="di10"><div class="doc-icon"></div> T11 — Pre-Start Engagement</div>
-    <div class="doc-item" id="di11"><div class="doc-icon"></div> T12 — 30/60/90 Onboarding</div>
+  <div style="padding:0 24px;">
+    <div style="font-size:11px;font-weight:600;color:var(--muted);margin-bottom:8px;">Overall progress</div>
+    <div style="height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+      <div id="progressBar" style="width:0%;height:100%;background:var(--amber);border-radius:2px;transition:width 0.5s ease;"></div>
+    </div>
   </div>
 </aside>
 
@@ -1076,7 +1067,26 @@ function updSidebar(){
     const tb=document.getElementById('tab'+i);
     if(tb){tb.style.opacity='1';tb.style.pointerEvents='auto';}
   }
-  const dc=document.getElementById('docCount');if(dc)dc.textContent=totalDocs;
+  // Update progress bar
+  updProgress();
+}
+
+function updProgress(){
+  let filled=0,total=0;
+  for(let i=0;i<6;i++){
+    const section=document.getElementById('p'+i);
+    if(!section)continue;
+    const inputs=section.querySelectorAll('input[type=text],input[type=number],textarea');
+    inputs.forEach(el=>{
+      if(!el.readOnly){
+        total++;
+        if(el.value.trim())filled++;
+      }
+    });
+  }
+  const pct=total>0?Math.round((filled/total)*100):0;
+  const bar=document.getElementById('progressBar');
+  if(bar)bar.style.width=pct+'%';
 }
 
 // ── HELPERS ──────────────────────────────────────
